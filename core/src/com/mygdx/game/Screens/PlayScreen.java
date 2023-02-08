@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.TileMapHelper;
+import com.mygdx.game.Sprites.Player;
 
 import javax.swing.*;
 
@@ -26,6 +27,8 @@ public class PlayScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+
+    private Player player;
 
     public PlayScreen(OrthographicCamera camera){
         this.camera = camera;
@@ -68,7 +71,9 @@ public class PlayScreen extends ScreenAdapter {
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+    }
 
-
+    public void setPlayer(Player player){
+        this.player = player;
     }
 }
