@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.States.MenuState;
+import com.mygdx.game.States.gStateManager;
 
 import javax.swing.*;
 
@@ -24,6 +26,8 @@ import static com.mygdx.game.Helper.Constants.PPM;
 public class PlayScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    Texture img;
+    private gStateManager gsm;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
 
@@ -31,6 +35,7 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+
 
 
     public PlayScreen(OrthographicCamera camera){
@@ -68,6 +73,16 @@ public class PlayScreen extends ScreenAdapter {
         camera.update();
     }
 
+
+    @Override
+    public void show(){
+      batch = new SpriteBatch();
+      img = new Texture("badlogic.jpg");
+      gsm = new gStateManager();
+      Gdx.gl.glClearColor(0,0,0,1);
+      gsm.push(new MenuState(gsm));
+    }
+
     @Override
     public void render(float delta){
         this.update();
@@ -82,6 +97,9 @@ public class PlayScreen extends ScreenAdapter {
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
     }
 
     public void setPlayer(Player player){
