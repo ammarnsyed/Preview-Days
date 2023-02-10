@@ -30,13 +30,14 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
 
+
     public PlayScreen(OrthographicCamera camera){
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, 0), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-        this.tileMapHelper = new TileMapHelper();
+        this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
     }
 
@@ -75,5 +76,8 @@ public class PlayScreen extends ScreenAdapter {
 
     public void setPlayer(Player player){
         this.player = player;
+    }
+    public World getWorld() {
+        return world;
     }
 }
