@@ -22,6 +22,8 @@ public class Player extends Entity {
     public void update() {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
+
+        checkUserInput();
     }
 
     @Override

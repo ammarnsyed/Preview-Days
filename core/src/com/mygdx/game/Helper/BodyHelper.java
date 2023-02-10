@@ -14,10 +14,11 @@ public class BodyHelper {
         Body body = world.createBody(bodyDef);
 
         //Using shape instead of sprite for test
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2 /PPM, height / 2 / PPM);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(1);
 
         FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.friction = 0;
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
         shape.dispose();

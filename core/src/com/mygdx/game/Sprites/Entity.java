@@ -17,6 +17,7 @@ public abstract class Entity {
         this.velX = 0;
         this.velY = 0;
         this.speed = 0;
+        this.body = body;
     }
 
     public abstract void update();
