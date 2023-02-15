@@ -16,6 +16,7 @@ public class Player extends Entity {
         super(width, height, body);
         this.speed = 9f;
         this.jumpCount = 0;
+        fixture.setUserData("Player");
     }
 
     @Override

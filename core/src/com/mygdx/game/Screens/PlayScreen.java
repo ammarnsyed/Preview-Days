@@ -15,6 +15,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
+import com.mygdx.game.Helper.WorldContactListener;
+import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
@@ -35,6 +38,8 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private JumpPowerUp jumpPowerUpTest;
+    private SpeedPowerUp speedPowerUpTest;
 
 
 
@@ -49,6 +54,15 @@ public class PlayScreen extends ScreenAdapter {
 
         Body playerBody = BodyHelper.createBody(32, 500, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
+
+
+
+
+        world.setContactListener(new WorldContactListener());
+
+        //Setting two different Power ups to test collision detection for both
+        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
+        speedPowerUpTest = new SpeedPowerUp(600, 200, world);
 
     }
 
