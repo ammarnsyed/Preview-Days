@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class MenuState extends State{
-  private Texture background;
   private Texture playBtn;
+  private Texture charImg;
 
 
   public MenuState(gStateManager gsm) {
     super(gsm);
-    playBtn = new Texture("char.png");
+    playBtn = new Texture("startButton.png");
+    charImg = new Texture("char.png");
   }
 
   @Override
@@ -29,8 +30,8 @@ public class MenuState extends State{
   @Override
   public void render(SpriteBatch sb) {
     sb.begin();
-    //sb.draw(background,0,0,960, 640);
-    sb.draw(playBtn, 0,0,200, 200);
+    sb.draw(charImg,-30,200, 170,170);
+    sb.draw(playBtn, -120,0,351, 150);
     sb.end();
   }
 
