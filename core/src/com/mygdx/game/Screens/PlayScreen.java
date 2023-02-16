@@ -16,8 +16,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.NPCHelper;
 import com.mygdx.game.Helper.TileMapHelper;
+import com.mygdx.game.Helper.WorldContactListener;
+import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
+import com.mygdx.game.States.MenuState;
+import com.mygdx.game.States.gStateManager;
 
 import javax.swing.*;
 
@@ -26,6 +31,8 @@ import static com.mygdx.game.Helper.Constants.PPM;
 public class PlayScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     private SpriteBatch batch;
+    Texture img;
+    private gStateManager gsm;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
 
@@ -34,6 +41,9 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private NPC npc;
+    private JumpPowerUp jumpPowerUpTest;
+    private SpeedPowerUp speedPowerUpTest;
+
 
 
     public PlayScreen(OrthographicCamera camera){
@@ -49,6 +59,15 @@ public class PlayScreen extends ScreenAdapter {
         Body npcBody = NPCHelper.createBody(70,500,1,1,false, world);
         npc = new NPC(1,1, npcBody);
         player = new Player(1, 1, playerBody);
+
+
+
+
+        world.setContactListener(new WorldContactListener());
+
+        //Setting two different Power ups to test collision detection for both
+        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
+        speedPowerUpTest = new SpeedPowerUp(600, 200, world);
 
     }
 
@@ -74,6 +93,16 @@ public class PlayScreen extends ScreenAdapter {
         camera.update();
     }
 
+
+    @Override
+    public void show(){
+      batch = new SpriteBatch();
+      img = new Texture("badlogic.jpg");
+      gsm = new gStateManager();
+      Gdx.gl.glClearColor(0,0,0,1);
+      gsm.push(new MenuState(gsm));
+    }
+
     @Override
     public void render(float delta){
         this.update();
@@ -88,6 +117,9 @@ public class PlayScreen extends ScreenAdapter {
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
     }
 
     public void setPlayer(Player player){
