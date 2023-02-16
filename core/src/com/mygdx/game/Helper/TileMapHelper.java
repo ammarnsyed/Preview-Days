@@ -28,27 +28,37 @@ public class TileMapHelper {
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("TestMapTiled.tmx");
-        parseMapObjects(tiledMap.getLayers().get(1).getObjects());
+        parseMapObjects(tiledMap.getLayers().get(1).getObjects(), 1);
+        parseMapObjects(tiledMap.getLayers().get(2).getObjects(), 2);
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
-    private void parseMapObjects(MapObjects mapObjects){
+    private void parseMapObjects(MapObjects mapObjects, int layer){
         for(MapObject mapObject : mapObjects){
 
             if(mapObject instanceof PolygonMapObject){
-                createStaticBody((PolygonMapObject) mapObject);
+                createStaticBody((PolygonMapObject) mapObject, layer);
             }
         }
     }
 
-    private void createStaticBody(PolygonMapObject polygonMapObject){
+    private void createStaticBody(PolygonMapObject polygonMapObject, int layer){
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = playScreen.getWorld().createBody(bodyDef);
         Shape shape = createPolygonShape(polygonMapObject);
         fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        switch(layer){
+            case 1:
+                fixture.getFilterData().categoryBits = Constants.DEFAULT_BIT;
+                break;
+            case 2:
+                fixture.getFilterData().categoryBits = Constants.OBSTACLE_BIT;
+                break;
+        }
+
         shape.dispose();
 
     }

@@ -18,9 +18,10 @@ public class Player extends Entity {
         super(width, height, body);
         this.speed = 9f;
         this.jumpCount = 0;
-        fixture.setUserData("Player");
+        fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
-        fixture.getFilterData().maskBits = Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT;
+        fixture.getFilterData().maskBits =
+                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT;
     }
 
     @Override
@@ -65,5 +66,9 @@ public class Player extends Entity {
 
     public int getJumpForce(){
         return jumpForce;
+    }
+
+    public void playerDeath(){
+        Gdx.app.log("Enemy", "Collision");
     }
 }

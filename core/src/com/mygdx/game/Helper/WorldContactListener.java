@@ -3,6 +3,8 @@ package com.mygdx.game.Helper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Powers.PowerUp;
+import com.mygdx.game.Sprites.NPC;
+import com.mygdx.game.Sprites.Player;
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -12,15 +14,31 @@ public class WorldContactListener implements ContactListener {
 
         int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        if(fixA.getUserData() == "Player" || fixB.getUserData() == "Player"){
-            Fixture player = fixA.getUserData() == "Player" ? fixA : fixB;
-            Fixture object = player == fixA ? fixB : fixA;
-
-            //See if player colliding w/ a power up to activate the hook
-            if(object.getUserData() != null && PowerUp.class.isAssignableFrom(object.getUserData().getClass())){
-                ((PowerUp) object.getUserData()).powerUpActivate();
-            }
-
+        switch (cDef){
+            case Constants.PLAYER_BIT | Constants.NPC_BIT:
+                if(fixA.getFilterData().categoryBits == Constants.PLAYER_BIT){
+                    ((Player)fixA.getUserData()).playerDeath();
+                }
+                else{
+                    ((Player)fixB.getUserData()).playerDeath();
+                }
+                break;
+            case Constants.PLAYER_BIT | Constants.POWER_BIT:
+                if(fixA.getFilterData().categoryBits == Constants.POWER_BIT){
+                    ((PowerUp)fixA.getUserData()).powerUpActivate();
+                }
+                else{
+                    ((PowerUp)fixB.getUserData()).powerUpActivate();
+                }
+                break;
+            case Constants.NPC_BIT | Constants.OBSTACLE_BIT:
+                if(fixA.getFilterData().categoryBits == Constants.NPC_BIT){
+                    ((NPC)fixA.getUserData()).reverseVelocity();
+                }
+                else{
+                    ((NPC)fixB.getUserData()).reverseVelocity();
+                }
+                break;
         }
     }
 
