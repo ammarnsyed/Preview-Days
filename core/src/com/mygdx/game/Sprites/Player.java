@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.Helper.Constants;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -18,6 +19,8 @@ public class Player extends Entity {
         this.speed = 9f;
         this.jumpCount = 0;
         fixture.setUserData("Player");
+        fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
+        fixture.getFilterData().maskBits = Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT;
     }
 
     @Override

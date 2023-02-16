@@ -13,10 +13,11 @@ public class WorldContactListener implements ContactListener {
             Fixture player = fixA.getUserData() == "Player" ? fixA : fixB;
             Fixture object = player == fixA ? fixB : fixA;
 
+            //See if player colliding w/ a power up to activate the hook
             if(object.getUserData() != null && PowerUp.class.isAssignableFrom(object.getUserData().getClass())){
                 ((PowerUp) object.getUserData()).powerUpActivate();
-
             }
+
         }
     }
 
