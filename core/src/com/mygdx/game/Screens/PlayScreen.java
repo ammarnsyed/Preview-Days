@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
+import com.mygdx.game.Helper.NPCHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
@@ -45,7 +46,7 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
         Body playerBody = BodyHelper.createBody(30, 500, 1, 1, false, world);
-        Body npcBody = BodyHelper.createBody(70,500,1,1,false, world);
+        Body npcBody = NPCHelper.createBody(70,500,1,1,false, world);
         npc = new NPC(1,1, npcBody);
         player = new Player(1, 1, playerBody);
 
