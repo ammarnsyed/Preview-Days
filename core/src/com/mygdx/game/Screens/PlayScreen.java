@@ -15,11 +15,13 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
+import com.mygdx.game.Helper.WorldContactListener;
+import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
-
-import javax.swing.*;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -35,6 +37,9 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private NPC npc;
+    private JumpPowerUp jumpPowerUpTest;
+    private SpeedPowerUp speedPowerUpTest;
 
 
 
@@ -47,8 +52,19 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(32, 500, 1, 1, false, world);
+        Body playerBody = BodyHelper.createBody(30, 500, 1, 1, false, world);
+        Body npcBody = BodyHelper.createBody(70,500,1,1,false, world);
+        npc = new NPC(1,1, npcBody);
         player = new Player(1, 1, playerBody);
+
+
+
+
+        world.setContactListener(new WorldContactListener());
+
+        //Setting two different Power ups to test collision detection for both
+        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
+        speedPowerUpTest = new SpeedPowerUp(600, 200, world);
 
     }
 
@@ -56,6 +72,7 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update();
+        npc.update();
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
