@@ -9,6 +9,9 @@ public class WorldContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+
+        int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
+
         if(fixA.getUserData() == "Player" || fixB.getUserData() == "Player"){
             Fixture player = fixA.getUserData() == "Player" ? fixA : fixB;
             Fixture object = player == fixA ? fixB : fixA;
