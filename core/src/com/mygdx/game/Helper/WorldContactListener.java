@@ -25,10 +25,10 @@ public class WorldContactListener implements ContactListener {
                 break;
             case Constants.PLAYER_BIT | Constants.POWER_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.POWER_BIT){
-                    ((PowerUp)fixA.getUserData()).powerUpActivate();
+                    ((PowerUp)fixA.getUserData()).powerUpActivate((Player)fixB.getUserData());
                 }
                 else{
-                    ((PowerUp)fixB.getUserData()).powerUpActivate();
+                    ((PowerUp)fixB.getUserData()).powerUpActivate((Player)fixA.getUserData());
                 }
                 break;
             case Constants.NPC_BIT | Constants.OBSTACLE_BIT:

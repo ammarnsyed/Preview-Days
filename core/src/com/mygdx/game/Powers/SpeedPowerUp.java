@@ -2,6 +2,7 @@ package com.mygdx.game.Powers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Sprites.Player;
 
 public class SpeedPowerUp extends PowerUp{
 
@@ -11,7 +12,10 @@ public class SpeedPowerUp extends PowerUp{
     }
 
     @Override
-    public void powerUpActivate() {
+    public void powerUpActivate(Player player) {
         Gdx.app.log("Speed Power", "Collision");
+        float speed = player.getSpeed();
+        int speedIncrease = 3;
+        player.setSpeed(speed + speedIncrease);
     }
 }
