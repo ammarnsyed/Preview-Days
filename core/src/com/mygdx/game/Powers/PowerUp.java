@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.Constants;
+import com.mygdx.game.Sprites.Player;
 
 public abstract class PowerUp {
     protected float x, y;
@@ -20,7 +21,7 @@ public abstract class PowerUp {
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
     }
 
-    public abstract void powerUpActivate();
+    public abstract void powerUpActivate(Player player);
 
     public Body getBody(){
         return body;
