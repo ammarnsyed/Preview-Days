@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.mygdx.game.Helper.Constants;
+import com.mygdx.game.Helper.BodyHelper;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -17,6 +19,7 @@ public class Player extends Entity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 9f;
+        this.health = 100;
         this.jumpCount = 0;
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
@@ -69,6 +72,25 @@ public class Player extends Entity {
     }
 
     public void playerDeath(){
-        Gdx.app.log("Enemy", "Collision");
+        if(health <= 0){
+            Gdx.app.log("Enemy", "Death");
+            health = 0;
+        }
+    }
+
+    public void playerDamage(){
+        health = health - 20;
+        Gdx.app.log("Enemy", "Damage");
+        Gdx.app.log("Damage", String.valueOf(health));
+        if(jumpCount < 1){
+            float force = body.getMass() * jumpForce;
+            body.applyLinearImpulse(new Vector2(0, force / 2), body.getPosition(), true);
+            jumpCount++;
+        }
+
+        if(body.getLinearVelocity().y == 0){
+            jumpCount = 0;
+        }
+        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
     }
 }
