@@ -15,6 +15,8 @@ public class Player extends Entity {
 
     private int jumpCount;
     private int jumpForce = 18;
+    private boolean knockedBack;
+    private float knockbackTimer;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -25,6 +27,9 @@ public class Player extends Entity {
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT;
+
+        knockedBack = false;
+        knockbackTimer = 0;
     }
 
     @Override
@@ -32,7 +37,11 @@ public class Player extends Entity {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
 
-        checkUserInput();
+        knockbackTimer += Gdx.graphics.getDeltaTime();
+        if(!knockedBack && knockbackTimer >= 0.5f){
+            checkUserInput();
+        }
+
     }
 
     @Override
@@ -78,19 +87,22 @@ public class Player extends Entity {
         }
     }
 
-    public void playerDamage(){
-        health = health - 20;
+    public void playerDamage(NPC npc){
+        knockbackTimer = 0;
         Gdx.app.log("Enemy", "Damage");
-        Gdx.app.log("Damage", String.valueOf(health));
-        if(jumpCount < 1){
-            float force = body.getMass() * jumpForce;
-            body.applyLinearImpulse(new Vector2(0, force / 2), body.getPosition(), true);
-            jumpCount++;
-        }
 
-        if(body.getLinearVelocity().y == 0){
-            jumpCount = 0;
+        float knockbackForce = 20f;
+        Vector2 playerVelocity =  body.getLinearVelocity();
+        Vector2 knockDirection = new Vector2();
+        if(playerVelocity.x > 0){
+            knockDirection.x = -1;
         }
-        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
+        else{
+            knockDirection.x = 1;
+        }
+        knockDirection.y = 1;
+        knockDirection.nor();
+        Vector2 knockback = knockDirection.scl(knockbackForce);
+        body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
     }
 }
