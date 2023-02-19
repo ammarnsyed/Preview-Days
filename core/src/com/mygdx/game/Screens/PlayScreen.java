@@ -73,6 +73,8 @@ public class PlayScreen extends ScreenAdapter {
         cameraUpdate();
         player.update();
         npc.update();
+        jumpPowerUpTest.update(player);
+        speedPowerUpTest.update(player);
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);

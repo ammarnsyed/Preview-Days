@@ -1,7 +1,6 @@
 package com.mygdx.game.Powers;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Helper.BodyHelper;
@@ -12,13 +11,19 @@ public abstract class PowerUp {
     protected float x, y;
     protected Body body;
     protected Fixture fixture;
+    protected boolean toDestroy;
+    protected boolean destroyed;
+    protected World world;
 
     public PowerUp(float x, float y, World world){
+        this.world = world;
         body = BodyHelper.createBody(x, y, 1, 1, true, world);
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
+        toDestroy = false;
+        destroyed = false;
     }
 
     public abstract void powerUpActivate(Player player);
@@ -27,4 +32,12 @@ public abstract class PowerUp {
         return body;
     }
 
+    public void update(Player player){
+        if (toDestroy && !destroyed) {
+            world.destroyBody(body);
+            destroyed = true;
+        }
+    }
+
+    public abstract void consume();
 }
