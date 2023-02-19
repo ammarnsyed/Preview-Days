@@ -92,7 +92,7 @@ public class Player extends Entity {
         Gdx.app.log("Enemy", "Damage");
 
         float knockbackForce = 20f;
-        Vector2 playerVelocity =  body.getLinearVelocity();
+        Vector2 playerVelocity =  npc.body.getPosition().sub(body.getPosition());
         Vector2 knockDirection = new Vector2();
         if(playerVelocity.x > 0){
             knockDirection.x = -1;
