@@ -17,6 +17,7 @@ import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
 import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.SizePowerUp;
 import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
@@ -40,7 +41,7 @@ public class PlayScreen extends ScreenAdapter {
     private NPC npc;
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
-
+    private SizePowerUp sizePowerUpTest;
 
 
     public PlayScreen(OrthographicCamera camera){
@@ -65,6 +66,7 @@ public class PlayScreen extends ScreenAdapter {
         //Setting two different Power ups to test collision detection for both
         jumpPowerUpTest = new JumpPowerUp(500, 500, world);
         speedPowerUpTest = new SpeedPowerUp(600, 200, world);
+        sizePowerUpTest = new SizePowerUp(900, 500, world);
 
     }
 
@@ -75,6 +77,8 @@ public class PlayScreen extends ScreenAdapter {
         npc.update();
         jumpPowerUpTest.update(player);
         speedPowerUpTest.update(player);
+        sizePowerUpTest.update(player);
+
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);

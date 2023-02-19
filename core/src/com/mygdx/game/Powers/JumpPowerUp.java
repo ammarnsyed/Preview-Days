@@ -14,7 +14,7 @@ public class JumpPowerUp extends PowerUp {
     public void powerUpActivate(Player player) {
         Gdx.app.log("Jump Power", "Collision");
         int jumpPower = player.getJumpForce();
-        int jumpIncrease = 2;
+        int jumpIncrease = 10;
         player.setJumpForce(jumpPower + jumpIncrease);
     }
 
