@@ -16,6 +16,8 @@ public class JumpPowerUp extends PowerUp {
         int jumpPower = player.getJumpForce();
         int jumpIncrease = 10;
         player.setJumpForce(jumpPower + jumpIncrease);
+        activated = true;
+        timer = 0f;
     }
 
     @Override

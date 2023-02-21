@@ -14,6 +14,8 @@ public abstract class PowerUp {
     protected boolean toDestroy;
     protected boolean destroyed;
     protected World world;
+    protected float timer = 0f;
+    protected boolean activated;
 
     public PowerUp(float x, float y, World world){
         this.world = world;
@@ -24,6 +26,7 @@ public abstract class PowerUp {
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
         toDestroy = false;
         destroyed = false;
+        activated = false;
     }
 
     public abstract void powerUpActivate(Player player);
@@ -32,12 +35,24 @@ public abstract class PowerUp {
         return body;
     }
 
-    public void update(Player player){
+    public void update(Player player, float delta){
         if (toDestroy && !destroyed) {
             world.destroyBody(body);
             destroyed = true;
+        }
+        if (activated) {
+            timer += delta;
+            if (timer > 10f) { // Change 10f to the desired duration of the powerup
+                timer = 0f;
+                activated = false;
+                player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
+                player.setSpeed(Constants.PLAYER_SPEED);
+                player.setWidth(Constants.PLAYER_WIDTH);
+                player.setHeight(Constants.PLAYER_HEIGHT);
+            }
         }
     }
 
     public abstract void consume();
 }
+

@@ -70,14 +70,14 @@ public class PlayScreen extends ScreenAdapter {
 
     }
 
-    private void update(){
+    private void update(float delta){
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update();
         npc.update();
-        jumpPowerUpTest.update(player);
-        speedPowerUpTest.update(player);
-        sizePowerUpTest.update(player);
+        jumpPowerUpTest.update(player, delta);
+        speedPowerUpTest.update(player, delta);
+        sizePowerUpTest.update(player, delta);
 
 
         batch.setProjectionMatrix(camera.combined);
@@ -108,7 +108,7 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-        this.update();
+        this.update(delta);
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
