@@ -60,7 +60,6 @@ public class TileMapHelper {
         }
 
         shape.dispose();
-
     }
 
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {

@@ -71,4 +71,26 @@ public class Player extends Entity {
     public void playerDeath(){
         Gdx.app.log("Enemy", "Collision");
     }
+
+    public float getSpeed(){
+        return this.speed;
+    }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public void setWidth(float width){
+        this.width = width;
+    }
+    public float getWidth(){
+        return this.width;
+    }
+
+    public void setHeight(float height){
+        this.height = height;
+    }
+    public float getHeight(){
+        return this.height;
+    }
 }

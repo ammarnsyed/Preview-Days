@@ -17,6 +17,7 @@ import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
 import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.SizePowerUp;
 import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
@@ -40,7 +41,7 @@ public class PlayScreen extends ScreenAdapter {
     private NPC npc;
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
-
+    private SizePowerUp sizePowerUpTest;
 
 
     public PlayScreen(OrthographicCamera camera){
@@ -62,17 +63,22 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
-        //Setting two different Power ups to test collision detection for both
+        //Setting three different Power ups to test collision detection for all
         jumpPowerUpTest = new JumpPowerUp(500, 500, world);
         speedPowerUpTest = new SpeedPowerUp(600, 200, world);
+        sizePowerUpTest = new SizePowerUp(900, 500, world);
 
     }
 
-    private void update(){
+    private void update(float delta){
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update();
         npc.update();
+        jumpPowerUpTest.update(player, delta);
+        speedPowerUpTest.update(player, delta);
+        sizePowerUpTest.update(player, delta);
+
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
@@ -102,7 +108,7 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-        this.update();
+        this.update(delta);
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
