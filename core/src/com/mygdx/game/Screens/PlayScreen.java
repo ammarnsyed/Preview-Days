@@ -63,7 +63,7 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
-        //Setting two different Power ups to test collision detection for both
+        //Setting three different Power ups to test collision detection for all
         jumpPowerUpTest = new JumpPowerUp(500, 500, world);
         speedPowerUpTest = new SpeedPowerUp(600, 200, world);
         sizePowerUpTest = new SizePowerUp(900, 500, world);

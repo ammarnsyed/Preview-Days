@@ -49,8 +49,8 @@ public abstract class PowerUp {
                 player.setSpeed(Constants.PLAYER_SPEED);
                 player.setWidth(Constants.PLAYER_WIDTH);
                 player.setHeight(Constants.PLAYER_HEIGHT);
-                if (player.getBody().getFixtureList().get(0).getShape().getRadius() == 2){
-                    player.getBody().getFixtureList().get(0).getShape().setRadius(player.getBody().getFixtureList().get(0).getShape().getRadius() / 2);
+                if (player.getBody().getFixtureList().get(0).getShape().getRadius() != 1){
+                    player.getBody().getFixtureList().get(0).getShape().setRadius(1);
                 }
 
             }
