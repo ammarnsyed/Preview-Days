@@ -48,7 +48,7 @@ public class Player extends Entity {
             velX = 1;
         }
         //Jump
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && jumpCount < 1){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < 1){
             float force = body.getMass() * jumpForce;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             jumpCount++;
