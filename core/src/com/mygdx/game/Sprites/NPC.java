@@ -17,7 +17,6 @@ public class NPC extends Entity{
     public NPC(float width, float height, Body body){
         super(width, height, body);
         this.speed = 4f;
-        this.health = 100;
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.NPC_BIT;
         fixture.getFilterData().maskBits = Constants.DEFAULT_BIT | Constants.OBSTACLE_BIT | Constants.PLAYER_BIT;
@@ -31,8 +30,6 @@ public class NPC extends Entity{
         y = body.getPosition().y * PPM;
 
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
-
-
     }
 
     @Override

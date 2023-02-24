@@ -83,11 +83,13 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     private void cameraUpdate(){
-        Vector3 position = camera.position;
-        position.x = Math.round(player.getBody().getPosition().x * PPM * 10)/10f;
-        position.y = Math.round(player.getBody().getPosition().y * PPM * 10)/10f;
-        camera.position.set(position);
-        camera.update();
+            Vector3 position = camera.position;
+            if(!player.isDead()) {
+                position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
+                position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
+            }
+            camera.position.set(position);
+            camera.update();
     }
 
 

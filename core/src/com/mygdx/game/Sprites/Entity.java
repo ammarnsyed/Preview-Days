@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public abstract class Entity {
     protected float x, y, velX, velY, speed;
     protected float width, height;
-    protected float health;
     protected Body body;
     protected Fixture fixture;
 
@@ -19,7 +18,6 @@ public abstract class Entity {
         this.height = height;
         this.velX = 0;
         this.velY = 0;
-        this.health = 0;
         this.speed = 0;
         this.body = body;
         fixture = body.getFixtureList().get(0);
