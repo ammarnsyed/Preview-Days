@@ -1,6 +1,5 @@
 package com.mygdx.game.Helper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Powers.PowerUp;
 import com.mygdx.game.Sprites.NPC;
@@ -27,11 +26,14 @@ public class WorldContactListener implements ContactListener {
                 break;
             case Constants.PLAYER_BIT | Constants.POWER_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.POWER_BIT){
-                    ((PowerUp)fixA.getUserData()).powerUpActivate();
+                    ((PowerUp)fixA.getUserData()).powerUpActivate((Player)fixB.getUserData());
+                    ((PowerUp)fixA.getUserData()).consume();
                 }
                 else{
-                    ((PowerUp)fixB.getUserData()).powerUpActivate();
+                    ((PowerUp)fixB.getUserData()).powerUpActivate((Player)fixA.getUserData());
+                    ((PowerUp)fixB.getUserData()).consume();
                 }
+
                 break;
             case Constants.NPC_BIT | Constants.OBSTACLE_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.NPC_BIT){
