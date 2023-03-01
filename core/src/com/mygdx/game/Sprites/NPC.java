@@ -32,8 +32,6 @@ public class NPC extends Entity{
         y = body.getPosition().y * PPM;
 
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
-
-
     }
 
     @Override
@@ -45,4 +43,5 @@ public class NPC extends Entity{
     public void reverseVelocity(){
         velX = -velX;
     }
+
 }

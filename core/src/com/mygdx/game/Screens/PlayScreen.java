@@ -53,9 +53,8 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-
-        Body playerBody = BodyHelper.createBody(96, 64, 1, 1, false, world);
-        Body npcBody = BodyHelper.createBody(70,500,1,1,false, world);
+        Body playerBody = BodyHelper.createBody(20, 500, 1, 1, false, world);
+        Body npcBody = BodyHelper.createBody(300,500,1,1,false, world);
         npc = new NPC(1,1, npcBody);
         player = new Player(1, 1, playerBody);
 
@@ -90,11 +89,13 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     private void cameraUpdate(){
-        Vector3 position = camera.position;
-        position.x = Math.round(player.getBody().getPosition().x * PPM * 10)/10f;
-        position.y = Math.round(player.getBody().getPosition().y * PPM * 10)/10f;
-        camera.position.set(position);
-        camera.update();
+            Vector3 position = camera.position;
+            if(!player.isDead()) {
+                position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
+                position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
+            }
+            camera.position.set(position);
+            camera.update();
     }
 
 
