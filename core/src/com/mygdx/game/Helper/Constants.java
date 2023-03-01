@@ -8,4 +8,8 @@ public class Constants {
     public static final short NPC_BIT = 8;
     public static final short OBSTACLE_BIT = 16;
     public static final short NOTHING_BIT = 0;
+    public static final int PLAYER_JUMP_FORCE = 18;
+    public static final float PLAYER_SPEED = 9f;
+    public static final float PLAYER_WIDTH = 16;
+    public static final float PLAYER_HEIGHT = 16;
 }
