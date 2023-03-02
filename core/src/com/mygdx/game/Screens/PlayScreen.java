@@ -54,7 +54,7 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
         Body playerBody = BodyHelper.createBody(60, 500, 1, 1, false, world);
-        Body npcBody = BodyHelper.createBody(300,500,1,1,false, world);
+        Body npcBody = BodyHelper.createBody(3000,1000,1,1,false, world);
         npc = new NPC(1,1, npcBody);
         player = new Player(1, 1, playerBody);
 
@@ -64,9 +64,9 @@ public class PlayScreen extends ScreenAdapter {
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
-        speedPowerUpTest = new SpeedPowerUp(600, 200, world);
-        sizePowerUpTest = new SizePowerUp(900, 500, world);
+        jumpPowerUpTest = new JumpPowerUp(2900, 120, world);
+        speedPowerUpTest = new SpeedPowerUp(6000, 1000, world);
+        sizePowerUpTest = new SizePowerUp(2300, 1260, world);
 
     }
 
