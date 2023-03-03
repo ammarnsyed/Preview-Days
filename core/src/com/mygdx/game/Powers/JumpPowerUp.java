@@ -12,16 +12,10 @@ public class JumpPowerUp extends PowerUp {
 
     @Override
     public void powerUpActivate(Player player) {
-        Gdx.app.log("Jump Power", "Collision");
         int jumpPower = player.getJumpForce();
         int jumpIncrease = 10;
         player.setJumpForce(jumpPower + jumpIncrease);
         activated = true;
         timer = 0f;
-    }
-
-    @Override
-    public void consume() {
-        toDestroy = true;
     }
 }

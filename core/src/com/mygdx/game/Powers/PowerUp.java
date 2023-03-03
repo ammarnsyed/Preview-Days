@@ -57,6 +57,8 @@ public abstract class PowerUp {
         }
     }
 
-    public abstract void consume();
+    public void consume() {
+        toDestroy = true;
+    }
 }
 
