@@ -21,6 +21,7 @@ public class Player extends Entity {
     private boolean knockedBack;
     private float knockbackTimer;
     private boolean dead;
+    private boolean fallen;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -33,6 +34,7 @@ public class Player extends Entity {
 
         knockedBack = false;
         knockbackTimer = 0;
+        fallen = false;
     }
 
     @Override
@@ -64,17 +66,21 @@ public class Player extends Entity {
                 velX = 1;
             }
             //Jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < 1) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < 1 && !fallen) {
                 float force = body.getMass() * jumpForce;
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
                 jumpCount++;
             }
             //Jump is reset
-            if (body.getLinearVelocity().y == 0) {
+            if (body.getLinearVelocity().y == 0 && !fallen) {
                 jumpCount = 0;
             }
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
-        }
+            fallen = body.getLinearVelocity().y < 0;
+            }
+            else {
+                fallen = false;
+            }
     }
 
     public void setJumpForce(int jumpForce){
