@@ -2,7 +2,7 @@ package com.mygdx.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -23,6 +23,10 @@ public class Player extends Entity {
     private boolean dead;
     private boolean fallen;
 
+    private TextureRegion playerIdle;
+    private TextureAtlas atlas = new TextureAtlas("MasterSheet.pack");
+    private Sprite playerSprite;
+
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 9f;
@@ -35,12 +39,18 @@ public class Player extends Entity {
         knockedBack = false;
         knockbackTimer = 0;
         fallen = false;
+
+        playerIdle = new TextureRegion(atlas.findRegion("Jump"), 8, 1, 32, 32);
+        playerSprite = new Sprite(playerIdle);
+        playerSprite.setBounds(0, 0, this.getWidth() * 3 * PPM, this.getHeight() * 3 * PPM);
+
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
+        playerSprite.setPosition(x - PPM, y - PPM);
 
         knockbackTimer += Gdx.graphics.getDeltaTime();
         if(!knockedBack && knockbackTimer >= 0.5f){
@@ -51,7 +61,7 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-
+        playerSprite.draw(batch);
     }
 
     private void checkUserInput(){

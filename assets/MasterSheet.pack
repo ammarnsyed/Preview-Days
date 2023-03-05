@@ -1,0 +1,26 @@
+
+MasterSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Jump
+  rotate: false
+  xy: 1, 1
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 131, 1
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+Right
+  rotate: false
+  xy: 261, 1
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1

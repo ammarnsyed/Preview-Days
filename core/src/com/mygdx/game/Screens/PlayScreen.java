@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -43,8 +44,11 @@ public class PlayScreen extends ScreenAdapter {
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
 
+    private TextureAtlas atlas;
+
 
     public PlayScreen(OrthographicCamera camera){
+
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -53,10 +57,12 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(60, 500, 1, 1, false, world);
+        Body playerBody = BodyHelper.createBody(60, 500, 0.5f, 1, false, world);
+        player = new Player(1, 1, playerBody);
+
         Body npcBody = BodyHelper.createBody(3000,1000,1,1,false, world);
         npc = new NPC(1,1, npcBody);
-        player = new Player(1, 1, playerBody);
+
 
 
 
@@ -73,8 +79,8 @@ public class PlayScreen extends ScreenAdapter {
     private void update(float delta){
         world.step(1/60f, 6, 2);
         cameraUpdate();
-        player.update();
-        npc.update();
+        player.update(delta);
+        npc.update(delta);
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
@@ -119,6 +125,7 @@ public class PlayScreen extends ScreenAdapter {
 
         batch.begin();
         //Render objects such as characters and walls
+        player.render(batch);
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
@@ -133,4 +140,5 @@ public class PlayScreen extends ScreenAdapter {
     public World getWorld() {
         return world;
     }
+    public TextureAtlas getAtlas(){return atlas;}
 }
