@@ -78,9 +78,9 @@ public class Player extends Entity {
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
             fallen = body.getLinearVelocity().y < 0;
             }
-            else {
-                fallen = false;
-            }
+        else {
+            fallen = false;
+        }
     }
 
     public void setJumpForce(int jumpForce){
