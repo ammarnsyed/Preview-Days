@@ -52,7 +52,7 @@ public class Player extends Entity {
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
-        playerSprite.setBounds(0, 0, this.getWidth() * 2 * PPM, this.getHeight() * 3 * PPM);
+        playerSprite.setBounds(0, 0, 64, 64);
 
         currentState = State.STANDING;
         previousState = State.STANDING;
