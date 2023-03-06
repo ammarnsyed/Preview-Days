@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.Helper.BodyHelper;
 
@@ -23,9 +24,16 @@ public class Player extends Entity {
     private boolean dead;
     private boolean fallen;
 
+    public enum State {FALLING, JUMPING, STANDING, RUNNING};
+    public State currentState;
+    public State previousState;
     private TextureRegion playerIdle;
     private TextureAtlas atlas = new TextureAtlas("MasterSheet.pack");
     private Sprite playerSprite;
+    private Animation playerRun;
+    private Animation playerJump;
+    private boolean isFacingRight;
+    private float stateTimer;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -40,17 +48,38 @@ public class Player extends Entity {
         knockbackTimer = 0;
         fallen = false;
 
-        playerIdle = new TextureRegion(atlas.findRegion("Jump"), 8, 1, 32, 32);
+        //Animation Logic
+        TextureRegion runTextureRegion = atlas.findRegion("Right");
+        playerIdle = new TextureRegion(runTextureRegion, 48, -1, 32, 32);
         playerSprite = new Sprite(playerIdle);
         playerSprite.setBounds(0, 0, this.getWidth() * 3 * PPM, this.getHeight() * 3 * PPM);
+
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        stateTimer = 0;
+        isFacingRight = true;
+        Array<TextureRegion> frames = new Array<>();
+        for(int i = 0; i<3; i++){
+            frames.add(new TextureRegion(runTextureRegion, i*42, 0, 32, 32));
+        }
+
+        playerRun = new Animation(0.1f, frames);
+        frames.clear();
+        TextureRegion jumpTextureRegion = atlas.findRegion("Jump");
+        for(int i = 0; i<2; i++){
+            frames.add(new TextureRegion(jumpTextureRegion, i*42, 0, 32, 32));
+        }
+        playerJump = new Animation(0.1f, frames);
+
 
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         playerSprite.setPosition(x - PPM, y - PPM);
+        playerSprite.setRegion(getFrame(dt));
 
         knockbackTimer += Gdx.graphics.getDeltaTime();
         if(!knockedBack && knockbackTimer >= 0.5f){
@@ -62,6 +91,53 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         playerSprite.draw(batch);
+    }
+
+    public TextureRegion getFrame(float dt){
+        currentState = getState();
+        TextureRegion region;
+        switch(currentState){
+            case RUNNING:
+                region = (TextureRegion) playerRun.getKeyFrame(stateTimer, true);
+                break;
+            case JUMPING:
+                region = (TextureRegion) playerJump.getKeyFrame(stateTimer);
+                break;
+            case FALLING:
+            case STANDING:
+            default:
+                region = playerIdle;
+                break;
+        }
+
+        if((body.getLinearVelocity().x < 0 || !isFacingRight) && !region.isFlipX()){
+            region.flip(true,false);
+            isFacingRight = false;
+        }
+        else if((body.getLinearVelocity().x > 0 || isFacingRight) && region.isFlipX()){
+            region.flip(true, false);
+            isFacingRight = true;
+        }
+
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
+        previousState = currentState;
+        return region;
+
+    }
+
+    public State getState(){
+        if(body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)){
+            return State.JUMPING;
+        }
+        else if(body.getLinearVelocity().y < 0){
+            return State.FALLING;
+        }
+        else if(body.getLinearVelocity().x != 0){
+            return State.RUNNING;
+        }
+        else{
+            return State.STANDING;
+        }
     }
 
     private void checkUserInput(){
