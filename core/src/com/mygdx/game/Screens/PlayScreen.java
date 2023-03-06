@@ -60,7 +60,7 @@ public class PlayScreen extends ScreenAdapter {
         Body playerBody = BodyHelper.createBody(60, 500, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
-        Body npcBody = BodyHelper.createBody(80,1000,0.5f,1,false, world);
+        Body npcBody = BodyHelper.createBody(100,100,0.5f,1,false, world);
         npc = new NPC(1,1, npcBody);
 
 
@@ -126,6 +126,7 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
+        npc.render(batch);
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
