@@ -40,6 +40,10 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private NPC npc;
+    private NPC npc1;
+    private NPC npc2;
+    private NPC npc3;
+    private NPC npc4;
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -60,9 +64,16 @@ public class PlayScreen extends ScreenAdapter {
         Body playerBody = BodyHelper.createBody(60, 500, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
-        Body npcBody = BodyHelper.createBody(3000,1000,1,1,false, world);
+        Body npcBody = BodyHelper.createBody(3000,1000,0.5f,1,false, world);
+        Body npcBody1 = BodyHelper.createBody(3400,1000,0.5f,1,false, world);
+        Body npcBody2 = BodyHelper.createBody(5000,500,0.5f,1,false, world);
+        Body npcBody3 = BodyHelper.createBody(3100,500,0.5f,1,false, world);
+        Body npcBody4 = BodyHelper.createBody(2500,500,0.5f,1,false, world);
         npc = new NPC(1,1, npcBody);
-
+        npc1 = new NPC(1,1, npcBody1);
+        npc2 = new NPC(1,1, npcBody2);
+        npc3 = new NPC(1,1, npcBody3);
+        npc4 = new NPC(1,1, npcBody4);
 
 
 
@@ -81,6 +92,10 @@ public class PlayScreen extends ScreenAdapter {
         cameraUpdate();
         player.update(delta);
         npc.update(delta);
+        npc1.update(delta);
+        npc2.update(delta);
+        npc3.update(delta);
+        npc4.update(delta);
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
@@ -126,6 +141,12 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
+        npc.render(batch);
+        npc1.render(batch);
+        npc2.render(batch);
+        npc3.render(batch);
+        npc4.render(batch);
+
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
