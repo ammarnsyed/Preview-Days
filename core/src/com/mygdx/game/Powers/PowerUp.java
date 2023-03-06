@@ -34,6 +34,10 @@ public abstract class PowerUp {
     public Body getBody(){
         return body;
     }
+    public void setActivated(float time, boolean active){
+        timer = time;
+        activated = active;
+    }
 
     public void update(Player player, float delta){
         if (toDestroy && !destroyed) {
