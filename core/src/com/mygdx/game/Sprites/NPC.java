@@ -27,7 +27,7 @@ public class NPC extends Entity{
     }
 
     @Override
-    public void update() {
+    public void update(float delta) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
 
