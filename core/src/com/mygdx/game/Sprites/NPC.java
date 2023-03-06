@@ -43,7 +43,7 @@ public class NPC extends Entity{
         stateTime = 0;
         isFacingRight = true;
 
-        Array<TextureRegion> frames = new Array<>();
+        frames = new Array<>();
         for(int i = 0; i<4; i++){
             frames.add(new TextureRegion(runTextureRegion, i*20, 0, 19, 22));
         }
@@ -64,10 +64,6 @@ public class NPC extends Entity{
     @Override
     public void render(SpriteBatch batch) {
         npcSprite.draw(batch);
-    }
-
-    public State getState() {
-        return State.RUNNING;
     }
 
     public TextureRegion getFrame(float dt) {
