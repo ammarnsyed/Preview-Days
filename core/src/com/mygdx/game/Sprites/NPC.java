@@ -24,7 +24,7 @@ public class NPC extends Entity{
     public State currentState;
     public State previousState;
     private Sprite npcSprite;
-    private TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
+    private TextureAtlas atlas = new TextureAtlas("FixedNPCSprites.pack");
     private Array<TextureRegion> frames;
     private float stateTime;
     private Animation walkAnimation;
@@ -39,14 +39,14 @@ public class NPC extends Entity{
         velX = 1;
 
         //npc animation
-        TextureRegion runTextureRegion = atlas.findRegion("playerSpriteSheet");
-        npcSprite = new Sprite(new TextureRegion(runTextureRegion, 21, 0, 21, 26));
+        TextureRegion runTextureRegion = atlas.findRegion("FixedNPCSpriteSheet");
+        npcSprite = new Sprite(new TextureRegion(runTextureRegion, 0, 0, 19, 22));
         npcSprite.setBounds(0, 0, 64, 64);
         stateTime = 0;
         isFacingRight = true;
         Array<TextureRegion> frames = new Array<>();
-        for(int i = 0; i<3; i++){
-            frames.add(new TextureRegion(runTextureRegion, i*42, 0, 32, 32));
+        for(int i = 0; i<2; i++){
+            frames.add(new TextureRegion(runTextureRegion, i*19, 0, 19, 22));
         }
         walkAnimation = new Animation(0.4f, frames);
 

@@ -1,12 +1,12 @@
 
-FixedNPCSprites.png
+NPCFixedSprites.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 FixedNPCSpriteSheet
   rotate: false
   xy: 1, 1
-  size: 40, 22
-  orig: 40, 22
+  size: 81, 22
+  orig: 81, 22
   offset: 0, 0
   index: -1
