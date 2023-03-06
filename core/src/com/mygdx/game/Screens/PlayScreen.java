@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
@@ -23,6 +24,8 @@ import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
+
+import java.util.ArrayList;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -39,6 +42,7 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private NPC npc;
+    private Array<NPC> npcList = new Array<NPC>();
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -53,10 +57,15 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(60, 500, 1, 1, false, world);
-        Body npcBody = BodyHelper.createBody(300,500,1,1,false, world);
-        npc = new NPC(1,1, npcBody);
+        Body playerBody = BodyHelper.createBody(2600, 300, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
+        //first npc obstacle
+        int npcSectionOne = 2432;
+        for(int i = 0; i < 2; i++){
+            npcList.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
+        }
+
+
 
 
 
@@ -74,7 +83,12 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update();
-        npc.update();
+        for(NPC test : npcList){
+            test.update();
+        }
+
+
+
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
