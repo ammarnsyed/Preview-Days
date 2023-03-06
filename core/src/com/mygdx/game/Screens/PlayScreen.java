@@ -42,9 +42,9 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private NPC npc;
-    private Array<NPC> npcList = new Array<NPC>();
-    private Array<NPC> npcList2 = new Array<NPC>();
-    private Array<NPC> npcList3 = new Array<NPC>();
+    private Array<NPC> npcSecOne = new Array<NPC>();
+    private Array<NPC> npcSecTwo = new Array<NPC>();
+    private Array<NPC> npcSecThree = new Array<NPC>();
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -59,23 +59,23 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(6000, 300, 1, 1, false, world);
+        Body playerBody = BodyHelper.createBody(64, 64, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
 
         //first npc obstacle
         int npcSectionOne = 2432;
         for(int i = 0; i < 2; i++){
-            npcList.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
+            npcSecOne.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
         }
         //second npc obstacle section
         int npcSectionTwo = 3564;
         for(int i = 0; i < 1; i++){
-            npcList2.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,64,1,1,false,world)));
+            npcSecTwo.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,64,1,1,false,world)));
         }
         //third npc obstacle section
         int npcSectionThree = 4720;
         for(int i = 0; i < 4; i++){
-            npcList3.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,64,1,1,false,world)));
+            npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,64,1,1,false,world)));
         }
 
         world.setContactListener(new WorldContactListener());
@@ -91,17 +91,15 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update();
-        for(NPC test : npcList){
-            test.update();
+        for(NPC secOne : npcSecOne){
+            secOne.update();
         }
-        for(NPC test : npcList2){
-            test.update();
+        for(NPC secTwo : npcSecTwo){
+            secTwo.update();
         }
-        for(NPC test : npcList3){
-            test.update();
+        for(NPC secThree : npcSecThree){
+            secThree.update();
         }
-
-
 
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
@@ -132,7 +130,7 @@ public class PlayScreen extends ScreenAdapter {
       batch = new SpriteBatch();
       img = new Texture("badlogic.jpg");
       gsm = new gStateManager();
-      Gdx.gl.glClearColor(0,0,0,1);
+      Gdx.gl.glClearColor(0,0,0,2);
       gsm.push(new MenuState(gsm));
     }
 
