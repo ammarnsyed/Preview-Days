@@ -65,8 +65,8 @@ public class PlayScreen extends ScreenAdapter {
         player = new Player(1, 1, playerBody);
 
         Body npcBody = BodyHelper.createBody(3000,1000,0.5f,1,false, world);
-        Body npcBody1 = BodyHelper.createBody(3600,1000,0.5f,1,false, world);
-        Body npcBody2 = BodyHelper.createBody(5000,1000,0.5f,1,false, world);
+        Body npcBody1 = BodyHelper.createBody(3400,1000,0.5f,1,false, world);
+        Body npcBody2 = BodyHelper.createBody(5000,500,0.5f,1,false, world);
         Body npcBody3 = BodyHelper.createBody(3100,500,0.5f,1,false, world);
         Body npcBody4 = BodyHelper.createBody(2500,500,0.5f,1,false, world);
         npc = new NPC(1,1, npcBody);
