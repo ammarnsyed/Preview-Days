@@ -67,25 +67,21 @@ public class PlayScreen extends ScreenAdapter {
         for(int i = 0; i < 2; i++){
             npcList.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
         }
+        //second npc obstacle section
         int npcSectionTwo = 3564;
         for(int i = 0; i < 1; i++){
             npcList2.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,64,1,1,false,world)));
         }
+        //third npc obstacle section
         int npcSectionThree = 4720;
         for(int i = 0; i < 4; i++){
             npcList3.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,64,1,1,false,world)));
         }
 
-
-
-
-
-
-
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
+        //jumpPowerUpTest = new JumpPowerUp(500, 500, world);
         speedPowerUpTest = new SpeedPowerUp(6000, 1024, world);
         sizePowerUpTest = new SizePowerUp(2368, 1266, world);
 
