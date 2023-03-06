@@ -34,6 +34,10 @@ public abstract class PowerUp {
     public Body getBody(){
         return body;
     }
+    public void setActivated(float time, boolean active){
+        timer = time;
+        activated = active;
+    }
 
     public void update(Player player, float delta){
         if (toDestroy && !destroyed) {
@@ -49,10 +53,6 @@ public abstract class PowerUp {
                 player.setSpeed(Constants.PLAYER_SPEED);
                 player.setWidth(Constants.PLAYER_WIDTH);
                 player.setHeight(Constants.PLAYER_HEIGHT);
-                if (player.getBody().getFixtureList().get(0).getShape().getRadius() != 1){
-                    player.getBody().getFixtureList().get(0).getShape().setRadius(1);
-                }
-
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.mygdx.game.Sprites;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.model.MeshPart;
@@ -25,7 +26,7 @@ public abstract class Entity {
         fixture = body.getFixtureList().get(0);
     }
 
-    public abstract void update();
+    public abstract void update(float delta);
 
     public abstract void render(SpriteBatch batch);
 
