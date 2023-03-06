@@ -18,7 +18,7 @@ public class SpeedPowerUp extends PowerUp{
     public void powerUpActivate(Player player) {
         Gdx.app.log("Speed Power", "Collision");
         float speed = player.getSpeed();
-        int speedIncrease = 5;
+        int speedIncrease = 10;
         player.setSpeed(speed + speedIncrease);
         activated = true;
         timer = 0f;

@@ -71,7 +71,7 @@
 2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6
 </data>
  </layer>
- <objectgroup id="2" name="Block Barriers" locked="1">
+ <objectgroup id="2" name="Block Barriers" visible="0" locked="1">
   <object id="3" x="0" y="1856">
    <polygon points="2368,0 6400,0 6400,64 2368,64"/>
   </object>
@@ -188,12 +188,6 @@
   <object id="94" x="2368" y="1792">
    <polygon points="0,0 0,64 2.73403,64.0083 2.75,-0.00390625"/>
   </object>
-  <object id="107" x="3200" y="1600">
-   <polygon points="0,0 0,64 -1.33333,63.9944 -0.925781,0"/>
-  </object>
-  <object id="108" x="3520" y="1600">
-   <polygon points="0,0 0,64 4.5,63.9778 4.49358,-0.00347222"/>
-  </object>
   <object id="109" x="3200" y="1856">
    <polygon points="0,0 0,-64 -0.410156,-64.0039 -0.289063,0"/>
   </object>
@@ -252,7 +246,7 @@
    <polygon points="0,0 0,-64 3.45455,-64 3.43892,-0.00994318"/>
   </object>
  </objectgroup>
- <objectgroup id="12" name="Spike Blocks" locked="1">
+ <objectgroup id="12" name="Spike Blocks" visible="0" locked="1">
   <object id="81" x="64" y="64">
    <polygon points="0,0 512,0 512,64 0,64"/>
   </object>

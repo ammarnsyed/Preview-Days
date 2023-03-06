@@ -43,6 +43,8 @@ public class PlayScreen extends ScreenAdapter {
     private Player player;
     private NPC npc;
     private Array<NPC> npcList = new Array<NPC>();
+    private Array<NPC> npcList2 = new Array<NPC>();
+    private Array<NPC> npcList3 = new Array<NPC>();
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -57,13 +59,23 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(2600, 300, 1, 1, false, world);
+        Body playerBody = BodyHelper.createBody(6000, 300, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
+
         //first npc obstacle
         int npcSectionOne = 2432;
         for(int i = 0; i < 2; i++){
             npcList.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
         }
+        int npcSectionTwo = 3564;
+        for(int i = 0; i < 1; i++){
+            npcList2.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,64,1,1,false,world)));
+        }
+        int npcSectionThree = 4720;
+        for(int i = 0; i < 4; i++){
+            npcList3.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,64,1,1,false,world)));
+        }
+
 
 
 
@@ -74,8 +86,8 @@ public class PlayScreen extends ScreenAdapter {
 
         //Setting three different Power ups to test collision detection for all
         jumpPowerUpTest = new JumpPowerUp(500, 500, world);
-        speedPowerUpTest = new SpeedPowerUp(600, 200, world);
-        sizePowerUpTest = new SizePowerUp(900, 500, world);
+        speedPowerUpTest = new SpeedPowerUp(6000, 1024, world);
+        sizePowerUpTest = new SizePowerUp(2368, 1266, world);
 
     }
 
@@ -84,6 +96,12 @@ public class PlayScreen extends ScreenAdapter {
         cameraUpdate();
         player.update();
         for(NPC test : npcList){
+            test.update();
+        }
+        for(NPC test : npcList2){
+            test.update();
+        }
+        for(NPC test : npcList3){
             test.update();
         }
 
