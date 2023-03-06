@@ -28,7 +28,7 @@ public class Player extends Entity {
     public State currentState;
     public State previousState;
     private TextureRegion playerIdle;
-    private TextureAtlas atlas = new TextureAtlas("MasterSheet.pack");
+    private TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
     private Sprite playerSprite;
     private Animation playerRun;
     private Animation playerJump;
@@ -49,10 +49,10 @@ public class Player extends Entity {
         fallen = false;
 
         //Animation Logic
-        TextureRegion runTextureRegion = atlas.findRegion("Right");
-        playerIdle = new TextureRegion(runTextureRegion, 48, -1, 32, 32);
+        TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
+        playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
-        playerSprite.setBounds(0, 0, this.getWidth() * 3 * PPM, this.getHeight() * 3 * PPM);
+        playerSprite.setBounds(0, 0, this.getWidth() * 2 * PPM, this.getHeight() * 3 * PPM);
 
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -60,14 +60,13 @@ public class Player extends Entity {
         isFacingRight = true;
         Array<TextureRegion> frames = new Array<>();
         for(int i = 0; i<3; i++){
-            frames.add(new TextureRegion(runTextureRegion, i*42, 0, 32, 32));
+            frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
 
         playerRun = new Animation(0.1f, frames);
         frames.clear();
-        TextureRegion jumpTextureRegion = atlas.findRegion("Jump");
-        for(int i = 0; i<2; i++){
-            frames.add(new TextureRegion(jumpTextureRegion, i*42, 0, 32, 32));
+        for(int i = 3; i<4; i++){
+            frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
 
