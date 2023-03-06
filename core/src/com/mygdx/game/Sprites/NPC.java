@@ -21,10 +21,8 @@ import static com.mygdx.game.Helper.Constants.PPM;
 public class NPC extends Entity{
 
     public enum State {RUNNING};
-    public State currentState;
-    public State previousState;
     private Sprite npcSprite;
-    private TextureAtlas atlas = new TextureAtlas("FixedNPCSprites.pack");
+    private TextureAtlas atlas = new TextureAtlas("NPCFixedSprites.pack");
     private Array<TextureRegion> frames;
     private float stateTime;
     private Animation walkAnimation;
@@ -40,24 +38,24 @@ public class NPC extends Entity{
 
         //npc animation
         TextureRegion runTextureRegion = atlas.findRegion("FixedNPCSpriteSheet");
-        npcSprite = new Sprite(new TextureRegion(runTextureRegion, 0, 0, 19, 22));
-        npcSprite.setBounds(0, 0, 64, 64);
-        stateTime = 0;
-        isFacingRight = true;
-        Array<TextureRegion> frames = new Array<>();
-        for(int i = 0; i<2; i++){
-            frames.add(new TextureRegion(runTextureRegion, i*19, 0, 19, 22));
-        }
-        walkAnimation = new Animation(0.4f, frames);
+        npcSprite = new Sprite(new TextureRegion(runTextureRegion, 0, 0, 64, 64));
+        npcSprite.setBounds(0, 0, 128, 128);
+//        stateTime = 0;
+//        isFacingRight = true;
+//        Array<TextureRegion> frames = new Array<>();
+//        for(int i = 0; i<4; i++){
+//            frames.add(new TextureRegion(runTextureRegion, i*30, 0, 64, 64));
+//        }
+//        walkAnimation = new Animation(0.4f, frames);
 
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         npcSprite.setPosition(x - PPM, y - PPM);
-        npcSprite.setRegion(getFrame(delta));
+        //npcSprite.setRegion(getFrame(dt));
 
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
     }
@@ -67,32 +65,24 @@ public class NPC extends Entity{
         npcSprite.draw(batch);
     }
 
-    public State getState() {
-        return State.RUNNING;
-    }
-
-    public TextureRegion getFrame(float dt) {
-        currentState = getState();
-        TextureRegion region;
-        switch (currentState) {
-            default:
-                region = (TextureRegion) walkAnimation.getKeyFrame(stateTime, true);
-                break;
-        }
-
-        if((body.getLinearVelocity().x < 0 || !isFacingRight) && !region.isFlipX()){
-            region.flip(true,false);
-            isFacingRight = false;
-        }
-        else if((body.getLinearVelocity().x > 0 || isFacingRight) && region.isFlipX()){
-            region.flip(true, false);
-            isFacingRight = true;
-        }
-
-        stateTime = currentState == previousState ? stateTime + dt : 0;
-        previousState = currentState;
-        return region;
-    }
+//    public State getState() {
+//        return State.RUNNING;
+//    }
+//
+//    public TextureRegion getFrame(float dt) {
+//        TextureRegion region = (TextureRegion) walkAnimation.getKeyFrame(stateTime, true);
+//
+//        if((body.getLinearVelocity().x < 0 || !isFacingRight) && !region.isFlipX()){
+//            region.flip(true,false);
+//            isFacingRight = false;
+//        }
+//        else if((body.getLinearVelocity().x > 0 || isFacingRight) && region.isFlipX()){
+//            region.flip(true, false);
+//            isFacingRight = true;
+//        }
+//
+//        return region;
+//    }
 
     public void reverseVelocity(){
         velX = -velX;
