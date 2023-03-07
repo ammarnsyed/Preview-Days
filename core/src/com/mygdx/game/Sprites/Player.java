@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.Helper.BodyHelper;
+import com.mygdx.game.States.MenuState;
 
 import static com.mygdx.game.Helper.Constants.NOTHING_BIT;
 import static com.mygdx.game.Helper.Constants.PPM;
@@ -141,7 +142,7 @@ public class Player extends Entity {
 
     private void checkUserInput(){
         velX = 0;
-        if(!dead) {
+        if(!dead && MenuState.isTouched()) {
             //Move Left
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 velX = -1;
