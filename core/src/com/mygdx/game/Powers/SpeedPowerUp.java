@@ -17,7 +17,7 @@ public class SpeedPowerUp extends PowerUp{
     @Override
     public void powerUpActivate(Player player) {
         float speed = player.getSpeed();
-        int speedIncrease = 5;
+        int speedIncrease = 10;
         player.setSpeed(speed + speedIncrease);
     }
 }
