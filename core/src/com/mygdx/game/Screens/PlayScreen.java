@@ -1,8 +1,6 @@
 package com.mygdx.game.Screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
@@ -61,7 +60,7 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(60, 500, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createBody(2450, 350, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
         Body npcBody = BodyHelper.createBody(3000,1000,0.5f,1,false, world);
@@ -107,6 +106,7 @@ public class PlayScreen extends ScreenAdapter {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
+
     }
 
     private void cameraUpdate(){
@@ -118,7 +118,6 @@ public class PlayScreen extends ScreenAdapter {
             camera.position.set(position);
             camera.update();
     }
-
 
     @Override
     public void show(){
@@ -153,6 +152,10 @@ public class PlayScreen extends ScreenAdapter {
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
+        if(player.isDead() && player.getStateTimer() > 3){
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Boot.INSTANCE.create();
+        }
     }
 
     public void setPlayer(Player player){
