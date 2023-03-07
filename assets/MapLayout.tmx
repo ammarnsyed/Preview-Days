@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="200" height="150" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="179">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="200" height="150" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="181">
  <tileset firstgid="1" source="SampleTerrain.tsx"/>
  <tileset firstgid="17" source="StartPoint.tsx"/>
  <tileset firstgid="18" source="Background.tsx"/>
@@ -418,7 +418,7 @@
    <polygon points="0,0 64,0 64,22.0222 0,22"/>
   </object>
  </objectgroup>
- <objectgroup id="13" name="Npc Collision">
+ <objectgroup id="13" name="Npc Collision" locked="1">
   <object id="94" x="5568" y="4992">
    <polygon points="0,0 0,64 2.73403,64.0083 2.75,-0.00390625"/>
   </object>
@@ -464,12 +464,6 @@
   <object id="153" x="7040" y="4160">
    <polygon points="0,0 0,-64 -4.36364,-64 -4.27273,-0.0909091"/>
   </object>
-  <object id="155" x="6912" y="4096">
-   <polygon points="0,0 0,64 2.75,64 2.76563,0"/>
-  </object>
-  <object id="157" x="6848" y="4160">
-   <polygon points="0,0 0,-64 2.72727,-64 2.54545,-0.181818"/>
-  </object>
   <object id="159" x="6784" y="4096">
    <polygon points="0,0 0,64 -5,64 -4.98687,0"/>
   </object>
@@ -479,8 +473,14 @@
   <object id="170" x="5568" y="4160">
    <polygon points="0,0 0,-64 3.45455,-64 3.43892,-0.00994318"/>
   </object>
+  <object id="179" x="6464" y="4160">
+   <polygon points="0,0 -0.333333,-64.3333 4.66667,-64.6667 4.33333,0"/>
+  </object>
+  <object id="180" x="6144" y="4160">
+   <polygon points="0,0 0,-49.6667 3.66667,-49.6667 3.33333,-0.333333"/>
+  </object>
  </objectgroup>
- <objectgroup id="12" name="Spike Blocks">
+ <objectgroup id="12" name="Spike Blocks" locked="1">
   <object id="81" x="3264" y="3264">
    <polygon points="0,0 512,0 512,64 0,64"/>
   </object>
@@ -516,12 +516,6 @@
   </object>
   <object id="164" x="7040" y="3968">
    <polygon points="0,-64 128,-64 128.591,-51.7728 -0.181818,-51.0909"/>
-  </object>
-  <object id="165" x="6464" y="4160">
-   <polygon points="0,0 0,-64 -0.766667,-63.9944 -0.766667,-0.00555556"/>
-  </object>
-  <object id="166" x="6144" y="4160">
-   <polygon points="0,0 0,-64 0.421875,-64 0.417969,0.00390625"/>
   </object>
   <object id="168" x="5952" y="3968">
    <polygon points="0,-64 192,-64 191.75,-50.4348 -0.0869565,-51.1739"/>

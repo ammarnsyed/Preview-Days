@@ -45,6 +45,8 @@ public class PlayScreen extends ScreenAdapter {
     private Array<NPC> npcSecOne = new Array<NPC>();
     private Array<NPC> npcSecTwo = new Array<NPC>();
     private Array<NPC> npcSecThree = new Array<NPC>();
+    private Array<NPC> npcSecFour = new Array<NPC>();
+    private Array<NPC> npcSecFive = new Array<NPC>();
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -58,7 +60,7 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
-        //3300 4580
+        //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
 
@@ -76,6 +78,16 @@ public class PlayScreen extends ScreenAdapter {
         int npcSectionThree = 8020;
         for(int i = 0; i < 4; i++){
             npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,4580,1,1,false,world)));
+        }
+        //fourth npc obstacle section
+        int npcSectionFour = 9080;
+        for(int i = 0; i < 4; i++){
+            npcSecFour.add(new NPC(1,1,BodyHelper.createBody(npcSectionFour-390*i,5480,1,1,false,world)));
+        }
+        //fifth npc obstacle section
+        int npcSectionFive = 7320;
+        for(int i = 0; i < 4; i++){
+            npcSecFive.add(new NPC(1,1,BodyHelper.createBody(npcSectionFive-480*i,5480,1,1,false,world)));
         }
 
         world.setContactListener(new WorldContactListener());
@@ -100,6 +112,13 @@ public class PlayScreen extends ScreenAdapter {
         for(NPC secThree : npcSecThree){
             secThree.update();
         }
+        for(NPC secFour : npcSecFour){
+            secFour.update();
+        }
+        for(NPC secFive : npcSecFive){
+            secFive.update();
+        }
+
 
         //jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
