@@ -58,32 +58,32 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
-
+        //3300 4580
         Body playerBody = BodyHelper.createBody(3300, 4580, 1, 1, false, world);
         player = new Player(1, 1, playerBody);
 
         //first npc obstacle
-        int npcSectionOne = 2432;
+        int npcSectionOne = 5642;
         for(int i = 0; i < 2; i++){
-            npcSecOne.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+704*i,64,1,1,false,world)));
+            npcSecOne.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+720*i,4580,1,1,false,world)));
         }
         //second npc obstacle section
-        int npcSectionTwo = 3564;
+        int npcSectionTwo = 6864;
         for(int i = 0; i < 1; i++){
-            npcSecTwo.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,64,1,1,false,world)));
+            npcSecTwo.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,4580,1,1,false,world)));
         }
         //third npc obstacle section
-        int npcSectionThree = 4720;
+        int npcSectionThree = 8020;
         for(int i = 0; i < 4; i++){
-            npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,64,1,1,false,world)));
+            npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,4580,1,1,false,world)));
         }
 
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        jumpPowerUpTest = new JumpPowerUp(500, 500, world);
-        speedPowerUpTest = new SpeedPowerUp(6000, 1024, world);
-        sizePowerUpTest = new SizePowerUp(2368, 1266, world);
+        //jumpPowerUpTest = new JumpPowerUp(500, 500, world);
+        speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
+        sizePowerUpTest = new SizePowerUp(5668, 5846, world);
 
     }
 
@@ -101,7 +101,7 @@ public class PlayScreen extends ScreenAdapter {
             secThree.update();
         }
 
-        jumpPowerUpTest.update(player, delta);
+        //jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
 
