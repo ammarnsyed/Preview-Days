@@ -30,8 +30,8 @@ public class MenuState extends State{
   @Override
   public void render(SpriteBatch sb) {
     sb.begin();
-    sb.draw(charImg,-30,200, 170,170);
-    sb.draw(playBtn, -120,0,351, 150);
+    sb.draw(charImg,3300,4580, 170,170);
+    sb.draw(playBtn, 3200,4380,351, 150);
     sb.end();
   }
 
