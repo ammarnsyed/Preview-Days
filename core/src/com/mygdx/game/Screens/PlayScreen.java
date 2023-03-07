@@ -42,7 +42,6 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
-    private NPC npc;
     private Array<NPC> npcSecOne = new Array<NPC>();
     private Array<NPC> npcSecTwo = new Array<NPC>();
     private Array<NPC> npcSecThree = new Array<NPC>();
@@ -106,21 +105,21 @@ public class PlayScreen extends ScreenAdapter {
     private void update(float delta){
         world.step(1/60f, 6, 2);
         cameraUpdate();
-        player.update();
+        player.update(delta);
         for(NPC secOne : npcSecOne){
-            secOne.update();
+            secOne.update(delta);
         }
         for(NPC secTwo : npcSecTwo){
-            secTwo.update();
+            secTwo.update(delta);
         }
         for(NPC secThree : npcSecThree){
-            secThree.update();
+            secThree.update(delta);
         }
         for(NPC secFour : npcSecFour){
-            secFour.update();
+            secFour.update(delta);
         }
         for(NPC secFive : npcSecFive){
-            secFive.update();
+            secFive.update(delta);
         }
 
 
@@ -169,12 +168,21 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
-        npc.render(batch);
-        npc1.render(batch);
-        npc2.render(batch);
-        npc3.render(batch);
-        npc4.render(batch);
-
+        for(NPC secOne : npcSecOne){
+            secOne.render(batch);
+        }
+        for(NPC secTwo : npcSecTwo){
+            secTwo.render(batch);
+        }
+        for(NPC secThree : npcSecThree){
+            secThree.render(batch);
+        }
+        for(NPC secFour : npcSecFour){
+            secFour.render(batch);
+        }
+        for(NPC secFive : npcSecFive){
+            secFive.render(batch);
+        }
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
