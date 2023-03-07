@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -51,8 +52,11 @@ public class PlayScreen extends ScreenAdapter {
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
 
+    private TextureAtlas atlas;
+
 
     public PlayScreen(OrthographicCamera camera){
+
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -93,9 +97,9 @@ public class PlayScreen extends ScreenAdapter {
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        //jumpPowerUpTest = new JumpPowerUp(500, 500, world);
-        speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
-        sizePowerUpTest = new SizePowerUp(5668, 5846, world);
+        jumpPowerUpTest = new JumpPowerUp(2900, 120, world);
+        speedPowerUpTest = new SpeedPowerUp(6000, 1000, world);
+        sizePowerUpTest = new SizePowerUp(2300, 1260, world);
 
     }
 
@@ -164,6 +168,13 @@ public class PlayScreen extends ScreenAdapter {
 
         batch.begin();
         //Render objects such as characters and walls
+        player.render(batch);
+        npc.render(batch);
+        npc1.render(batch);
+        npc2.render(batch);
+        npc3.render(batch);
+        npc4.render(batch);
+
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
@@ -178,4 +189,5 @@ public class PlayScreen extends ScreenAdapter {
     public World getWorld() {
         return world;
     }
+    public TextureAtlas getAtlas(){return atlas;}
 }

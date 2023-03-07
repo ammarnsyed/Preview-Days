@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class MenuState extends State{
+  private static boolean isTouched;
   private Texture playBtn;
   private Texture charImg;
 
@@ -13,12 +14,14 @@ public class MenuState extends State{
     super(gsm);
     playBtn = new Texture("startButton.png");
     charImg = new Texture("char.png");
+    isTouched = false;
   }
 
   @Override
   public void handleInput() {
     if(Gdx.input.justTouched()){
       gsm.set(new PlayState(gsm));
+      isTouched = true;
     }
   }
 
@@ -39,5 +42,9 @@ public class MenuState extends State{
   public void dispose() {
     playBtn.dispose();
 
+  }
+
+  public static boolean isTouched() {
+    return isTouched;
   }
 }

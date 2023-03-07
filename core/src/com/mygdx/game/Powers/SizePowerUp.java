@@ -18,19 +18,11 @@ public class SizePowerUp extends PowerUp {
 
     @Override
     public void powerUpActivate(Player player) {
-        // Double the size of the player
-        player.getBody().getFixtureList().get(0).getShape().setRadius(player.getBody().getFixtureList().get(0).getShape().getRadius() * 2);
-
+        // Update the size of the player
+        player.getBody().getFixtureList().get(0).getShape().setRadius(player.getBody().getFixtureList().get(0).getShape().getRadius() / 2);
         // Update the player's width and height accordingly
-        player.setWidth(player.getWidth() * 2);
-        player.setHeight(player.getHeight() * 2);
-        activated = true;
-        timer = 0f;
-    }
-
-    @Override
-    public void consume() {
-        toDestroy = true;
+        player.setWidth(player.getWidth() / 2);
+        player.setHeight(player.getHeight() / 2);
     }
 }
 

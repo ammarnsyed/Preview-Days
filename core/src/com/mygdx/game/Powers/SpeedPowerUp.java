@@ -16,16 +16,8 @@ public class SpeedPowerUp extends PowerUp{
 
     @Override
     public void powerUpActivate(Player player) {
-        Gdx.app.log("Speed Power", "Collision");
         float speed = player.getSpeed();
         int speedIncrease = 10;
         player.setSpeed(speed + speedIncrease);
-        activated = true;
-        timer = 0f;
-    }
-
-    @Override
-    public void consume() {
-        toDestroy = true;
     }
 }

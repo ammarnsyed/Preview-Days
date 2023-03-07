@@ -28,10 +28,12 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits == Constants.POWER_BIT){
                     ((PowerUp)fixA.getUserData()).powerUpActivate((Player)fixB.getUserData());
                     ((PowerUp)fixA.getUserData()).consume();
+                    ((PowerUp)fixA.getUserData()).setActivated(0f, true);
                 }
                 else{
                     ((PowerUp)fixB.getUserData()).powerUpActivate((Player)fixA.getUserData());
                     ((PowerUp)fixB.getUserData()).consume();
+                    ((PowerUp)fixB.getUserData()).setActivated(0f, true);
                 }
 
                 break;
