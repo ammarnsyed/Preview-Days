@@ -1,20 +1,9 @@
 package com.mygdx.game.Sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g3d.model.MeshPart;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.Constants;
-import com.mygdx.game.Screens.PlayScreen;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
