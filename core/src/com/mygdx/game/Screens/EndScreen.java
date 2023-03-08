@@ -25,7 +25,7 @@ public class EndScreen extends ScreenAdapter {
         this.stage = new Stage();
 
         Label EndScreenLabel = new Label("Game Over", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label Replay = new Label("Play Again?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label Replay = new Label("Play Agin?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         EndScreenLabel.setFontScale(5f, 5f);
         Replay.setFontScale(5f, 5f);
 
