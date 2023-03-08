@@ -1,6 +1,5 @@
 package com.mygdx.game.Helper;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 
 import static com.mygdx.game.Helper.Constants.PPM;
@@ -16,8 +15,6 @@ public class BodyHelper {
 
         //Using shape instead of sprite for test
         PolygonShape shape = new PolygonShape();
-        //CircleShape shape = new CircleShape();
-        //shape.setRadius(width);
         shape.setAsBox(width, height);
 
         FixtureDef fixtureDef = new FixtureDef();
