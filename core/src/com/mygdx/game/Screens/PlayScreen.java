@@ -1,6 +1,8 @@
 package com.mygdx.game.Screens;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,7 +63,7 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
-
+        //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
@@ -132,7 +134,6 @@ public class PlayScreen extends ScreenAdapter {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
-
     }
 
     private void cameraUpdate(){
@@ -144,6 +145,7 @@ public class PlayScreen extends ScreenAdapter {
             camera.position.set(position);
             camera.update();
     }
+
 
     @Override
     public void show(){
@@ -187,10 +189,6 @@ public class PlayScreen extends ScreenAdapter {
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
-        if(player.isDead() && player.getStateTimer() > 3){
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            Boot.INSTANCE.create();
-        }
     }
 
     public void setPlayer(Player player){
