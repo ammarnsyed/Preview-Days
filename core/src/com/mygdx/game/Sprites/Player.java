@@ -16,6 +16,7 @@ import static com.mygdx.game.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
+    public static boolean isDead;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
@@ -57,6 +58,7 @@ public class Player extends Entity {
         previousState = State.STANDING;
         stateTimer = 0;
         isFacingRight = true;
+        isDead = false;
         Array<TextureRegion> frames = new Array<>();
         for(int i = 0; i<3; i++){
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
@@ -68,8 +70,6 @@ public class Player extends Entity {
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
-
-
     }
 
     @Override
@@ -202,6 +202,8 @@ public class Player extends Entity {
         knockDirection.nor();
         Vector2 knockback = knockDirection.scl(knockbackForce);
         body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
+        isDead = true;
+
     }
 
     public boolean isDead() {
@@ -228,5 +230,8 @@ public class Player extends Entity {
     }
     public float getHeight(){
         return this.height;
+    }
+    public float getStateTimer() {
+        return stateTimer;
     }
 }

@@ -20,7 +20,12 @@ public class Boot extends Game {
         this.height = Gdx.graphics.getHeight();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
-        setScreen(new PlayScreen(camera));
-
+        if(Player.isDead){
+            Gdx.app.log("Screen:", "Dead");
+            setScreen(new EndScreen(camera));
+        }if(!Player.isDead){
+            Gdx.app.log("Screen:", "Alive");
+            setScreen(new PlayScreen(camera));
+        }
     }
 }
