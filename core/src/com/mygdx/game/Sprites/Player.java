@@ -16,6 +16,7 @@ import static com.mygdx.game.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
+    private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
@@ -36,6 +37,7 @@ public class Player extends Entity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
+        hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
         fixture.setUserData(this);
