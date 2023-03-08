@@ -62,7 +62,7 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        Body playerBody = BodyHelper.createBody(2450, 350, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
         //first npc obstacle
