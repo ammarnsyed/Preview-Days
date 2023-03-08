@@ -5,12 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.Constants;
-import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.States.MenuState;
 
 import static com.mygdx.game.Helper.Constants.NOTHING_BIT;
@@ -164,9 +162,9 @@ public class Player extends Entity {
             body.setLinearVelocity(velX * speed, body.getLinearVelocity().y);
             fallen = body.getLinearVelocity().y < 0;
             }
-            else {
-                fallen = false;
-            }
+        else {
+            fallen = false;
+        }
     }
 
     public void setJumpForce(int jumpForce){

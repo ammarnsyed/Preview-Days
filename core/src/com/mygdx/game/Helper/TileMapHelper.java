@@ -1,20 +1,14 @@
 package com.mygdx.game.Helper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.mygdx.game.Screens.PlayScreen;
-
-import java.awt.*;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -28,8 +22,8 @@ public class TileMapHelper {
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("MapLayout.tmx");
-        parseMapObjects(tiledMap.getLayers().get(1).getObjects(), 1);
-        parseMapObjects(tiledMap.getLayers().get(2).getObjects(), 2);
+        parseMapObjects(tiledMap.getLayers().get(2).getObjects(), 1);
+        parseMapObjects(tiledMap.getLayers().get(3).getObjects(), 2);
 
         return new OrthogonalTiledMapRenderer(tiledMap);
     }

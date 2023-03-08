@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
@@ -23,6 +23,8 @@ import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
+
+import java.util.ArrayList;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
@@ -38,11 +40,11 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
-    private NPC npc;
-    private NPC npc1;
-    private NPC npc2;
-    private NPC npc3;
-    private NPC npc4;
+    private Array<NPC> npcSecOne = new Array<NPC>();
+    private Array<NPC> npcSecTwo = new Array<NPC>();
+    private Array<NPC> npcSecThree = new Array<NPC>();
+    private Array<NPC> npcSecFour = new Array<NPC>();
+    private Array<NPC> npcSecFive = new Array<NPC>();
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -63,26 +65,38 @@ public class PlayScreen extends ScreenAdapter {
         Body playerBody = BodyHelper.createBody(2450, 350, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
-        Body npcBody = BodyHelper.createBody(3000,1000,0.5f,1,false, world);
-        Body npcBody1 = BodyHelper.createBody(3400,1000,0.5f,1,false, world);
-        Body npcBody2 = BodyHelper.createBody(5000,500,0.5f,1,false, world);
-        Body npcBody3 = BodyHelper.createBody(3100,500,0.5f,1,false, world);
-        Body npcBody4 = BodyHelper.createBody(2500,500,0.5f,1,false, world);
-        npc = new NPC(1,1, npcBody);
-        npc1 = new NPC(1,1, npcBody1);
-        npc2 = new NPC(1,1, npcBody2);
-        npc3 = new NPC(1,1, npcBody3);
-        npc4 = new NPC(1,1, npcBody4);
-
-
-
+        //first npc obstacle
+        int npcSectionOne = 5642;
+        for(int i = 0; i < 2; i++){
+            npcSecOne.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+720*i,4580,1,1,false,world)));
+        }
+        //second npc obstacle section
+        int npcSectionTwo = 6864;
+        for(int i = 0; i < 1; i++){
+            npcSecTwo.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,4580,1,1,false,world)));
+        }
+        //third npc obstacle section
+        int npcSectionThree = 8020;
+        for(int i = 0; i < 4; i++){
+            npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,4580,1,1,false,world)));
+        }
+        //fourth npc obstacle section
+        int npcSectionFour = 9080;
+        for(int i = 0; i < 4; i++){
+            npcSecFour.add(new NPC(1,1,BodyHelper.createBody(npcSectionFour-390*i,5480,1,1,false,world)));
+        }
+        //fifth npc obstacle section
+        int npcSectionFive = 7320;
+        for(int i = 0; i < 4; i++){
+            npcSecFive.add(new NPC(1,1,BodyHelper.createBody(npcSectionFive-480*i,5480,1,1,false,world)));
+        }
 
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        jumpPowerUpTest = new JumpPowerUp(2900, 120, world);
-        speedPowerUpTest = new SpeedPowerUp(6000, 1000, world);
-        sizePowerUpTest = new SizePowerUp(2300, 1260, world);
+        jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
+        speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
+        sizePowerUpTest = new SizePowerUp(5668, 5846, world);
 
     }
 
@@ -90,11 +104,23 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update(delta);
-        npc.update(delta);
-        npc1.update(delta);
-        npc2.update(delta);
-        npc3.update(delta);
-        npc4.update(delta);
+        for(NPC secOne : npcSecOne){
+            secOne.update(delta);
+        }
+        for(NPC secTwo : npcSecTwo){
+            secTwo.update(delta);
+        }
+        for(NPC secThree : npcSecThree){
+            secThree.update(delta);
+        }
+        for(NPC secFour : npcSecFour){
+            secFour.update(delta);
+        }
+        for(NPC secFive : npcSecFive){
+            secFive.update(delta);
+        }
+
+
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
@@ -124,7 +150,7 @@ public class PlayScreen extends ScreenAdapter {
       batch = new SpriteBatch();
       img = new Texture("badlogic.jpg");
       gsm = new gStateManager();
-      Gdx.gl.glClearColor(0,0,0,1);
+      Gdx.gl.glClearColor(0,0,0,2);
       gsm.push(new MenuState(gsm));
     }
 
@@ -140,12 +166,21 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
-        npc.render(batch);
-        npc1.render(batch);
-        npc2.render(batch);
-        npc3.render(batch);
-        npc4.render(batch);
-
+        for(NPC secOne : npcSecOne){
+            secOne.render(batch);
+        }
+        for(NPC secTwo : npcSecTwo){
+            secTwo.render(batch);
+        }
+        for(NPC secThree : npcSecThree){
+            secThree.render(batch);
+        }
+        for(NPC secFour : npcSecFour){
+            secFour.render(batch);
+        }
+        for(NPC secFive : npcSecFive){
+            secFive.render(batch);
+        }
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
