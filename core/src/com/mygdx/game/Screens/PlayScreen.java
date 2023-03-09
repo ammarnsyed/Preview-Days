@@ -3,9 +3,11 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -14,6 +16,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
@@ -42,6 +47,7 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private int playerLives;
     private Array<NPC> npcSecOne = new Array<NPC>();
     private Array<NPC> npcSecTwo = new Array<NPC>();
     private Array<NPC> npcSecThree = new Array<NPC>();
@@ -51,11 +57,13 @@ public class PlayScreen extends ScreenAdapter {
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
 
+    private Stage stage;
     private TextureAtlas atlas;
 
 
     public PlayScreen(OrthographicCamera camera){
 
+        this.stage = new Stage();
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -105,6 +113,7 @@ public class PlayScreen extends ScreenAdapter {
     private void update(float delta){
         world.step(1/60f, 6, 2);
         cameraUpdate();
+        playerLives = player.getLives();
         player.update(delta);
         for(NPC secOne : npcSecOne){
             secOne.update(delta);
@@ -193,6 +202,18 @@ public class PlayScreen extends ScreenAdapter {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
+        Label livesCounter = new Label("Lives: ".concat(String.valueOf(playerLives+1)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        livesCounter.setFontScale(4f, 4f);
+
+        Table newTable = new Table();
+        newTable.setFillParent(true);
+        newTable.add(livesCounter);
+        newTable.right();
+        newTable.top();
+        newTable.padRight(20f);
+        stage.addActor(newTable);
+        stage.draw();
     }
 
     public void setPlayer(Player player){
