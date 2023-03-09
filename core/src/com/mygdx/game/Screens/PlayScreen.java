@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Checkpoint.Checkpoint;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
@@ -50,6 +51,7 @@ public class PlayScreen extends ScreenAdapter {
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
+    private Checkpoint Spawn;
 
     private TextureAtlas atlas;
 
@@ -100,6 +102,9 @@ public class PlayScreen extends ScreenAdapter {
         speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
         sizePowerUpTest = new SizePowerUp(5668, 5846, world);
 
+        //Checkpoints
+        Spawn = new Checkpoint(3300, 4880, world, "Spawn");
+
     }
 
     private void update(float delta){
@@ -126,6 +131,7 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
+        Spawn.update(player, delta);
 
 
         batch.setProjectionMatrix(camera.combined);
