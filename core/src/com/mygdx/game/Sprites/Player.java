@@ -16,6 +16,7 @@ import static com.mygdx.game.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
+    public static boolean isDead;
     private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
@@ -37,6 +38,7 @@ public class Player extends Entity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
+        isDead = false;
         hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
@@ -181,6 +183,7 @@ public class Player extends Entity {
         Filter filter = new Filter();
         filter.maskBits = NOTHING_BIT;
         dead = true;
+        isDead = true;
 
         for(Fixture fixture : body.getFixtureList()){
             fixture.setFilterData(filter);
@@ -230,5 +233,9 @@ public class Player extends Entity {
     }
     public float getHeight(){
         return this.height;
+    }
+
+    public float getStateTimer() {
+        return stateTimer;
     }
 }

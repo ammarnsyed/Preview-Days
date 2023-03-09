@@ -189,6 +189,10 @@ public class PlayScreen extends ScreenAdapter {
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
+        if(player.isDead() && player.getStateTimer() > 3){
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Boot.INSTANCE.create();
+        }
     }
 
     public void setPlayer(Player player){
