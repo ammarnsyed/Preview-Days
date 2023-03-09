@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -53,8 +54,10 @@ public class PlayScreen extends ScreenAdapter {
 
     private TextureAtlas atlas;
 
+    private float timeRemaining = 300;
+    private BitmapFont font;
 
-    public PlayScreen(OrthographicCamera camera){
+  public PlayScreen(OrthographicCamera camera){
 
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -183,7 +186,9 @@ public class PlayScreen extends ScreenAdapter {
         for(NPC secFive : npcSecFive){
             secFive.render(batch);
         }
+      //timeRemaining -= delta;
 
+      //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
