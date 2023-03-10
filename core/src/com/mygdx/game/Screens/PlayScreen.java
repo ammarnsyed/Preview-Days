@@ -103,7 +103,7 @@ public class PlayScreen extends ScreenAdapter {
         //Setting three different Power ups to test collision detection for all
         jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
         speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
-        sizePowerUpTest = new SizePowerUp(5668, 5846, world);
+        sizePowerUpTest = new SizePowerUp(3300, 4880, world);
 
     }
 

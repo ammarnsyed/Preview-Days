@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.States.MenuState;
 
@@ -55,7 +54,7 @@ public class Player extends Entity {
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
-        playerSprite.setBounds(0, 0, 64, 64);
+        playerSprite.setBounds(0, 0, 64 * width, 64 * height);
 
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -223,6 +222,8 @@ public class Player extends Entity {
 
     public void setWidth(float width){
         this.width = width;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        changeBody();
     }
     public float getWidth(){
         return this.width;
@@ -230,9 +231,28 @@ public class Player extends Entity {
 
     public void setHeight(float height){
         this.height = height;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        changeBody();
     }
     public float getHeight(){
         return this.height;
+    }
+
+    private void changeBody(){
+        body.destroyFixture(fixture);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width, height);
+        FixtureDef fDef = new FixtureDef();
+        fDef.friction = 0;
+        fDef.shape = shape;
+        shape.dispose();
+
+        body.createFixture(fDef);
+        fixture = body.getFixtureList().get(0);
+        fixture.setUserData(this);
+        fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
+        fixture.getFilterData().maskBits =
+                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
     }
 
     public float getStateTimer() {
