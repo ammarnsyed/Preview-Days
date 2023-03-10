@@ -23,6 +23,7 @@ public class Checkpoint {
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         fixture = body.getFixtureList().get(0);
+        fixture.setSensor(true);
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.CHECKPOINT_BIT;
         checkPoint = false;
