@@ -43,6 +43,7 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private NPC introNPC;
     private Array<NPC> npcSecOne = new Array<NPC>();
     private Array<NPC> npcSecTwo = new Array<NPC>();
     private Array<NPC> npcSecThree = new Array<NPC>();
@@ -69,7 +70,8 @@ public class PlayScreen extends ScreenAdapter {
         //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
-
+        Body introNpcBody = BodyHelper.createBody(3740, 6180, 0.5f, 1, false, world);
+        introNPC = new NPC(1, 1, introNpcBody);
         //first npc obstacle
         int npcSectionOne = 5642;
         for(int i = 0; i < 2; i++){
@@ -109,6 +111,7 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update(delta);
+        introNPC.update(delta);
         for(NPC secOne : npcSecOne){
             secOne.update(delta);
         }
@@ -171,6 +174,7 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
+        introNPC.render(batch);
         for(NPC secOne : npcSecOne){
             secOne.render(batch);
         }
