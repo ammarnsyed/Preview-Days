@@ -47,7 +47,7 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
             case Constants.PLAYER_BIT | Constants.CHECKPOINT_BIT:
-                if(fixA.getFilterData().categoryBits == Constants.PLAYER_BIT){
+                if(fixA.getFilterData().categoryBits == Constants.CHECKPOINT_BIT){
                     ((Checkpoint)fixA.getUserData()).printWhatever();
                 }
                 else{
