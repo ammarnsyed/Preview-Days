@@ -31,7 +31,7 @@ public class Checkpoint {
         Gdx.app.log("Contact", "Hello");
     }
 
-    public void update(Player player, float delta){
+    public void update(Player player){
         if(checkPoint){
             world.destroyBody(body);
         }

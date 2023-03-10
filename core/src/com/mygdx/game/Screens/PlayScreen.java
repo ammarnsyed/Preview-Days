@@ -131,7 +131,7 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
-        Spawn.update(player, delta);
+        Spawn.update(player);
 
 
         batch.setProjectionMatrix(camera.combined);
