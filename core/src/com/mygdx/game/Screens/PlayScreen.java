@@ -19,6 +19,7 @@ import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
 import com.mygdx.game.Powers.JumpPowerUp;
+import com.mygdx.game.Powers.MultipleJumpPowerUp;
 import com.mygdx.game.Powers.SizePowerUp;
 import com.mygdx.game.Powers.SpeedPowerUp;
 import com.mygdx.game.Sprites.Player;
@@ -50,6 +51,7 @@ public class PlayScreen extends ScreenAdapter {
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
+    private MultipleJumpPowerUp multipleJumpPowerUpTest;
 
     private TextureAtlas atlas;
 
@@ -99,7 +101,7 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
         speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
         sizePowerUpTest = new SizePowerUp(5668, 5846, world);
-
+        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 4880, world);
     }
 
     private void update(float delta){
@@ -126,6 +128,7 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
+        multipleJumpPowerUpTest.update(player, delta);
 
 
         batch.setProjectionMatrix(camera.combined);

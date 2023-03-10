@@ -35,6 +35,7 @@ public class Player extends Entity {
     private Animation playerJump;
     private boolean isFacingRight;
     private float stateTimer;
+    private int maxJumps;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -42,6 +43,7 @@ public class Player extends Entity {
         hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
+        this.maxJumps = 1;
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
@@ -154,7 +156,7 @@ public class Player extends Entity {
                 velX = 1;
             }
             //Jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < 1 && !fallen) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && maxJumps <= 3 && !fallen) {
                 float force = body.getMass() * jumpForce;
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
                 jumpCount++;
@@ -211,6 +213,14 @@ public class Player extends Entity {
 
     public boolean isDead() {
         return dead;
+    }
+
+    public int getMaxJumps() {
+        return maxJumps;
+    }
+
+    public void setMaxJumps(int maxJumps) {
+        this.maxJumps = maxJumps;
     }
 
     public float getSpeed(){
