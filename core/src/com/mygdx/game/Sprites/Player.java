@@ -45,7 +45,7 @@ public class Player extends Entity {
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
-                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT;
+                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
 
         knockedBack = false;
         knockbackTimer = 0;
