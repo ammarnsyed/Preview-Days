@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.States.MenuState;
@@ -36,6 +37,8 @@ public class Player extends Entity {
     private boolean isFacingRight;
     private float stateTimer;
     private int maxJumps;
+    private float spriteWidth;
+    private float spriteHeight;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -44,6 +47,8 @@ public class Player extends Entity {
         this.speed = 9f;
         this.jumpCount = 0;
         this.maxJumps = 1;
+        spriteWidth = playerSprite.getWidth();
+        spriteHeight = playerSprite.getHeight();
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
@@ -89,7 +94,15 @@ public class Player extends Entity {
         if(!knockedBack && knockbackTimer >= 0.5f){
             checkUserInput();
         }
-
+        if (spriteWidth != playerSprite.getWidth() || spriteHeight != playerSprite.getHeight()) {
+            spriteWidth = playerSprite.getWidth();
+            spriteHeight = playerSprite.getHeight();
+            // update fixture size
+            PolygonShape shape = (PolygonShape) fixture.getShape();
+            float scaleX = spriteWidth / (64 * width * PPM);
+            float scaleY = spriteHeight / (64 * height * PPM);
+            shape.setAsBox(width / 2 * scaleX, height / 2 * scaleY);
+        }
     }
 
     @Override
