@@ -37,8 +37,6 @@ public class Player extends Entity {
     private boolean isFacingRight;
     private float stateTimer;
     private int maxJumps;
-    private float spriteWidth;
-    private float spriteHeight;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -60,10 +58,7 @@ public class Player extends Entity {
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
-        playerSprite.setBounds(0, 0, 64 * width, 64 * height);
-
-        spriteWidth = playerSprite.getWidth();
-        spriteHeight = playerSprite.getHeight();
+        playerSprite.setBounds(0, 0, 64, 64);
 
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -94,15 +89,6 @@ public class Player extends Entity {
         knockbackTimer += Gdx.graphics.getDeltaTime();
         if(!knockedBack && knockbackTimer >= 0.5f){
             checkUserInput();
-        }
-        if (spriteWidth != playerSprite.getWidth() || spriteHeight != playerSprite.getHeight()) {
-            spriteWidth = playerSprite.getWidth();
-            spriteHeight = playerSprite.getHeight();
-            // update fixture size
-            PolygonShape shape = (PolygonShape) fixture.getShape();
-            float scaleX = spriteWidth / (64 * width * PPM);
-            float scaleY = spriteHeight / (64 * height * PPM);
-            shape.setAsBox(width / 2 * scaleX, height / 2 * scaleY);
         }
     }
 
