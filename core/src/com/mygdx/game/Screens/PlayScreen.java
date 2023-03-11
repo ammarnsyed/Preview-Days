@@ -12,9 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
@@ -70,6 +68,8 @@ public class PlayScreen extends ScreenAdapter {
         //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
+        //player.changeBody();
+
         Body introNpcBody = BodyHelper.createBody(3740, 6180, 0.5f, 1, false, world);
         introNPC = new NPC(1, 1, introNpcBody);
         //first npc obstacle

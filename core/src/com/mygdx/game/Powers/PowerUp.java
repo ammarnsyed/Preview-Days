@@ -57,6 +57,10 @@ public abstract class PowerUp {
         }
     }
 
+    public boolean getActive(){
+        return activated;
+    }
+
     public void consume() {
         toDestroy = true;
     }

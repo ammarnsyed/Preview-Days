@@ -33,12 +33,12 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
             case Constants.PLAYER_BIT | Constants.POWER_BIT:
-                if(fixA.getFilterData().categoryBits == Constants.POWER_BIT){
+                if(fixA.getFilterData().categoryBits == Constants.POWER_BIT && !((PowerUp)fixA.getUserData()).getActive()){
                     ((PowerUp)fixA.getUserData()).powerUpActivate((Player)fixB.getUserData());
                     ((PowerUp)fixA.getUserData()).consume();
                     ((PowerUp)fixA.getUserData()).setActivated(0f, true);
                 }
-                else{
+                else if(!((PowerUp)fixB.getUserData()).getActive()){
                     ((PowerUp)fixB.getUserData()).powerUpActivate((Player)fixA.getUserData());
                     ((PowerUp)fixB.getUserData()).consume();
                     ((PowerUp)fixB.getUserData()).setActivated(0f, true);

@@ -232,28 +232,29 @@ public class Player extends Entity {
     public void setHeight(float height){
         this.height = height;
         playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        changeBody();
+
     }
     public float getHeight(){
         return this.height;
     }
 
-    private void changeBody(){
+    public void changeBody(){
         body.destroyFixture(fixture);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width, height);
-        FixtureDef fDef = new FixtureDef();
-        fDef.friction = 0;
-        fDef.shape = shape;
-        shape.dispose();
-
-        body.createFixture(fDef);
+        shape.setAsBox(width/2, height/2);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.friction = 0;
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
         fixture = body.getFixtureList().get(0);
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
+        shape.dispose();
+
     }
+
 
     public float getStateTimer() {
         return stateTimer;
