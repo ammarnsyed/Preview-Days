@@ -47,8 +47,6 @@ public class Player extends Entity {
         this.speed = 9f;
         this.jumpCount = 0;
         this.maxJumps = 1;
-        spriteWidth = playerSprite.getWidth();
-        spriteHeight = playerSprite.getHeight();
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
@@ -62,7 +60,10 @@ public class Player extends Entity {
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
-        playerSprite.setBounds(0, 0, 64, 64);
+        playerSprite.setBounds(0, 0, 64 * width, 64 * height);
+
+        spriteWidth = playerSprite.getWidth();
+        spriteHeight = playerSprite.getHeight();
 
         currentState = State.STANDING;
         previousState = State.STANDING;
