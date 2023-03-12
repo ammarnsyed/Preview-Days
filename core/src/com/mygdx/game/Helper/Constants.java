@@ -13,6 +13,6 @@ public class Constants {
 
     public static final int PLAYER_JUMP_FORCE = 18;
     public static final float PLAYER_SPEED = 9f;
-    public static final float PLAYER_WIDTH = 21;
-    public static final float PLAYER_HEIGHT = 26;
+    public static final float PLAYER_WIDTH = 1;
+    public static final float PLAYER_HEIGHT = 1;
 }
