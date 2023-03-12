@@ -117,6 +117,13 @@ public class Player extends Entity {
                 break;
         }
 
+        if (body.getGravityScale() < 0 && !region.isFlipY()) {
+            region.flip(false, true);
+        }
+        else if (body.getGravityScale() >= 0 && region.isFlipY()) {
+            region.flip(false, true);
+        }
+
         if((body.getLinearVelocity().x < 0 || !isFacingRight) && !region.isFlipX()){
             region.flip(true,false);
             isFacingRight = false;
@@ -159,7 +166,7 @@ public class Player extends Entity {
                 velX = 1;
             }
             //Jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < 1 && !fallen) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && maxJumps <= 3 && !fallen) {
                 float force = body.getMass() * jumpForce;
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
                 jumpCount++;
@@ -218,6 +225,14 @@ public class Player extends Entity {
         return dead;
     }
 
+    public int getMaxJumps() {
+        return maxJumps;
+    }
+
+    public void setMaxJumps(int maxJumps) {
+        this.maxJumps = maxJumps;
+    }
+
     public float getSpeed(){
         return this.speed;
     }
@@ -244,6 +259,9 @@ public class Player extends Entity {
     }
     public float getHeight(){
         return this.height;
+    }
+    public Sprite getPlayerSprite() {
+        return playerSprite;
     }
 
     public void changeBody(){

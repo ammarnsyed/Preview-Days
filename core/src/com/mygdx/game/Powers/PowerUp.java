@@ -53,6 +53,8 @@ public abstract class PowerUp {
                 player.setSpeed(Constants.PLAYER_SPEED);
                 player.setWidth(Constants.PLAYER_WIDTH);
                 player.setHeight(Constants.PLAYER_HEIGHT);
+                player.setMaxJumps(Constants.PLAYER_MAX_JUMPS);
+                player.getBody().setGravityScale(1f);
             }
         }
     }
