@@ -14,8 +14,8 @@ public class SizePowerUp extends PowerUp {
     public void powerUpActivate(Player player) {
         // Update the size of the player
         // Update the player's width and height accordingly
-        player.setWidth(player.getWidth() * 2);
-        player.setHeight(player.getHeight() * 2);
+        player.setWidth(player.getWidth() / 2);
+        player.setHeight(player.getHeight() / 2);
     }
 }
 

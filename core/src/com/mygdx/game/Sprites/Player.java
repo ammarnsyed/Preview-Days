@@ -81,7 +81,7 @@ public class Player extends Entity {
     public void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
-        playerSprite.setPosition(x - PPM, y - PPM);
+        playerSprite.setPosition(x - PPM*width, y - PPM*height);
         playerSprite.setRegion(getFrame(dt));
 
         knockbackTimer += Gdx.graphics.getDeltaTime();
