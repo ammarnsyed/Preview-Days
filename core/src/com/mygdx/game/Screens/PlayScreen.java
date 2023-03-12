@@ -6,14 +6,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
@@ -40,6 +39,7 @@ public class PlayScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private NPC introNPC;
     private Array<NPC> npcSecOne = new Array<NPC>();
     private Array<NPC> npcSecTwo = new Array<NPC>();
     private Array<NPC> npcSecThree = new Array<NPC>();
@@ -53,8 +53,10 @@ public class PlayScreen extends ScreenAdapter {
 
     private TextureAtlas atlas;
 
+    private float timeRemaining = 300;
+    private BitmapFont font;
 
-    public PlayScreen(OrthographicCamera camera){
+  public PlayScreen(OrthographicCamera camera){
 
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -65,8 +67,10 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
         //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
-        player = new Player(1, 1, playerBody);
+        player = new Player(1, 1, playerBody, getWorld());
 
+        Body introNpcBody = BodyHelper.createBody(3740, 6180, 0.5f, 1, false, world);
+        introNPC = new NPC(1, 1, introNpcBody);
         //first npc obstacle
         int npcSectionOne = 5642;
         for(int i = 0; i < 2; i++){
@@ -107,6 +111,7 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update(delta);
+        introNPC.update(delta);
         for(NPC secOne : npcSecOne){
             secOne.update(delta);
         }
@@ -172,6 +177,7 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
+        introNPC.render(batch);
         for(NPC secOne : npcSecOne){
             secOne.render(batch);
         }
@@ -187,7 +193,9 @@ public class PlayScreen extends ScreenAdapter {
         for(NPC secFive : npcSecFive){
             secFive.render(batch);
         }
+      //timeRemaining -= delta;
 
+      //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
