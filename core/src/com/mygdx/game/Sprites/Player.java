@@ -113,6 +113,13 @@ public class Player extends Entity {
                 break;
         }
 
+        if (body.getGravityScale() < 0 && !region.isFlipY()) {
+            region.flip(false, true);
+        }
+        else if (body.getGravityScale() >= 0 && region.isFlipY()) {
+            region.flip(false, true);
+        }
+
         if((body.getLinearVelocity().x < 0 || !isFacingRight) && !region.isFlipX()){
             region.flip(true,false);
             isFacingRight = false;
