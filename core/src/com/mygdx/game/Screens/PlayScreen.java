@@ -67,8 +67,7 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
         //3300 4580 start coords
         Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
-        player = new Player(1, 1, playerBody);
-        //player.changeBody();
+        player = new Player(1, 1, playerBody, getWorld());
 
         Body introNpcBody = BodyHelper.createBody(3740, 6180, 0.5f, 1, false, world);
         introNPC = new NPC(1, 1, introNpcBody);

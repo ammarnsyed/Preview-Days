@@ -23,6 +23,7 @@ public class Player extends Entity {
     private float knockbackTimer;
     private boolean dead;
     private boolean fallen;
+    private boolean needToUpdateBody;
 
     public enum State {FALLING, JUMPING, STANDING, RUNNING};
     public State currentState;
@@ -34,17 +35,18 @@ public class Player extends Entity {
     private Animation playerJump;
     private boolean isFacingRight;
     private float stateTimer;
+    private World world;
 
-    public Player(float width, float height, Body body) {
+    public Player(float width, float height, Body body, World world) {
         super(width, height, body);
         isDead = false;
+        needToUpdateBody = false;
         hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
-        fixture.setUserData(this);
-        fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
-        fixture.getFilterData().maskBits =
-                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
+        this.world = world;
+
+        fixtureSet();
 
         knockedBack = false;
         knockbackTimer = 0;
@@ -85,6 +87,10 @@ public class Player extends Entity {
         knockbackTimer += Gdx.graphics.getDeltaTime();
         if(!knockedBack && knockbackTimer >= 0.5f){
             checkUserInput();
+        }
+
+        if(needToUpdateBody){
+            changeBody();
         }
 
     }
@@ -223,7 +229,8 @@ public class Player extends Entity {
     public void setWidth(float width){
         this.width = width;
         playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        changeBody();
+        needToUpdateBody = true;
+
     }
     public float getWidth(){
         return this.width;
@@ -232,6 +239,7 @@ public class Player extends Entity {
     public void setHeight(float height){
         this.height = height;
         playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        needToUpdateBody = true;
 
     }
     public float getHeight(){
@@ -239,20 +247,31 @@ public class Player extends Entity {
     }
 
     public void changeBody(){
-        body.destroyFixture(fixture);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/2, height/2);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.friction = 0;
-        fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
-        fixture = body.getFixtureList().get(0);
+        Runnable destroyBody = new Runnable() {
+            @Override
+            public void run() {
+                body.destroyFixture(fixture);
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(width/2, height);
+                FixtureDef fixtureDef = new FixtureDef();
+                fixtureDef.friction = 0;
+                fixtureDef.shape = shape;
+                body.createFixture(fixtureDef);
+                fixture = body.getFixtureList().get(0);
+                fixtureSet();
+                shape.dispose();
+            }
+        };
+
+        Gdx.app.postRunnable(destroyBody);
+        needToUpdateBody = false;
+    }
+
+    private void fixtureSet(){
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
-        shape.dispose();
-
     }
 
 
