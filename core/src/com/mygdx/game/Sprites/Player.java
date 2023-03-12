@@ -59,7 +59,6 @@ public class Player extends Entity {
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
         playerSprite.setBounds(0, 0, 64, 64);
-
         currentState = State.STANDING;
         previousState = State.STANDING;
         stateTimer = 0;
@@ -243,6 +242,9 @@ public class Player extends Entity {
     }
     public float getHeight(){
         return this.height;
+    }
+    public Sprite getPlayerSprite() {
+        return playerSprite;
     }
 
     public float getStateTimer() {
