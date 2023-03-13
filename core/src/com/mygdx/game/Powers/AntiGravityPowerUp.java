@@ -14,7 +14,5 @@ public class AntiGravityPowerUp extends PowerUp {
     public void powerUpActivate(Player player) {
         // Flip gravity
         player.getBody().setGravityScale(-1f);
-        // Rotate player
-        player.getPlayerSprite().flip(false, true);
     }
 }
