@@ -23,8 +23,6 @@ import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
 
-import java.util.ArrayList;
-
 import static com.mygdx.game.Helper.Constants.PPM;
 
 public class PlayScreen extends ScreenAdapter {
@@ -66,35 +64,35 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
         //3300 4580 start coords
-        Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createRectangularBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
-        Body introNpcBody = BodyHelper.createBody(3740, 6180, 0.5f, 1, false, world);
+        Body introNpcBody = BodyHelper.createRectangularBody(3740, 6180, 0.5f, 1, false, world);
         introNPC = new NPC(1, 1, introNpcBody);
         //first npc obstacle
         int npcSectionOne = 5642;
         for(int i = 0; i < 2; i++){
-            npcSecOne.add(new NPC(1,1,BodyHelper.createBody(npcSectionOne+720*i,4580,1,1,false,world)));
+            npcSecOne.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionOne+720*i,4580,1,1,false,world)));
         }
         //second npc obstacle section
         int npcSectionTwo = 6864;
         for(int i = 0; i < 1; i++){
-            npcSecTwo.add(new NPC(1,1,BodyHelper.createBody(npcSectionTwo,4580,1,1,false,world)));
+            npcSecTwo.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionTwo,4580,1,1,false,world)));
         }
         //third npc obstacle section
         int npcSectionThree = 8020;
         for(int i = 0; i < 4; i++){
-            npcSecThree.add(new NPC(1,1,BodyHelper.createBody(npcSectionThree+320*i,4580,1,1,false,world)));
+            npcSecThree.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionThree+320*i,4580,1,1,false,world)));
         }
         //fourth npc obstacle section
         int npcSectionFour = 9080;
         for(int i = 0; i < 4; i++){
-            npcSecFour.add(new NPC(1,1,BodyHelper.createBody(npcSectionFour-390*i,5480,1,1,false,world)));
+            npcSecFour.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionFour-390*i,5480,1,1,false,world)));
         }
         //fifth npc obstacle section
         int npcSectionFive = 7320;
         for(int i = 0; i < 4; i++){
-            npcSecFive.add(new NPC(1,1,BodyHelper.createBody(npcSectionFive-480*i,5480,1,1,false,world)));
+            npcSecFive.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionFive-480*i,5480,1,1,false,world)));
         }
 
         world.setContactListener(new WorldContactListener());

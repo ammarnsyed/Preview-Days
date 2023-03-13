@@ -1,8 +1,5 @@
 package com.mygdx.game.Powers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.esotericsoftware.spine.BlendMode;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.Sprites.Player;
@@ -30,7 +26,7 @@ public abstract class PowerUp {
 
     public PowerUp(float x, float y, World world){
         this.world = world;
-        body = BodyHelper.createBody(x, y, 1, 1, true, world);
+        body = BodyHelper.createCircularBody(x, y, 1, true, world);
         this.x = x;
         this.y = y;
         fixture = body.getFixtureList().get(0);
