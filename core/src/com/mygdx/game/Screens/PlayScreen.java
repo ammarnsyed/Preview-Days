@@ -178,6 +178,10 @@ public class PlayScreen extends ScreenAdapter {
         //Render objects such as characters and walls
         player.render(batch);
         introNPC.render(batch);
+        jumpPowerUpTest.render(batch);
+        multipleJumpPowerUpTest.render(batch);
+        sizePowerUpTest.render(batch);
+        speedPowerUpTest.render(batch);
         antiGravityPowerUpTest.render(batch);
         for(NPC secOne : npcSecOne){
             secOne.render(batch);

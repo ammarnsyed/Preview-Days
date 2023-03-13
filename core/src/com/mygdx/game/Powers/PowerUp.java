@@ -41,7 +41,7 @@ public abstract class PowerUp {
 
         TextureRegion powerTexture = new TextureRegion(new Texture("powerUpImg1.png"));
         powerSprite = new Sprite(powerTexture);
-        powerSprite.setBounds(0,0, 64,64);
+        powerSprite.setBounds(0,0, 256,256);
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -63,7 +63,7 @@ public abstract class PowerUp {
     }
 
     public void update(Player player, float delta){
-        powerSprite.setPosition(x - Constants.PPM, y - Constants.PPM);
+        powerSprite.setPosition(x - Constants.PPM - 102, y - Constants.PPM - 109);
         if (toDestroy && !destroyed) {
             world.destroyBody(body);
             destroyed = true;
