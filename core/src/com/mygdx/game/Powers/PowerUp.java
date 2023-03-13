@@ -1,10 +1,14 @@
 package com.mygdx.game.Powers;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -39,10 +43,10 @@ public abstract class PowerUp {
         destroyed = false;
         activated = false;
 
-        TextureRegion powerTexture1 = new TextureRegion(new Texture("powerUpImg1.png"));
-        TextureRegion powerTexture2 = new TextureRegion(new Texture("powerUpImg2.png"));
+        TextureRegion powerTexture1 = new TextureRegion(new Texture("powerUp1.png"));
+        TextureRegion powerTexture2 = new TextureRegion(new Texture("powerUp2.png"));
         powerSprite = new Sprite(powerTexture1);
-        powerSprite.setBounds(0,0, 256,256);
+        powerSprite.setBounds(0,0, 64,64);
 
         Array<TextureRegion> frames = new Array<>();
         frames.add(powerTexture1);
@@ -70,7 +74,7 @@ public abstract class PowerUp {
     }
 
     public void update(Player player, float delta){
-        powerSprite.setPosition(x - Constants.PPM - 102, y - Constants.PPM - 109);
+        powerSprite.setPosition(x - Constants.PPM, y - Constants.PPM);
         powerSprite.setRegion(getFrame(delta));
         if (toDestroy && !destroyed) {
             world.destroyBody(body);
@@ -91,7 +95,7 @@ public abstract class PowerUp {
         }
     }
 
-    public TextureRegion getFrame(float dt){
+    private TextureRegion getFrame(float dt){
         TextureRegion region;
 
         region = (TextureRegion) powerUpBlink.getKeyFrame(stateTime, true);
