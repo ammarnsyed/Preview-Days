@@ -1,8 +1,17 @@
 package com.mygdx.game.Powers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.spine.BlendMode;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.Constants;
 import com.mygdx.game.Sprites.Player;
@@ -16,20 +25,34 @@ public abstract class PowerUp {
     protected World world;
     protected float timer = 0f;
     protected boolean activated;
+    Sprite powerSprite;
+    ShapeRenderer shapeRenderer;
 
     public PowerUp(float x, float y, World world){
         this.world = world;
         body = BodyHelper.createBody(x, y, 1, 1, true, world);
-        this.x = body.getPosition().x;
-        this.y = body.getPosition().y;
+        this.x = x;
+        this.y = y;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
         toDestroy = false;
         destroyed = false;
         activated = false;
+
+        TextureRegion powerTexture = new TextureRegion(new Texture("powerUpImg1.png"));
+        powerSprite = new Sprite(powerTexture);
+        powerSprite.setBounds(0,0, 64,64);
+        shapeRenderer = new ShapeRenderer();
     }
 
     public abstract void powerUpActivate(Player player);
+
+    public void render(SpriteBatch batch){
+        if(!destroyed){
+            powerSprite.draw(batch);
+        }
+
+    }
 
     public Body getBody(){
         return body;
@@ -40,6 +63,7 @@ public abstract class PowerUp {
     }
 
     public void update(Player player, float delta){
+        powerSprite.setPosition(x - Constants.PPM, y - Constants.PPM);
         if (toDestroy && !destroyed) {
             world.destroyBody(body);
             destroyed = true;
