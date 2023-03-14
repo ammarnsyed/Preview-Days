@@ -34,6 +34,7 @@ public class Player extends Entity {
     private Animation playerRun;
     private Animation playerJump;
     private boolean isFacingRight;
+    private int maxJumps;
     private float stateTimer;
     private World world;
 
@@ -45,9 +46,8 @@ public class Player extends Entity {
         this.speed = 9f;
         this.jumpCount = 0;
         this.world = world;
-
+        this.maxJumps = 1;
         fixtureSet();
-
         knockedBack = false;
         knockbackTimer = 0;
         fallen = false;
@@ -168,6 +168,10 @@ public class Player extends Entity {
             //Jump
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && maxJumps <= 3 && !fallen) {
                 float force = body.getMass() * jumpForce;
+                if (body.getGravityScale() < 0) {
+                    // If gravity is flipped, apply the jump force in the opposite direction
+                    force *= -1;
+                }
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
                 jumpCount++;
             }
