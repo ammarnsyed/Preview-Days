@@ -23,8 +23,6 @@ import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
 
-import java.util.ArrayList;
-
 import static com.mygdx.game.Helper.Constants.PPM;
 
 public class PlayScreen extends ScreenAdapter {
@@ -65,8 +63,36 @@ public class PlayScreen extends ScreenAdapter {
         NPCs = tileMapHelper.getNPCs();
 
         //3300 4580 start coords
-        Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createRectangularBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
+
+        Body introNpcBody = BodyHelper.createRectangularBody(3740, 6180, 0.5f, 1, false, world);
+        introNPC = new NPC(1, 1, introNpcBody);
+        //first npc obstacle
+        int npcSectionOne = 5642;
+        for(int i = 0; i < 2; i++){
+            npcSecOne.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionOne+720*i,4580,1,1,false,world)));
+        }
+        //second npc obstacle section
+        int npcSectionTwo = 6864;
+        for(int i = 0; i < 1; i++){
+            npcSecTwo.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionTwo,4580,1,1,false,world)));
+        }
+        //third npc obstacle section
+        int npcSectionThree = 8020;
+        for(int i = 0; i < 4; i++){
+            npcSecThree.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionThree+320*i,4580,1,1,false,world)));
+        }
+        //fourth npc obstacle section
+        int npcSectionFour = 9080;
+        for(int i = 0; i < 4; i++){
+            npcSecFour.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionFour-390*i,5480,1,1,false,world)));
+        }
+        //fifth npc obstacle section
+        int npcSectionFive = 7320;
+        for(int i = 0; i < 4; i++){
+            npcSecFive.add(new NPC(1,1,BodyHelper.createRectangularBody(npcSectionFive-480*i,5480,1,1,false,world)));
+        }
 
         world.setContactListener(new WorldContactListener());
 
@@ -132,9 +158,26 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
         //Render objects such as characters and walls
         player.render(batch);
-
-        for(NPC npc : NPCs){
-            npc.render(batch);
+        introNPC.render(batch);
+        jumpPowerUpTest.render(batch);
+        multipleJumpPowerUpTest.render(batch);
+        sizePowerUpTest.render(batch);
+        speedPowerUpTest.render(batch);
+        antiGravityPowerUpTest.render(batch);
+        for(NPC secOne : npcSecOne){
+            secOne.render(batch);
+        }
+        for(NPC secTwo : npcSecTwo){
+            secTwo.render(batch);
+        }
+        for(NPC secThree : npcSecThree){
+            secThree.render(batch);
+        }
+        for(NPC secFour : npcSecFour){
+            secFour.render(batch);
+        }
+        for(NPC secFive : npcSecFive){
+            secFive.render(batch);
         }
 
       //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
