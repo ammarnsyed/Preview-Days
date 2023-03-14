@@ -1,5 +1,6 @@
 package com.mygdx.game.Helper;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -8,24 +9,32 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Sprites.NPC;
 
 import static com.mygdx.game.Helper.Constants.PPM;
 
 public class TileMapHelper {
     private TiledMap tiledMap;
     private PlayScreen playScreen;
+    public Array<NPC> NPCs;
 
     public TileMapHelper(PlayScreen playScreen){
         this.playScreen = playScreen;
+         NPCs = new Array<>();
+    }
+
+    public Array<NPC> getNPCs() {
+        return NPCs;
     }
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("MapLayout.tmx");
-        parseMapObjects(tiledMap.getLayers().get(2).getObjects(), 1);
-        parseMapObjects(tiledMap.getLayers().get(3).getObjects(), 2);
-        parseMapObjects(tiledMap.getLayers().get(4).getObjects(), 3);
 
+        for(int i = 2; i<=5; i++){
+            parseMapObjects(tiledMap.getLayers().get(i).getObjects(), i-1);
+        }
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
@@ -33,9 +42,21 @@ public class TileMapHelper {
         for(MapObject mapObject : mapObjects){
 
             if(mapObject instanceof PolygonMapObject){
-                createStaticBody((PolygonMapObject) mapObject, layer);
+                if(layer == 4){
+                    createNPC((PolygonMapObject) mapObject);
+                }
+                else{
+                    createStaticBody((PolygonMapObject) mapObject, layer);
+                }
+
             }
         }
+    }
+
+    private void createNPC(PolygonMapObject polygonMapObject){
+        Gdx.app.log("npc position", polygonMapObject.getPolygon().getX() + " " + polygonMapObject.getPolygon().getY());
+        Body npcBody = BodyHelper.createBody(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), 0.5f, 1, false, playScreen.getWorld());
+        NPCs.add(new NPC(1, 1, npcBody));
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject, int layer){
@@ -73,3 +94,4 @@ public class TileMapHelper {
         return shape;
     }
 }
+

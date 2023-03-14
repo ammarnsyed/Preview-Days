@@ -35,14 +35,11 @@ public class PlayScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+    private Array<NPC> NPCs;
 
     private Player player;
-    private NPC introNPC;
-    private Array<NPC> npcSecOne = new Array<NPC>();
-    private Array<NPC> npcSecTwo = new Array<NPC>();
-    private Array<NPC> npcSecThree = new Array<NPC>();
-    private Array<NPC> npcSecFour = new Array<NPC>();
-    private Array<NPC> npcSecFive = new Array<NPC>();
+
+
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
@@ -63,6 +60,8 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
+        NPCs = tileMapHelper.getNPCs();
+
         //3300 4580 start coords
         Body playerBody = BodyHelper.createRectangularBody(3300, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
@@ -109,31 +108,15 @@ public class PlayScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
         player.update(delta);
-        introNPC.update(delta);
-        for(NPC secOne : npcSecOne){
-            secOne.update(delta);
+        for(NPC npc : NPCs){
+            npc.update(delta);
         }
-        for(NPC secTwo : npcSecTwo){
-            secTwo.update(delta);
-        }
-        for(NPC secThree : npcSecThree){
-            secThree.update(delta);
-        }
-        for(NPC secFour : npcSecFour){
-            secFour.update(delta);
-        }
-        for(NPC secFive : npcSecFive){
-            secFive.update(delta);
-        }
-
 
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
         multipleJumpPowerUpTest.update(player, delta);
         antiGravityPowerUpTest.update(player, delta);
-
-
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
@@ -196,7 +179,6 @@ public class PlayScreen extends ScreenAdapter {
         for(NPC secFive : npcSecFive){
             secFive.render(batch);
         }
-      //timeRemaining -= delta;
 
       //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
