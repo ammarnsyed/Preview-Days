@@ -23,6 +23,8 @@ import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import jdk.javadoc.internal.doclets.formats.html.Table;
 
 import java.util.ArrayList;
 
@@ -54,12 +56,13 @@ public class PlayScreen extends ScreenAdapter {
 
     private TextureAtlas atlas;
 
-    private float deltaTime = 10;
-    private float score = 0;
     private BitmapFont font;
 
-    public PlayScreen(OrthographicCamera camera){
+    private float deltaTime = 10;
+    private float score = 0;
 
+  public PlayScreen(OrthographicCamera camera){
+        this.font = new BitmapFont();
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -146,12 +149,17 @@ public class PlayScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
-
         batch.begin();
+
         deltaTime = Gdx.graphics.getDeltaTime();
-        font.draw(batch, "Score: " + score,4000,4000);
-        font.draw(batch, "Time: " + deltaTime,4000,3950);
-        font.getData().setScale(2f);
+        deltaTime -= delta;
+        font.draw(batch, "Score:  " + score, 3800,5000);
+        font.draw(batch, "Time: " + deltaTime,3800,4950);
+        font.getData().setScale(3f);
+
+
+        
+
         //Render objects such as characters and walls
         player.render(batch);
 
@@ -165,6 +173,7 @@ public class PlayScreen extends ScreenAdapter {
             npc.render(batch);
         }
 
+        //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
@@ -183,4 +192,9 @@ public class PlayScreen extends ScreenAdapter {
         return world;
     }
     public TextureAtlas getAtlas(){return atlas;}
+    private String formatTime(float time) {
+      int minutes = (int)time / 60;
+      int seconds = (int)time % 60;
+      return String.format("%02d:%02d", minutes, seconds);
+  }
 }
