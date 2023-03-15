@@ -54,7 +54,8 @@ public class PlayScreen extends ScreenAdapter {
 
     private TextureAtlas atlas;
 
-    private float timeRemaining = 300;
+    private float deltaTime = 10;
+    private float score = 0;
     private BitmapFont font;
 
     public PlayScreen(OrthographicCamera camera){
@@ -147,6 +148,10 @@ public class PlayScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.render();
 
         batch.begin();
+        deltaTime = Gdx.graphics.getDeltaTime();
+        font.draw(batch, "Score: " + score,4000,4000);
+        font.draw(batch, "Time: " + deltaTime,4000,3950);
+        font.getData().setScale(2f);
         //Render objects such as characters and walls
         player.render(batch);
 
@@ -160,7 +165,6 @@ public class PlayScreen extends ScreenAdapter {
             npc.render(batch);
         }
 
-        //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
