@@ -27,6 +27,7 @@ import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import jdk.javadoc.internal.doclets.formats.html.Table;
 
 import java.util.ArrayList;
 
@@ -176,7 +177,9 @@ public class PlayScreen extends ScreenAdapter {
         deltaTime -= delta;
         font.draw(batch, "Score:  " + score, 3800,5000);
         font.draw(batch, "Time: " + deltaTime,3800,4950);
-        font.getData().setScale(2f);
+        font.getData().setScale(3f);
+
+
         
 
         //Render objects such as characters and walls
