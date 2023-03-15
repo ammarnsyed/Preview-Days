@@ -1,6 +1,7 @@
 package com.mygdx.game.Helper;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.Checkpoint.Checkpoint;
 import com.mygdx.game.Powers.PowerUp;
 import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.Sprites.Player;
@@ -51,6 +52,16 @@ public class WorldContactListener implements ContactListener {
                 }
                 else{
                     ((NPC)fixB.getUserData()).reverseVelocity();
+                }
+                break;
+            case Constants.PLAYER_BIT | Constants.CHECKPOINT_BIT:
+                if(fixA.getFilterData().categoryBits == Constants.CHECKPOINT_BIT){
+                    ((Checkpoint)fixA.getUserData()).printContact();
+                    ((Checkpoint)fixA.getUserData()).getCheckName();
+                }
+                else{
+                    ((Checkpoint)fixB.getUserData()).printContact();
+                    ((Checkpoint)fixB.getUserData()).getCheckName();
                 }
                 break;
         }
