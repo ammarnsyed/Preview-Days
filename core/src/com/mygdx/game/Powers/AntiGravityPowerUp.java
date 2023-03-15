@@ -13,6 +13,6 @@ public class AntiGravityPowerUp extends PowerUp {
     @Override
     public void powerUpActivate(Player player) {
         // Flip gravity
-        player.getBody().setGravityScale(-1f);
+        player.setGravityScale(-1f);
     }
 }

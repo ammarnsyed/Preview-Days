@@ -54,7 +54,6 @@ public class TileMapHelper {
     }
 
     private void createNPC(PolygonMapObject polygonMapObject){
-        Gdx.app.log("npc position", polygonMapObject.getPolygon().getX() + " " + polygonMapObject.getPolygon().getY());
         Body npcBody = BodyHelper.createRectangularBody(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), 0.5f, 1, false, playScreen.getWorld());
         NPCs.add(new NPC(1, 1, npcBody));
     }

@@ -25,9 +25,9 @@ public class Player extends Entity {
     private boolean fallen;
     private boolean needToUpdateBody;
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING};
-    public State currentState;
-    public State previousState;
+    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private State currentState;
+    private State previousState;
     private TextureRegion playerIdle;
     private TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
     private Sprite playerSprite;
@@ -100,7 +100,7 @@ public class Player extends Entity {
         playerSprite.draw(batch);
     }
 
-    public TextureRegion getFrame(float dt){
+    private TextureRegion getFrame(float dt){
         currentState = getState();
         TextureRegion region;
         switch(currentState){
@@ -139,7 +139,7 @@ public class Player extends Entity {
 
     }
 
-    public State getState(){
+    private State getState(){
         if(body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)){
             return State.JUMPING;
         }
@@ -187,13 +187,6 @@ public class Player extends Entity {
         }
     }
 
-    public void setJumpForce(int jumpForce){
-        this.jumpForce = jumpForce;
-    }
-
-    public int getJumpForce(){
-        return jumpForce;
-    }
 
     public void playerDeath(){
         Filter filter = new Filter();
@@ -229,46 +222,8 @@ public class Player extends Entity {
         return dead;
     }
 
-    public int getMaxJumps() {
-        return maxJumps;
-    }
 
-    public void setMaxJumps(int maxJumps) {
-        this.maxJumps = maxJumps;
-    }
-
-    public float getSpeed(){
-        return this.speed;
-    }
-
-    public void setSpeed(float speed){
-        this.speed = speed;
-    }
-
-    public void setWidth(float width){
-        this.width = width;
-        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        needToUpdateBody = true;
-
-    }
-    public float getWidth(){
-        return this.width;
-    }
-
-    public void setHeight(float height){
-        this.height = height;
-        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        needToUpdateBody = true;
-
-    }
-    public float getHeight(){
-        return this.height;
-    }
-    public Sprite getPlayerSprite() {
-        return playerSprite;
-    }
-
-    public void changeBody(){
+    private void changeBody(){
         Runnable destroyBody = new Runnable() {
             @Override
             public void run() {
@@ -296,8 +251,64 @@ public class Player extends Entity {
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
     }
 
-
     public float getStateTimer() {
         return stateTimer;
     }
+
+    //All power up Getters and Setters
+    public int getMaxJumps() {
+        return maxJumps;
+    }
+
+    public void setMaxJumps(int maxJumps) {
+        this.maxJumps = maxJumps;
+    }
+
+    public float getSpeed(){
+        return this.speed;
+    }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public float getWidth(){
+        return this.width;
+    }
+
+    public void setWidth(float width){
+        this.width = width;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        needToUpdateBody = true;
+
+    }
+
+    public float getHeight(){
+        return this.height;
+    }
+
+    public void setHeight(float height){
+        this.height = height;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        needToUpdateBody = true;
+
+    }
+
+    public int getJumpForce(){
+        return jumpForce;
+    }
+
+    public void setJumpForce(int jumpForce){
+        this.jumpForce = jumpForce;
+    }
+
+    public float getGravityScale(){
+        return body.getGravityScale();
+    }
+
+    public void setGravityScale(float gravityScale){
+        body.setGravityScale(gravityScale);
+    }
+
+
 }
