@@ -12,7 +12,7 @@ public class MultipleJumpPowerUp extends PowerUp {
     @Override
     public void powerUpActivate(Player player) {
         int multipleJumps = player.getMaxJumps();
-        int numOfJumps = 3;
-        player.setMaxJumps(multipleJumps + (numOfJumps - 1));
+        int numOfJumps = 2;
+        player.setMaxJumps(multipleJumps + numOfJumps);
     }
 }

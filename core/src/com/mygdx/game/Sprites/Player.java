@@ -29,7 +29,6 @@ public class Player extends Entity {
     private State currentState;
     private State previousState;
     private TextureRegion playerIdle;
-    private TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
     private Sprite playerSprite;
     private Animation playerRun;
     private Animation playerJump;
@@ -53,6 +52,7 @@ public class Player extends Entity {
         fallen = false;
 
         //Animation Logic
+        TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
