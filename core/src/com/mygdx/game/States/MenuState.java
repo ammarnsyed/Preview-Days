@@ -8,10 +8,12 @@ public class MenuState extends State{
   private static boolean isTouched;
   private Texture playBtn;
   private Texture charImg;
+  private Texture bgImg;
 
 
   public MenuState(gStateManager gsm) {
     super(gsm);
+    bgImg = new Texture("bgImg.png");
     playBtn = new Texture("startButton.png");
     charImg = new Texture("char.png");
     isTouched = false;
@@ -33,8 +35,9 @@ public class MenuState extends State{
   @Override
   public void render(SpriteBatch sb) {
     sb.begin();
-    sb.draw(charImg,3300,4580, 170,170);
-    sb.draw(playBtn, 3200,4380,351, 150);
+    sb.draw(bgImg,3000,4000,1920,1080);
+    sb.draw(charImg,3200,4580, 170,170);
+    sb.draw(playBtn, 3100,4380,351, 150);
     sb.end();
   }
 
