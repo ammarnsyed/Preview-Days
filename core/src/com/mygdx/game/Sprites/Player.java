@@ -45,9 +45,16 @@ public class Player extends Entity {
         hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
+
+        fixture.setUserData(this);
+        fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
+        fixture.getFilterData().maskBits =
+                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT;
+
         this.world = world;
         this.maxJumps = 1;
         fixtureSet();
+
         knockedBack = false;
         knockbackTimer = 0;
         fallen = false;

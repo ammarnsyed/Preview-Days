@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Checkpoint.Checkpoint;
 import com.mygdx.game.Helper.BodyHelper;
 import com.mygdx.game.Helper.TileMapHelper;
 import com.mygdx.game.Helper.WorldContactListener;
@@ -45,6 +46,9 @@ public class PlayScreen extends ScreenAdapter {
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
+    private Checkpoint Spawn;
+    private Checkpoint Random;
+    private int playerX;
     private MultipleJumpPowerUp multipleJumpPowerUpTest;
     private AntiGravityPowerUp antiGravityPowerUpTest;
 
@@ -62,11 +66,14 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
+
+        playerX = Checkpoint.pointX;
+        //3300 4580 start coords
+        Body playerBody = BodyHelper.createRectangularBody(Checkpoint.spawnX(), Checkpoint.spawnY(), 0.5f, 1, false, world);
+        player = new Player(1, 1, playerBody, getWorld());
+
         NPCs = tileMapHelper.getNPCs();
 
-        //3300 4580 start coords
-        Body playerBody = BodyHelper.createRectangularBody(3300, 4580, 0.5f, 1, false, world);
-        player = new Player(1, 1, playerBody, getWorld());
 
         world.setContactListener(new WorldContactListener());
 
@@ -74,8 +81,14 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
         speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
         sizePowerUpTest = new SizePowerUp(5668, 5846, world);
+
+        //Checkpoints
+        Spawn = new Checkpoint(5800, 5080, world, "Spawn");
+        Random = new Checkpoint(6500, 4600, world, "Random");
+
         multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 6000, world);
         antiGravityPowerUpTest = new AntiGravityPowerUp(3300, 4880, world);
+
     }
 
     private void update(float delta){
@@ -89,6 +102,10 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
+
+        Checkpoint.spawnX();
+        Checkpoint.spawnY();
+
         multipleJumpPowerUpTest.update(player, delta);
         antiGravityPowerUpTest.update(player, delta);
 
