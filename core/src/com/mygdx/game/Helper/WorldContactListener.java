@@ -48,10 +48,12 @@ public class WorldContactListener implements ContactListener {
                 break;
             case Constants.PLAYER_BIT | Constants.CHECKPOINT_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.CHECKPOINT_BIT){
-                    ((Checkpoint)fixA.getUserData()).printWhatever();
+                    ((Checkpoint)fixA.getUserData()).printContact();
+                    ((Checkpoint)fixA.getUserData()).getCheckName();
                 }
                 else{
-                    ((Checkpoint)fixB.getUserData()).printWhatever();
+                    ((Checkpoint)fixB.getUserData()).printContact();
+                    ((Checkpoint)fixB.getUserData()).getCheckName();
                 }
                 break;
         }

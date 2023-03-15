@@ -52,6 +52,8 @@ public class PlayScreen extends ScreenAdapter {
     private SpeedPowerUp speedPowerUpTest;
     private SizePowerUp sizePowerUpTest;
     private Checkpoint Spawn;
+    private Checkpoint Random;
+    private int playerX;
 
     private TextureAtlas atlas;
 
@@ -65,8 +67,9 @@ public class PlayScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
+        playerX = Checkpoint.pointX;
         //3300 4580 start coords
-        Body playerBody = BodyHelper.createBody(3300, 4580, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createBody(Checkpoint.spawnX(), Checkpoint.spawnY(), 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody);
 
         //first npc obstacle
@@ -103,7 +106,9 @@ public class PlayScreen extends ScreenAdapter {
         sizePowerUpTest = new SizePowerUp(5668, 5846, world);
 
         //Checkpoints
-        Spawn = new Checkpoint(3300, 4880, world, "Spawn");
+        Spawn = new Checkpoint(5800, 5080, world, "Spawn");
+        Random = new Checkpoint(6500, 4600, world, "Random");
+
 
     }
 
@@ -131,7 +136,8 @@ public class PlayScreen extends ScreenAdapter {
         jumpPowerUpTest.update(player, delta);
         speedPowerUpTest.update(player, delta);
         sizePowerUpTest.update(player, delta);
-        Spawn.update(player);
+        Checkpoint.spawnX();
+        Checkpoint.spawnY();
 
 
         batch.setProjectionMatrix(camera.combined);
