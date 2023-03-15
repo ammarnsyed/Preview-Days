@@ -57,8 +57,8 @@ public class PlayScreen extends ScreenAdapter {
 
     private BitmapFont font;
 
-    private float deltaTime = 0;
-    private float distance = 0;
+    private float deltaTime = 10;
+    private float score = 0;
 
   public PlayScreen(OrthographicCamera camera){
         this.font = new BitmapFont();
@@ -173,8 +173,12 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
 
         deltaTime = Gdx.graphics.getDeltaTime();
-        deltaTime += delta;
-        font.draw(batch, "Time: " + formatTime(deltaTime),4000,5000);
+        deltaTime -= delta;
+        font.draw(batch, "Score:  " + score, 3800,5000);
+        font.draw(batch, "Time: " + deltaTime,3800,4950);
+        font.getData().setScale(2f);
+        
+
         //Render objects such as characters and walls
         player.render(batch);
         for(NPC secOne : npcSecOne){
