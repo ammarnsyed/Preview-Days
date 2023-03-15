@@ -26,7 +26,7 @@ public class Checkpoint {
 
     public Checkpoint(int x, int y, World world, String CheckName){
         this.world = world;
-        body = BodyHelper.createBody(x, y, 1, 1, true, world);
+        body = BodyHelper.createRectangularBody(x, y, 1, 1, true, world);
         fixture = body.getFixtureList().get(0);
         this.x = x;
         this.y = y;
