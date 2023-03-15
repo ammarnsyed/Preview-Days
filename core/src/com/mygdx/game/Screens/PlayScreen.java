@@ -163,12 +163,9 @@ public class PlayScreen extends ScreenAdapter {
 
         deltaTime = Gdx.graphics.getDeltaTime();
         deltaTime -= delta;
-        font.draw(batch, "Score:  " + score, 3800,5000);
+        /*font.draw(batch, "Score:  " + score, 3800,5000);
         font.draw(batch, "Time: " + deltaTime,3800,4950);
-        font.getData().setScale(3f);
-
-
-        
+        font.getData().setScale(3f);*/
 
         //Render objects such as characters and walls
         player.render(batch);
@@ -193,6 +190,21 @@ public class PlayScreen extends ScreenAdapter {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
+        Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Table table = new Table();
+        table.setFillParent(true);
+        sc.setFontScale(3f,3f);
+        tm.setFontScale(3f,3f);
+        table.add(sc);
+        table.row();
+        table.add(tm);
+        table.left();
+        table.top();
+        table.padLeft(12f);
+        stage.addActor(table);
+        stage.draw();
+
         Label livesCounter = new Label("Lives: ".concat(String.valueOf(playerLives+1)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         livesCounter.setFontScale(4f, 4f);
