@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
@@ -60,6 +61,7 @@ public class PlayScreen extends ScreenAdapter {
 
     private Stage stage;
     private TextureAtlas atlas;
+    private Image image1;
 
     private BitmapFont font;
 
@@ -205,13 +207,18 @@ public class PlayScreen extends ScreenAdapter {
         stage.addActor(table);
         stage.draw();
 
-        Label livesCounter = new Label("Lives: ".concat(String.valueOf(playerLives+1)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
-        livesCounter.setFontScale(4f, 4f);
-
+        if(playerLives+1 == 3){
+            image1 = new Image(new Texture("3hp.png"));
+        }else if(playerLives+1 == 2){
+            image1 = new Image(new Texture("2hp.png"));
+        }else if(playerLives+1 == 1){
+            image1 = new Image(new Texture("1hp.png"));
+        }else{
+            image1 = new Image(new Texture("dead.png"));
+        }
         Table newTable = new Table();
         newTable.setFillParent(true);
-        newTable.add(livesCounter);
+        newTable.add(image1);
         newTable.right();
         newTable.top();
         newTable.padRight(20f);
