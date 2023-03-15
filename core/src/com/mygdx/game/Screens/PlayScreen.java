@@ -194,18 +194,7 @@ public class PlayScreen extends ScreenAdapter {
         }
         Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Table table = new Table();
-        table.setFillParent(true);
-        sc.setFontScale(3f,3f);
-        tm.setFontScale(3f,3f);
-        table.add(sc);
-        table.row();
-        table.add(tm);
-        table.left();
-        table.top();
-        table.padLeft(12f);
-        stage.addActor(table);
-        stage.draw();
+
 
         if(playerLives+1 == 3){
             image1 = new Image(new Texture("3hp.png"));
@@ -218,10 +207,17 @@ public class PlayScreen extends ScreenAdapter {
         }
         Table newTable = new Table();
         newTable.setFillParent(true);
-        newTable.add(image1);
-        newTable.right();
+        sc.setFontScale(3f,3f);
+        tm.setFontScale(3f,3f);
         newTable.top();
-        newTable.padRight(20f);
+        newTable.left();
+        newTable.padLeft(20f);
+        newTable.add(image1);
+        newTable.row();
+        newTable.add(sc);
+        newTable.row();
+        newTable.add(tm);
+
         stage.addActor(newTable);
         stage.draw();
     }
