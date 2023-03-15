@@ -15,6 +15,7 @@ import static com.mygdx.game.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
+    private int lives;
     public static boolean isDead;
     private int hitCount;
     private int jumpCount;
@@ -40,6 +41,7 @@ public class Player extends Entity {
 
     public Player(float width, float height, Body body, World world) {
         super(width, height, body);
+        lives = 2;
         isDead = false;
         needToUpdateBody = false;
         hitCount = 0;
@@ -203,13 +205,15 @@ public class Player extends Entity {
     }
 
     public void playerDeath(){
-        Filter filter = new Filter();
-        filter.maskBits = NOTHING_BIT;
-        dead = true;
-        isDead = true;
+        if(lives == 0) {
+            Filter filter = new Filter();
+            filter.maskBits = NOTHING_BIT;
+            dead = true;
+            isDead = true;
 
-        for(Fixture fixture : body.getFixtureList()){
-            fixture.setFilterData(filter);
+            for (Fixture fixture : body.getFixtureList()) {
+                fixture.setFilterData(filter);
+            }
         }
     }
 
@@ -226,6 +230,7 @@ public class Player extends Entity {
         else{
             knockDirection.x = 1;
         }
+        lives--;
         knockDirection.y = 1;
         knockDirection.nor();
         Vector2 knockback = knockDirection.scl(knockbackForce);
@@ -306,5 +311,9 @@ public class Player extends Entity {
 
     public float getStateTimer() {
         return stateTimer;
+    }
+
+    public int getLives() {
+        return lives;
     }
 }
