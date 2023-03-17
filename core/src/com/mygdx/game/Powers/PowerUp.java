@@ -13,6 +13,9 @@ import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.Player;
 
+/**
+ * This is the class that your PowerUps will inherit from!
+ */
 public class PowerUp {
     protected float x, y;
     private float stateTime;

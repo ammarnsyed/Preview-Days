@@ -48,14 +48,14 @@ public class PlayScreen extends ScreenAdapter {
 
     private int playerLives;
 
-    private JumpPowerUp jumpPowerUpTest;
-    private SpeedPowerUp speedPowerUpTest;
-    private SizePowerUp sizePowerUpTest;
+//    private JumpPowerUp jumpPowerUpTest;
+//    private SpeedPowerUp speedPowerUpTest;
+//    private SizePowerUp sizePowerUpTest;
     private Checkpoint Spawn;
     private Checkpoint Random;
     private int playerX;
-    private MultipleJumpPowerUp multipleJumpPowerUpTest;
-    private AntiGravityPowerUp antiGravityPowerUpTest;
+//    private MultipleJumpPowerUp multipleJumpPowerUpTest;
+//    private AntiGravityPowerUp antiGravityPowerUpTest;
 
     private Stage stage;
     private TextureAtlas atlas;

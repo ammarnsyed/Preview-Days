@@ -1,4 +1,4 @@
-package com.mygdx.game.Powers;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;

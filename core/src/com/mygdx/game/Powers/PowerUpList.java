@@ -1,8 +1,4 @@
 package com.mygdx.game.Powers;
-
-import com.badlogic.gdx.physics.box2d.World;
-
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class PowerUpList {
@@ -33,12 +29,6 @@ public class PowerUpList {
      */
     private void setUpPowerList(){
         powerUpClassNames.add("PowerUpExample");
-        powerUpClassNames.add("AntiGravityPowerUp");
-        powerUpClassNames.add("SizePowerUp");
 
     }
-
-
-
-
 }

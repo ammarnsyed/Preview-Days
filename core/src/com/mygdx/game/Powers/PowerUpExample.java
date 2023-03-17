@@ -8,9 +8,13 @@ public class PowerUpExample extends PowerUp {
         super(x, y, world);
     }
 
+    /**
+     * Override this method with your power up implementation to overcome the obstacle.
+     * @param player refers to the player itself. See what kind of methods are available to you to help you
+     *               come up with a unique ways to traverse through the level!
+     */
     @Override
     public void powerUpActivate(Player player) {
-        player.setJumpForce(20);
 
     }
 }
