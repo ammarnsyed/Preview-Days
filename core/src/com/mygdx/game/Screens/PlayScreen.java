@@ -28,6 +28,7 @@ import com.mygdx.game.Sprites.Player;
 import com.mygdx.game.Sprites.NPC;
 import com.mygdx.game.States.MenuState;
 import com.mygdx.game.States.gStateManager;
+import com.mygdx.game.Hud.hud;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class PlayScreen extends ScreenAdapter {
     private Array<NPC> NPCs;
 
     private Player player;
-
+    private hud hud;
     private int playerLives;
 
     private JumpPowerUp jumpPowerUpTest;
@@ -89,6 +90,7 @@ public class PlayScreen extends ScreenAdapter {
 
         NPCs = tileMapHelper.getNPCs();
 
+        this.hud = new hud(batch);
 
         world.setContactListener(new WorldContactListener());
 
@@ -111,6 +113,7 @@ public class PlayScreen extends ScreenAdapter {
         cameraUpdate();
         playerLives = player.getLives();
         player.update(delta);
+        hud.update(delta);
         for(NPC npc : NPCs){
             npc.update(delta);
         }
@@ -164,10 +167,8 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
 
         deltaTime = Gdx.graphics.getDeltaTime();
-        deltaTime -= delta;
-        /*font.draw(batch, "Score:  " + score, 3800,5000);
-        font.draw(batch, "Time: " + deltaTime,3800,4950);
-        font.getData().setScale(3f);*/
+
+
 
         //Render objects such as characters and walls
         player.render(batch);
@@ -185,16 +186,16 @@ public class PlayScreen extends ScreenAdapter {
         //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
-
+        hud.stage.draw();
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
         if(player.isDead() && player.getStateTimer() > 3){
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
-        Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        /*Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
+*/
 
         if(playerLives+1 == 3){
             image1 = new Image(new Texture("3hp.png"));
@@ -207,16 +208,16 @@ public class PlayScreen extends ScreenAdapter {
         }
         Table newTable = new Table();
         newTable.setFillParent(true);
-        sc.setFontScale(3f,3f);
-        tm.setFontScale(3f,3f);
+       /* sc.setFontScale(3f,3f);
+        tm.setFontScale(3f,3f);*/
         newTable.top();
         newTable.left();
         newTable.padLeft(20f);
         newTable.add(image1);
         newTable.row();
-        newTable.add(sc);
+        /*newTable.add(sc);
         newTable.row();
-        newTable.add(tm);
+        newTable.add(tm);*/
 
         stage.addActor(newTable);
         stage.draw();
