@@ -219,7 +219,7 @@ public class Player extends Entity {
             filter.maskBits = NOTHING_BIT;
             dead = true;
             isDead = true;
-
+            lives = lives - 3;
             for (Fixture fixture : body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
