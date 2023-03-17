@@ -204,8 +204,17 @@ public class Player extends Entity {
         return jumpForce;
     }
 
+
+
+    public void playerCheckToDie(){
+        if(lives == 0){
+            playerDeath();
+        }
+
+    }
+
+
     public void playerDeath(){
-        if(lives == 0) {
             Filter filter = new Filter();
             filter.maskBits = NOTHING_BIT;
             dead = true;
@@ -214,7 +223,7 @@ public class Player extends Entity {
             for (Fixture fixture : body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
-        }
+
     }
 
     public void playerDamage(NPC npc){
