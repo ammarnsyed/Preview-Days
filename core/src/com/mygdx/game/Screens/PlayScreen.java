@@ -41,6 +41,7 @@ public class PlayScreen extends ScreenAdapter {
     private gStateManager gsm;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
+    private Vector3 cameraAnchor;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
@@ -133,10 +134,14 @@ public class PlayScreen extends ScreenAdapter {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.P)){
             player.setPaused();
+            cameraAnchor = camera.position;
+            cameraAnchor.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
+            cameraAnchor.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
         }
     }
 
     public void updatePause(float delta){
+        cameraAnchored();
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
@@ -155,6 +160,11 @@ public class PlayScreen extends ScreenAdapter {
         camera.update();
     }
 
+    private void cameraAnchored(){
+      camera.position.set(cameraAnchor);
+      camera.update();
+    }
+
 
     @Override
     public void show(){
@@ -167,7 +177,10 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-      if(!player.getPaused()) {
+      if(player.getPaused()) {
+          float deltaP = delta;
+          updatePause(deltaP);
+      }else{
           this.update(delta);
 
           Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -233,9 +246,6 @@ public class PlayScreen extends ScreenAdapter {
 
           stage.addActor(newTable);
           stage.draw();
-      }else{
-          float deltaP = delta;
-          updatePause(deltaP);
       }
     }
 
