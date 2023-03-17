@@ -131,6 +131,13 @@ public class PlayScreen extends ScreenAdapter {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+            player.setPaused();
+        }
+    }
+
+    public void updatePause(float delta){
+
     }
 
     private void cameraUpdate(){
@@ -155,71 +162,76 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-        this.update(delta);
+      if(!player.getPaused()) {
+          this.update(delta);
 
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+          Gdx.gl.glClearColor(0, 0, 0, 1);
+          Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        orthogonalTiledMapRenderer.render();
-        batch.begin();
+          orthogonalTiledMapRenderer.render();
+          batch.begin();
 
-        deltaTime = Gdx.graphics.getDeltaTime();
-        deltaTime -= delta;
+          deltaTime = Gdx.graphics.getDeltaTime();
+          deltaTime -= delta;
         /*font.draw(batch, "Score:  " + score, 3800,5000);
         font.draw(batch, "Time: " + deltaTime,3800,4950);
         font.getData().setScale(3f);*/
 
-        //Render objects such as characters and walls
-        player.render(batch);
+          //Render objects such as characters and walls
+          player.render(batch);
 
-        jumpPowerUpTest.render(batch);
-        speedPowerUpTest.render(batch);
-        sizePowerUpTest.render(batch);
-        multipleJumpPowerUpTest.render(batch);
-        antiGravityPowerUpTest.render(batch);
+          jumpPowerUpTest.render(batch);
+          speedPowerUpTest.render(batch);
+          sizePowerUpTest.render(batch);
+          multipleJumpPowerUpTest.render(batch);
+          antiGravityPowerUpTest.render(batch);
 
-        for(NPC npc : NPCs){
-            npc.render(batch);
-        }
+          for (NPC npc : NPCs) {
+              npc.render(batch);
+          }
 
-        //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
-        batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+          //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
+          batch.end();
+          box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
-        gsm.update(Gdx.graphics.getDeltaTime());
-        gsm.render(batch);
-        if(player.isDead() && player.getStateTimer() > 3){
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            Boot.INSTANCE.create();
-        }
-        Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+          gsm.update(Gdx.graphics.getDeltaTime());
+          gsm.render(batch);
+          if (player.isDead() && player.getStateTimer() > 3) {
+              Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+              Boot.INSTANCE.create();
+          }
+          Label sc = new Label("Score: ".concat(String.valueOf(score)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+          Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 
-        if(playerLives+1 == 3){
-            image1 = new Image(new Texture("3hp.png"));
-        }else if(playerLives+1 == 2){
-            image1 = new Image(new Texture("2hp.png"));
-        }else if(playerLives+1 == 1){
-            image1 = new Image(new Texture("1hp.png"));
-        }else{
-            image1 = new Image(new Texture("dead.png"));
-        }
-        Table newTable = new Table();
-        newTable.setFillParent(true);
-        sc.setFontScale(3f,3f);
-        tm.setFontScale(3f,3f);
-        newTable.top();
-        newTable.left();
-        newTable.padLeft(20f);
-        newTable.add(image1);
-        newTable.row();
-        newTable.add(sc);
-        newTable.row();
-        newTable.add(tm);
+          if (playerLives + 1 == 3) {
+              image1 = new Image(new Texture("3hp.png"));
+          } else if (playerLives + 1 == 2) {
+              image1 = new Image(new Texture("2hp.png"));
+          } else if (playerLives + 1 == 1) {
+              image1 = new Image(new Texture("1hp.png"));
+          } else {
+              image1 = new Image(new Texture("dead.png"));
+          }
+          Table newTable = new Table();
+          newTable.setFillParent(true);
+          sc.setFontScale(3f, 3f);
+          tm.setFontScale(3f, 3f);
+          newTable.top();
+          newTable.left();
+          newTable.padLeft(20f);
+          newTable.add(image1);
+          newTable.row();
+          newTable.add(sc);
+          newTable.row();
+          newTable.add(tm);
 
-        stage.addActor(newTable);
-        stage.draw();
+          stage.addActor(newTable);
+          stage.draw();
+      }else{
+          updatePause(delta);
+          
+      }
     }
 
     public void setPlayer(Player player){

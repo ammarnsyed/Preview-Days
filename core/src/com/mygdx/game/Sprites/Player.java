@@ -17,6 +17,7 @@ public class Player extends Entity {
 
     private int lives;
     public static boolean isDead;
+    private boolean isPaused;
     private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
@@ -43,6 +44,7 @@ public class Player extends Entity {
         super(width, height, body);
         lives = 2;
         isDead = false;
+        isPaused = false;
         needToUpdateBody = false;
         hitCount = 0;
         this.speed = 9f;
@@ -239,6 +241,18 @@ public class Player extends Entity {
 
     public boolean isDead() {
         return dead;
+    }
+
+    public boolean getPaused(){
+        return isPaused;
+    }
+
+    public void setPaused(){
+        isPaused = true;
+    }
+
+    public void setUnPaused(){
+        isPaused = false;
     }
 
     public int getMaxJumps() {
