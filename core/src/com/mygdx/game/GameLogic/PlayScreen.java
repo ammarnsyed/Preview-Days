@@ -38,6 +38,7 @@ public class PlayScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
+    private Array<PowerUp> powerUpArray;
 
     private Player player;
 
@@ -80,6 +81,10 @@ public class PlayScreen extends ScreenAdapter {
         player = new Player(1, 1, playerBody, getWorld());
 
         NPCs = tileMapHelper.getNPCs();
+        powerUpArray = tileMapHelper.getPowerUps();
+        powerUpArray.set(0, new AntiGravityPowerUp(powerUpArray.get(0).getBody().getPosition().x, powerUpArray.get(0).getBody().getPosition().y, world));
+
+
 
 
         world.setContactListener(new WorldContactListener());
@@ -105,6 +110,10 @@ public class PlayScreen extends ScreenAdapter {
         player.update(delta);
         for(NPC npc : NPCs){
             npc.update(delta);
+        }
+
+        for(PowerUp power : powerUpArray){
+            power.update(player, delta);
         }
 
         jumpPowerUpTest.update(player, delta);
@@ -175,6 +184,10 @@ public class PlayScreen extends ScreenAdapter {
 
         for(NPC npc : NPCs){
             npc.render(batch);
+        }
+
+        for(PowerUp power : powerUpArray){
+            power.render(batch);
         }
 
         //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);

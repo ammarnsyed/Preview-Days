@@ -13,7 +13,7 @@ import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.Player;
 
-public abstract class PowerUp {
+public class PowerUp {
     protected float x, y;
     private float stateTime;
     protected Body body;
@@ -34,6 +34,7 @@ public abstract class PowerUp {
         stateTime = 0;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
+        fixture.setUserData(this);
         toDestroy = false;
         destroyed = false;
         activated = false;
@@ -51,7 +52,9 @@ public abstract class PowerUp {
 
     }
 
-    public abstract void powerUpActivate(Player player);
+    public void powerUpActivate(Player player){
+
+    };
 
     public void render(SpriteBatch batch){
         if(!destroyed){
