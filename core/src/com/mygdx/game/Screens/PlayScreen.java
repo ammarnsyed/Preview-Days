@@ -63,6 +63,7 @@ public class PlayScreen extends ScreenAdapter {
     private Stage stage;
     private TextureAtlas atlas;
     private Image image1;
+    private boolean isPaused;
 
     private BitmapFont font;
 
@@ -108,45 +109,43 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     private void update(float delta){
-        world.step(1/60f, 6, 2);
-        cameraUpdate();
-        playerLives = player.getLives();
-        player.update(delta);
-        for(NPC npc : NPCs){
-            npc.update(delta);
-        }
+        if (!isPaused) {
+            world.step(1/60f, 6, 2);
+            cameraUpdate();
+            playerLives = player.getLives();
+            player.update(delta);
+            for(NPC npc : NPCs){
+                npc.update(delta);
+            }
 
-        jumpPowerUpTest.update(player, delta);
-        speedPowerUpTest.update(player, delta);
-        sizePowerUpTest.update(player, delta);
+            jumpPowerUpTest.update(player, delta);
+            speedPowerUpTest.update(player, delta);
+            sizePowerUpTest.update(player, delta);
 
-        Checkpoint.spawnX();
-        Checkpoint.spawnY();
+            Checkpoint.spawnX();
+            Checkpoint.spawnY();
 
-        multipleJumpPowerUpTest.update(player, delta);
-        antiGravityPowerUpTest.update(player, delta);
+            multipleJumpPowerUpTest.update(player, delta);
+            antiGravityPowerUpTest.update(player, delta);
 
-        batch.setProjectionMatrix(camera.combined);
-        orthogonalTiledMapRenderer.setView(camera);
+            batch.setProjectionMatrix(camera.combined);
+            orthogonalTiledMapRenderer.setView(camera);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.P)){
-            player.setPaused();
-            cameraAnchor = camera.position;
-            cameraAnchor.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
-            cameraAnchor.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
-        }
-    }
-
-    public void updatePause(float delta){
-        cameraAnchored();
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.U)){
-            player.setUnPaused();
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+                Gdx.app.exit();
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.P)){
+                player.setPaused();
+                isPaused = true;
+            }
+        } else {
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+                Gdx.app.exit();
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.U)){
+                player.setUnPaused();
+                isPaused = false;
+            }
         }
     }
 
@@ -160,12 +159,6 @@ public class PlayScreen extends ScreenAdapter {
         camera.update();
     }
 
-    private void cameraAnchored(){
-      camera.position.set(cameraAnchor);
-      camera.update();
-    }
-
-
     @Override
     public void show(){
         batch = new SpriteBatch();
@@ -177,10 +170,6 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-      if(player.getPaused()) {
-          float deltaP = delta;
-          updatePause(deltaP);
-      }else{
           this.update(delta);
 
           Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -191,9 +180,6 @@ public class PlayScreen extends ScreenAdapter {
 
           deltaTime = Gdx.graphics.getDeltaTime();
           deltaTime -= delta;
-        /*font.draw(batch, "Score:  " + score, 3800,5000);
-        font.draw(batch, "Time: " + deltaTime,3800,4950);
-        font.getData().setScale(3f);*/
 
           //Render objects such as characters and walls
           player.render(batch);
@@ -208,7 +194,6 @@ public class PlayScreen extends ScreenAdapter {
               npc.render(batch);
           }
 
-          //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
           batch.end();
           box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
@@ -247,7 +232,6 @@ public class PlayScreen extends ScreenAdapter {
           stage.addActor(newTable);
           stage.draw();
       }
-    }
 
     public void setPlayer(Player player){
         this.player = player;
