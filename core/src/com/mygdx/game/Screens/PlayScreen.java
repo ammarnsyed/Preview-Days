@@ -137,7 +137,12 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     public void updatePause(float delta){
-
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.U)){
+            player.setUnPaused();
+        }
     }
 
     private void cameraUpdate(){
@@ -229,8 +234,8 @@ public class PlayScreen extends ScreenAdapter {
           stage.addActor(newTable);
           stage.draw();
       }else{
-          updatePause(delta);
-          
+          float deltaP = delta;
+          updatePause(deltaP);
       }
     }
 
