@@ -26,6 +26,10 @@ public class PowerUp {
     Sprite powerSprite;
     private Animation powerUpBlink;
 
+    public PowerUp(){
+
+    }
+
     public PowerUp(float x, float y, World world){
         this.world = world;
         body = BodyHelper.createCircularBody(x, y, 1, true, world);
@@ -103,6 +107,18 @@ public class PowerUp {
 
     public boolean getActive(){
         return activated;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY(){
+        return y;
+    }
+
+    public World getWorld(){
+        return world;
     }
 
     public void consume() {

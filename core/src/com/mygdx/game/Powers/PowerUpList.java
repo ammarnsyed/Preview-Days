@@ -1,13 +1,18 @@
 package com.mygdx.game.Powers;
 
+import com.badlogic.gdx.physics.box2d.World;
+
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public class PowerUpList {
-    public ArrayList<PowerUp> powerUpArrayList;
+    public ArrayList<String> powerUpClassNames;
     private static PowerUpList instance = null;
 
     private PowerUpList(){
-        powerUpArrayList = new ArrayList<>();
+        powerUpClassNames = new ArrayList<>();
+
+        setUpPowerList();
     }
 
     public static PowerUpList getInstance(){
@@ -16,13 +21,24 @@ public class PowerUpList {
         }
         return instance;
     }
+    public ArrayList<String> getPowerUpClassNames(){
+        return powerUpClassNames;
+    }
 
-//    private ArrayList<PowerUp> PowerUpListMaker(){
-//        PowerUpExample powerUp1;
-//        PowerUpExample powerUp2;
-//        PowerUpExample powerUp3;
-//        PowerUpExample powerUp4;
-//
-//    }
+    //Start here!
+
+    /**
+     * Students will add the names of the classes they create for power ups to this list, making sure to follow the
+     * example implementation.
+     */
+    private void setUpPowerList(){
+        powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("AntiGravityPowerUp");
+        powerUpClassNames.add("SizePowerUp");
+
+    }
+
+
+
 
 }
