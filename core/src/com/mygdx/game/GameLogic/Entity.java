@@ -1,4 +1,4 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -22,11 +22,11 @@ public abstract class Entity {
         fixture = body.getFixtureList().get(0);
     }
 
-    public abstract void update(float delta);
+    protected abstract void update(float delta);
 
-    public abstract void render(SpriteBatch batch);
+    protected abstract void render(SpriteBatch batch);
 
-    public Body getBody(){
+    protected Body getBody(){
         return body;
     }
 

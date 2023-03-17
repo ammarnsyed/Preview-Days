@@ -1,4 +1,4 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.Constants;
-import com.mygdx.game.States.MenuState;
+import com.mygdx.game.GameLogic.Helper.Constants;
+import com.mygdx.game.GameLogic.States.MenuState;
 
-import static com.mygdx.game.Helper.Constants.NOTHING_BIT;
-import static com.mygdx.game.Helper.Constants.PPM;
+import static com.mygdx.game.GameLogic.Helper.Constants.NOTHING_BIT;
+import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
@@ -87,7 +86,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update(float dt) {
+    protected void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         playerSprite.setPosition(x - PPM*width, y - PPM*height);
@@ -105,7 +104,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    protected void render(SpriteBatch batch) {
         playerSprite.draw(batch);
     }
 
@@ -197,7 +196,7 @@ public class Player extends Entity {
     }
 
 
-    public void playerDeath(){
+    protected void playerDeath(){
         if(lives == 0) {
             Filter filter = new Filter();
             filter.maskBits = NOTHING_BIT;
@@ -210,7 +209,7 @@ public class Player extends Entity {
         }
     }
 
-    public void playerDamage(NPC npc){
+    protected void playerDamage(NPC npc){
         knockbackTimer = 0;
         Gdx.app.log("Enemy", "Damage");
 
@@ -230,7 +229,7 @@ public class Player extends Entity {
         body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
     }
 
-    public boolean isDead() {
+    protected boolean isDead() {
         return dead;
     }
 
@@ -263,10 +262,14 @@ public class Player extends Entity {
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
     }
 
-    public float getStateTimer() {
+    protected float getStateTimer() {
         return stateTimer;
     }
-    
+
+    protected int getLives() {
+        return lives;
+    }
+
     //All power up Getters and Setters
     public int getMaxJumps() {
         return maxJumps;
@@ -322,7 +325,5 @@ public class Player extends Entity {
         body.setGravityScale(gravityScale);
     }
 
-    public int getLives() {
-        return lives;
-    }
+
 }

@@ -2,7 +2,7 @@ package com.mygdx.game.Powers;
 
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.GameLogic.Player;
 
 public class SizePowerUp extends PowerUp {
     public SizePowerUp(float x, float y, World world){

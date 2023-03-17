@@ -1,10 +1,8 @@
-package com.mygdx.game.Helper;
+package com.mygdx.game.GameLogic.Helper;
 
 import com.badlogic.gdx.physics.box2d.*;
 
-import java.awt.*;
-
-import static com.mygdx.game.Helper.Constants.PPM;
+import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class BodyHelper {
 

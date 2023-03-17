@@ -1,7 +1,7 @@
 package com.mygdx.game.Powers;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.GameLogic.Player;
 
 public class JumpPowerUp extends PowerUp {
     public JumpPowerUp(float x, float y, World world){

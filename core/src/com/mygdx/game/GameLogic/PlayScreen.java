@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,20 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Checkpoint.Checkpoint;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.TileMapHelper;
-import com.mygdx.game.Helper.WorldContactListener;
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Helper.BodyHelper;
+import com.mygdx.game.GameLogic.Helper.Constants;
+import com.mygdx.game.GameLogic.Helper.TileMapHelper;
+import com.mygdx.game.GameLogic.Screens.Boot;
+import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
-import com.mygdx.game.Sprites.Player;
-import com.mygdx.game.Sprites.NPC;
-import com.mygdx.game.States.MenuState;
-import com.mygdx.game.States.gStateManager;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-
-import java.util.ArrayList;
-
-import static com.mygdx.game.Helper.Constants.PPM;
+import com.mygdx.game.GameLogic.States.gStateManager;
 
 public class PlayScreen extends ScreenAdapter {
     private OrthographicCamera camera;
@@ -134,8 +128,8 @@ public class PlayScreen extends ScreenAdapter {
     private void cameraUpdate(){
         Vector3 position = camera.position;
         if(!player.isDead()) {
-            position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
-            position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
+            position.x = Math.round(player.getBody().getPosition().x * Constants.PPM * 10) / 10f;
+            position.y = Math.round(player.getBody().getPosition().y * Constants.PPM * 10) / 10f;
         }
         camera.position.set(position);
         camera.update();
@@ -185,7 +179,7 @@ public class PlayScreen extends ScreenAdapter {
 
         //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);

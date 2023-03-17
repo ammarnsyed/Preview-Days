@@ -1,8 +1,7 @@
-package com.mygdx.game.States;
+package com.mygdx.game.GameLogic.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Screens.PlayScreen;
 
 public class MenuState extends State{
   private static boolean isTouched;

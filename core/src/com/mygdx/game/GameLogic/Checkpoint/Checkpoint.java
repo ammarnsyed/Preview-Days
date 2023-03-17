@@ -1,12 +1,12 @@
-package com.mygdx.game.Checkpoint;
+package com.mygdx.game.GameLogic.Checkpoint;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.Constants;
+import com.mygdx.game.GameLogic.Helper.BodyHelper;
+import com.mygdx.game.GameLogic.Helper.Constants;
 
 public class Checkpoint {
     private int x;
