@@ -64,17 +64,12 @@ public class PlayScreen extends ScreenAdapter {
     private TextureAtlas atlas;
     private Image image1;
 
-    private BitmapFont font;
-
     private float deltaTime = 10;
     private float score = 0;
 
 
   public PlayScreen(OrthographicCamera camera){
-        this.font = new BitmapFont();
-
         this.stage = new Stage();
-
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -193,9 +188,7 @@ public class PlayScreen extends ScreenAdapter {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
-        /*Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-*/
+
 
         if(playerLives+1 == 3){
             image1 = new Image(new Texture("3hp.png"));
@@ -208,16 +201,11 @@ public class PlayScreen extends ScreenAdapter {
         }
         Table newTable = new Table();
         newTable.setFillParent(true);
-       /* sc.setFontScale(3f,3f);
-        tm.setFontScale(3f,3f);*/
         newTable.top();
-        newTable.left();
-        newTable.padLeft(20f);
+        newTable.right();
+        newTable.padRight(20f);
         newTable.add(image1);
         newTable.row();
-        /*newTable.add(sc);
-        newTable.row();
-        newTable.add(tm);*/
 
         stage.addActor(newTable);
         stage.draw();
