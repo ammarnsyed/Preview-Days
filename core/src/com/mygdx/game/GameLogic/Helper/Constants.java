@@ -1,4 +1,4 @@
-package com.mygdx.game.Helper;
+package com.mygdx.game.GameLogic.Helper;
 
 public class Constants {
     public static final float PPM = 32.0f;

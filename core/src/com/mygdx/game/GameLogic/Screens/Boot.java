@@ -1,9 +1,10 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.GameLogic.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.GameLogic.PlayScreen;
+import com.mygdx.game.GameLogic.Player;
 
 public class Boot extends Game {
 

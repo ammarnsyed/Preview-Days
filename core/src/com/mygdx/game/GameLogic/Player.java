@@ -1,4 +1,4 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.Constants;
-import com.mygdx.game.States.MenuState;
+import com.mygdx.game.GameLogic.Helper.Constants;
+import com.mygdx.game.GameLogic.States.MenuState;
 
-import static com.mygdx.game.Helper.Constants.NOTHING_BIT;
-import static com.mygdx.game.Helper.Constants.PPM;
+import static com.mygdx.game.GameLogic.Helper.Constants.NOTHING_BIT;
+import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
@@ -27,11 +26,10 @@ public class Player extends Entity {
     private boolean fallen;
     private boolean needToUpdateBody;
 
-    public enum State {FALLING, JUMPING, STANDING, RUNNING};
-    public State currentState;
-    public State previousState;
+    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private State currentState;
+    private State previousState;
     private TextureRegion playerIdle;
-    private TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
     private Sprite playerSprite;
     private Animation playerRun;
     private Animation playerJump;
@@ -64,6 +62,7 @@ public class Player extends Entity {
         fallen = false;
 
         //Animation Logic
+        TextureAtlas atlas = new TextureAtlas("fixedPlayerSpriteSheet.pack");
         TextureRegion textureRegion = atlas.findRegion("playerSpriteSheet");
         playerIdle = new TextureRegion(textureRegion, 21, 0, 21, 26);
         playerSprite = new Sprite(playerIdle);
@@ -89,7 +88,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update(float dt) {
+    protected void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         playerSprite.setPosition(x - PPM*width, y - PPM*height);
@@ -107,11 +106,11 @@ public class Player extends Entity {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    protected void render(SpriteBatch batch) {
         playerSprite.draw(batch);
     }
 
-    public TextureRegion getFrame(float dt){
+    private TextureRegion getFrame(float dt){
         currentState = getState();
         TextureRegion region;
         switch(currentState){
@@ -150,7 +149,7 @@ public class Player extends Entity {
 
     }
 
-    public State getState(){
+    private State getState(){
         if(body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)){
             return State.JUMPING;
         }
@@ -198,16 +197,6 @@ public class Player extends Entity {
         }
     }
 
-    public void setJumpForce(int jumpForce){
-        this.jumpForce = jumpForce;
-    }
-
-    public int getJumpForce(){
-        return jumpForce;
-    }
-
-
-
     public void playerCheckToDie(){
         if(lives == 0){
             playerDeath();
@@ -215,8 +204,8 @@ public class Player extends Entity {
 
     }
 
-
-    public void playerDeath(){
+    protected void playerDeath() {
+        if (lives == 0) {
             Filter filter = new Filter();
             filter.maskBits = NOTHING_BIT;
             dead = true;
@@ -225,10 +214,10 @@ public class Player extends Entity {
             for (Fixture fixture : body.getFixtureList()) {
                 fixture.setFilterData(filter);
             }
-
+        }
     }
 
-    public void playerDamage(NPC npc){
+    protected void playerDamage(NPC npc){
         knockbackTimer = 0;
         Gdx.app.log("Enemy", "Damage");
 
@@ -248,7 +237,7 @@ public class Player extends Entity {
         body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
     }
 
-    public boolean isDead() {
+    protected boolean isDead() {
         return dead;
     }
 
@@ -264,46 +253,7 @@ public class Player extends Entity {
         isPaused = false;
     }
 
-    public int getMaxJumps() {
-        return maxJumps;
-    }
-
-    public void setMaxJumps(int maxJumps) {
-        this.maxJumps = maxJumps;
-    }
-
-    public float getSpeed(){
-        return this.speed;
-    }
-
-    public void setSpeed(float speed){
-        this.speed = speed;
-    }
-
-    public void setWidth(float width){
-        this.width = width;
-        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        needToUpdateBody = true;
-
-    }
-    public float getWidth(){
-        return this.width;
-    }
-
-    public void setHeight(float height){
-        this.height = height;
-        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
-        needToUpdateBody = true;
-
-    }
-    public float getHeight(){
-        return this.height;
-    }
-    public Sprite getPlayerSprite() {
-        return playerSprite;
-    }
-
-    public void changeBody(){
+    private void changeBody(){
         Runnable destroyBody = new Runnable() {
             @Override
             public void run() {
@@ -331,12 +281,68 @@ public class Player extends Entity {
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.SPIKE_BIT;
     }
 
-
-    public float getStateTimer() {
+    protected float getStateTimer() {
         return stateTimer;
     }
 
-    public int getLives() {
+    protected int getLives() {
         return lives;
     }
+
+    //All power up Getters and Setters
+    public int getMaxJumps() {
+        return maxJumps;
+    }
+
+    public void setMaxJumps(int maxJumps) {
+        this.maxJumps = maxJumps;
+    }
+
+    public float getSpeed(){
+        return this.speed;
+    }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public float getWidth(){
+        return this.width;
+    }
+
+    public void setWidth(float width){
+        this.width = width;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        needToUpdateBody = true;
+
+    }
+
+    public float getHeight(){
+        return this.height;
+    }
+
+    public void setHeight(float height){
+        this.height = height;
+        playerSprite.setBounds(0, 0, 64 * this.width, 64 * this.height);
+        needToUpdateBody = true;
+
+    }
+
+    public int getJumpForce(){
+        return jumpForce;
+    }
+
+    public void setJumpForce(int jumpForce){
+        this.jumpForce = jumpForce;
+    }
+
+    public float getGravityScale(){
+        return body.getGravityScale();
+    }
+
+    public void setGravityScale(float gravityScale){
+        body.setGravityScale(gravityScale);
+    }
+
+
 }

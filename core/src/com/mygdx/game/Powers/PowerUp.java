@@ -1,22 +1,17 @@
 package com.mygdx.game.Powers;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.Constants;
-import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.GameLogic.Helper.BodyHelper;
+import com.mygdx.game.GameLogic.Helper.Constants;
+import com.mygdx.game.GameLogic.Player;
 
 public abstract class PowerUp {
     protected float x, y;
@@ -90,7 +85,7 @@ public abstract class PowerUp {
                 player.setWidth(Constants.PLAYER_WIDTH);
                 player.setHeight(Constants.PLAYER_HEIGHT);
                 player.setMaxJumps(Constants.PLAYER_MAX_JUMPS);
-                player.getBody().setGravityScale(1f);
+                player.setGravityScale(1f);
             }
         }
     }

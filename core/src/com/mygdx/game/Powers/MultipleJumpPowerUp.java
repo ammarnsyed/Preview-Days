@@ -1,7 +1,7 @@
 package com.mygdx.game.Powers;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.GameLogic.Player;
 
 public class MultipleJumpPowerUp extends PowerUp {
     public MultipleJumpPowerUp(float x, float y, World world){
@@ -12,7 +12,7 @@ public class MultipleJumpPowerUp extends PowerUp {
     @Override
     public void powerUpActivate(Player player) {
         int multipleJumps = player.getMaxJumps();
-        int numOfJumps = 3;
-        player.setMaxJumps(multipleJumps + (numOfJumps - 1));
+        int numOfJumps = 2;
+        player.setMaxJumps(multipleJumps + numOfJumps);
     }
 }

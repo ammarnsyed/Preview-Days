@@ -1,13 +1,13 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Helper.Constants;
+import com.mygdx.game.GameLogic.Helper.Constants;
 
-import static com.mygdx.game.Helper.Constants.PPM;
+import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
-public class NPC extends Entity{
+public class NPC extends Entity {
 
     public enum State {RUNNING};
     private Sprite npcSprite;
@@ -41,7 +41,7 @@ public class NPC extends Entity{
     }
 
     @Override
-    public void update(float dt) {
+    protected void update(float dt) {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         npcSprite.setPosition(x - PPM, y - PPM);
@@ -51,7 +51,7 @@ public class NPC extends Entity{
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    protected void render(SpriteBatch batch) {
         npcSprite.draw(batch);
     }
 

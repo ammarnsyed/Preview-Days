@@ -1,6 +1,5 @@
-package com.mygdx.game.Helper;
+package com.mygdx.game.GameLogic.Helper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -10,10 +9,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Screens.PlayScreen;
-import com.mygdx.game.Sprites.NPC;
-
-import static com.mygdx.game.Helper.Constants.PPM;
+import com.mygdx.game.GameLogic.NPC;
+import com.mygdx.game.GameLogic.PlayScreen;
 
 public class TileMapHelper {
     private TiledMap tiledMap;
@@ -54,7 +51,6 @@ public class TileMapHelper {
     }
 
     private void createNPC(PolygonMapObject polygonMapObject){
-        Gdx.app.log("npc position", polygonMapObject.getPolygon().getX() + " " + polygonMapObject.getPolygon().getY());
         Body npcBody = BodyHelper.createRectangularBody(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), 0.5f, 1, false, playScreen.getWorld());
         NPCs.add(new NPC(1, 1, npcBody));
     }
@@ -86,7 +82,7 @@ public class TileMapHelper {
         Vector2[] worldVertices = new Vector2[vertices.length/2];
 
         for(int i = 0; i < vertices.length / 2; i++){
-            Vector2 current = new Vector2(vertices[i*2]/PPM, vertices[i*2+1]/PPM);
+            Vector2 current = new Vector2(vertices[i*2]/ Constants.PPM, vertices[i*2+1]/ Constants.PPM);
             worldVertices[i] = current;
         }
         PolygonShape shape = new PolygonShape();

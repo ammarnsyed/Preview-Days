@@ -1,10 +1,9 @@
-package com.mygdx.game.Helper;
+package com.mygdx.game.GameLogic;
 
+import com.mygdx.game.GameLogic.Helper.Constants;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.Powers.PowerUp;
-import com.mygdx.game.Sprites.NPC;
-import com.mygdx.game.Sprites.Player;
 
 public class WorldContactListener implements ContactListener {
     @Override
@@ -18,7 +17,9 @@ public class WorldContactListener implements ContactListener {
             case Constants.PLAYER_BIT | Constants.NPC_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.PLAYER_BIT){
                     ((Player)fixA.getUserData()).playerCheckToDie();
-                    ((Player)fixA.getUserData()).playerDamage((NPC)fixB.getUserData());
+                    Player player = (Player)fixA.getUserData();
+                    player.playerDeath();
+                    ((Player)fixA.getUserData()).playerDeath();
                 }
                 else{
                     ((Player)fixB.getUserData()).playerCheckToDie();

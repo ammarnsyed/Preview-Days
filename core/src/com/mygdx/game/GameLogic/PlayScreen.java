@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -19,20 +19,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Checkpoint.Checkpoint;
-import com.mygdx.game.Helper.BodyHelper;
-import com.mygdx.game.Helper.TileMapHelper;
-import com.mygdx.game.Helper.WorldContactListener;
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Helper.BodyHelper;
+import com.mygdx.game.GameLogic.Helper.Constants;
+import com.mygdx.game.GameLogic.Helper.TileMapHelper;
+import com.mygdx.game.GameLogic.Screens.Boot;
+import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
-import com.mygdx.game.Sprites.Player;
-import com.mygdx.game.Sprites.NPC;
-import com.mygdx.game.States.MenuState;
-import com.mygdx.game.States.gStateManager;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.mygdx.game.GameLogic.States.gStateManager;
 
-import java.util.ArrayList;
-
-import static com.mygdx.game.Helper.Constants.PPM;
+import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class PlayScreen extends ScreenAdapter {
     private OrthographicCamera camera;
@@ -94,17 +90,17 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
-        //Setting three different Power ups to test collision detection for all
+        //Setting three different Power ups to test collision detection for all 5668 5846 / 3300 4880
         jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
         speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
-        sizePowerUpTest = new SizePowerUp(5668, 5846, world);
+        sizePowerUpTest = new SizePowerUp(3300, 4880, world);
+        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 6000, world);
+        antiGravityPowerUpTest = new AntiGravityPowerUp(5668, 5846, world);
+
 
         //Checkpoints
         Spawn = new Checkpoint(5800, 5080, world, "Spawn");
         Random = new Checkpoint(6500, 4600, world, "Random");
-
-        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 6000, world);
-        antiGravityPowerUpTest = new AntiGravityPowerUp(3300, 4880, world);
 
     }
 
@@ -228,7 +224,6 @@ public class PlayScreen extends ScreenAdapter {
           newTable.add(sc);
           newTable.row();
           newTable.add(tm);
-
           stage.addActor(newTable);
           stage.draw();
       }
