@@ -205,16 +205,15 @@ public class Player extends Entity {
     }
 
     protected void playerDeath() {
-        if (lives == 0) {
-            Filter filter = new Filter();
-            filter.maskBits = NOTHING_BIT;
-            dead = true;
-            isDead = true;
-            lives = lives - 3;
-            for (Fixture fixture : body.getFixtureList()) {
-                fixture.setFilterData(filter);
-            }
+        Filter filter = new Filter();
+        filter.maskBits = NOTHING_BIT;
+        dead = true;
+        isDead = true;
+        lives = lives - 3;
+        for (Fixture fixture : body.getFixtureList()) {
+            fixture.setFilterData(filter);
         }
+
     }
 
     protected void playerDamage(NPC npc){
@@ -235,6 +234,7 @@ public class Player extends Entity {
         knockDirection.nor();
         Vector2 knockback = knockDirection.scl(knockbackForce);
         body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
+        playerCheckToDie();
     }
 
     protected boolean isDead() {

@@ -17,12 +17,9 @@ public class WorldContactListener implements ContactListener {
             case Constants.PLAYER_BIT | Constants.NPC_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.PLAYER_BIT){
                     ((Player)fixA.getUserData()).playerCheckToDie();
-                    Player player = (Player)fixA.getUserData();
-                    player.playerDeath();
-                    ((Player)fixA.getUserData()).playerDeath();
+                    ((Player)fixA.getUserData()).playerDamage((NPC)fixB.getUserData());
                 }
                 else{
-                    ((Player)fixB.getUserData()).playerCheckToDie();
                     ((Player)fixB.getUserData()).playerDamage((NPC)fixA.getUserData());
                 }
                 break;
