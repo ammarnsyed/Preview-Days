@@ -1,5 +1,7 @@
 package com.mygdx.game.Powers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.Player;
+import com.mygdx.game.GameLogic.SoundEffects;
 
 public abstract class PowerUp {
     protected float x, y;
@@ -25,6 +28,8 @@ public abstract class PowerUp {
     protected boolean activated;
     Sprite powerSprite;
     private Animation powerUpBlink;
+
+    Sound powerUpSound = SoundEffects.getPowerUpSE();
 
     public PowerUp(float x, float y, World world){
         this.world = world;
@@ -103,6 +108,7 @@ public abstract class PowerUp {
     }
 
     public void consume() {
+        powerUpSound.play(0.5f);
         toDestroy = true;
     }
 }
