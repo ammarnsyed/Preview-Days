@@ -17,7 +17,8 @@ import com.mygdx.game.GameLogic.Player;
  * This is the class that your PowerUps will inherit from!
  */
 public class PowerUp {
-    protected float x, y;
+    protected float x;
+    protected float y;
     private float stateTime;
     protected Body body;
     protected Fixture fixture;
@@ -61,7 +62,7 @@ public class PowerUp {
 
     public void powerUpActivate(Player player){
 
-    };
+    }
 
     public void render(SpriteBatch batch){
         if(!destroyed){

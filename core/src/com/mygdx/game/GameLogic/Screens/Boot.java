@@ -25,7 +25,7 @@ public class Boot extends Game {
         if(Player.isDead){
             Gdx.app.log("Screen:", "Dead");
             setScreen(new EndScreen(camera));
-        }if(!Player.isDead){
+        } else {
             Gdx.app.log("Screen:", "Alive");
             setScreen(new PlayScreen(camera));
         }

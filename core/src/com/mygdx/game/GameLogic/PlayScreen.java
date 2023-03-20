@@ -48,14 +48,10 @@ public class PlayScreen extends ScreenAdapter {
 
     private int playerLives;
 
-//    private JumpPowerUp jumpPowerUpTest;
-//    private SpeedPowerUp speedPowerUpTest;
-//    private SizePowerUp sizePowerUpTest;
+
     private Checkpoint Spawn;
     private Checkpoint Random;
     private int playerX;
-//    private MultipleJumpPowerUp multipleJumpPowerUpTest;
-//    private AntiGravityPowerUp antiGravityPowerUpTest;
 
     private Stage stage;
     private TextureAtlas atlas;
@@ -79,12 +75,11 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        //powerup handling
+
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
 
         playerX = Checkpoint.pointX;
-        //3300 4580 start coords
         Body playerBody = BodyHelper.createRectangularBody(Checkpoint.spawnX(), Checkpoint.spawnY(), 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
@@ -94,15 +89,9 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
-        //Setting three different Power ups to test collision detection for all 5668 5846 / 3300 4880
-//        jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
-//        speedPowerUpTest = new SpeedPowerUp(9236, 5488, world);
-//        sizePowerUpTest = new SizePowerUp(3300, 4880, world);
-//        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 6000, world);
-//        antiGravityPowerUpTest = new AntiGravityPowerUp(5668, 5846, world);
 
 
-        //Checkpoints
+
         Spawn = new Checkpoint(5800, 5080, world, "Spawn");
         Random = new Checkpoint(6500, 4600, world, "Random");
 
@@ -121,15 +110,10 @@ public class PlayScreen extends ScreenAdapter {
             power.update(player, delta);
         }
 
-//        jumpPowerUpTest.update(player, delta);
-//        speedPowerUpTest.update(player, delta);
-//        sizePowerUpTest.update(player, delta);
 
         Checkpoint.spawnX();
         Checkpoint.spawnY();
 
-//        multipleJumpPowerUpTest.update(player, delta);
-//        antiGravityPowerUpTest.update(player, delta);
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
@@ -178,14 +162,9 @@ public class PlayScreen extends ScreenAdapter {
 
         
 
-        //Render objects such as characters and walls
         player.render(batch);
 
-//        jumpPowerUpTest.render(batch);
-//        speedPowerUpTest.render(batch);
-//        sizePowerUpTest.render(batch);
-//        multipleJumpPowerUpTest.render(batch);
-//        antiGravityPowerUpTest.render(batch);
+
 
         for(NPC npc : NPCs){
             npc.render(batch);
@@ -195,7 +174,6 @@ public class PlayScreen extends ScreenAdapter {
             power.render(batch);
         }
 
-        //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(Constants.PPM));
 

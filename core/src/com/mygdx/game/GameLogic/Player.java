@@ -16,7 +16,6 @@ public class Player extends Entity {
 
     private int lives;
     public static boolean isDead;
-    private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
@@ -42,7 +41,6 @@ public class Player extends Entity {
         lives = 2;
         isDead = false;
         needToUpdateBody = false;
-        hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
 
