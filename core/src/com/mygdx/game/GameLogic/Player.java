@@ -39,7 +39,8 @@ public class Player extends Entity {
     private float stateTimer;
     private World world;
 
-    Sound jumpSound = SoundEffects.getJumpSE();
+
+
 
 
     public Player(float width, float height, Body body, World world) {
@@ -87,7 +88,6 @@ public class Player extends Entity {
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
-
 
     }
 
@@ -187,6 +187,7 @@ public class Player extends Entity {
                     force *= -1;
                 }
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
+                Sound jumpSound = SoundEffects.getJumpSE();
                 jumpSound.play(0.5f);
                 jumpCount++;
             }
@@ -210,9 +211,15 @@ public class Player extends Entity {
             Sound hit = SoundEffects.getHitSE();
             hit.play(0.5f);
         }
+
+        if(lives == 1){
+            SoundEffects.stopMainMusic();
+            SoundEffects.startLowHpMusic();
+        }
     }
 
     protected void playerDeath() {
+        SoundEffects.stopLowHpMusic();
         Sound death = SoundEffects.getDeathSE();
         death.play(0.5f);
         Filter filter = new Filter();
