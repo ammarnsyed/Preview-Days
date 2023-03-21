@@ -32,6 +32,7 @@ public class hud implements Disposable{
   private Image image1;
   private static int playerLives;
   private Table newTable;
+  private Table newTable1;
   private int lives;
 
   public hud(SpriteBatch spriteBatch, Player player){
@@ -45,6 +46,8 @@ public class hud implements Disposable{
 
 
     newTable = new Table();
+    newTable1 = new Table();
+    newTable1.setFillParent(true);
     newTable.setFillParent(true);
     sc.setFontScale(3f,3f);
     tm.setFontScale(3f,3f);
@@ -56,23 +59,31 @@ public class hud implements Disposable{
     newTable.row();
     newTable.add(tm);
     newTable.row();
-    if (player.getPlayerLives == 2) {
+    newTable1.top();
+    newTable1.right();
+    newTable.padRight(20f);
+    updateLives(player.getLives());
+    stage.addActor(newTable);
+    stage.addActor(newTable1);
+  }
+
+
+  public void update(float dt, Player player) {
+    timer -= dt;
+    updateLives(player.getLives());
+  }
+  public void updateLives(int playerLives) {
+    newTable1.removeActor(image1);
+    if (playerLives == 2) {
       image1 = new Image(new Texture("3hp.png"));
-    } else if (player.getPlayerLives == 1) {
+    } else if (playerLives == 1) {
       image1 = new Image(new Texture("2hp.png"));
-    } else if (player.getPlayerLives == 0) {
+    } else if (playerLives == 0) {
       image1 = new Image(new Texture("1hp.png"));
     } else {
       image1 = new Image(new Texture("dead.png"));
     }
-    newTable.add(image1);
-    stage.addActor(newTable);
-    /*stage.draw();*/
-  }
-
-
-  public void update(float dt) {
-    timer -= dt;
+    newTable1.add(image1);
   }
 
   public void addScore(float val){

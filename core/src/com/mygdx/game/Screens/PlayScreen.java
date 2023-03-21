@@ -108,7 +108,7 @@ public class PlayScreen extends ScreenAdapter {
         cameraUpdate();
         playerLives = player.getLives();
         player.update(delta);
-        hud.update(delta);
+        hud.update(delta, player);
         for(NPC npc : NPCs){
             npc.update(delta);
         }
