@@ -199,33 +199,7 @@ public class PlayScreen extends ScreenAdapter {
               Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
               Boot.INSTANCE.create();
           }
-          Label sc = new Label("Score: ".concat(String.valueOf(score)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-          Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-
-          if (playerLives + 1 == 3) {
-              image1 = new Image(new Texture("3hp.png"));
-          } else if (playerLives + 1 == 2) {
-              image1 = new Image(new Texture("2hp.png"));
-          } else if (playerLives + 1 == 1) {
-              image1 = new Image(new Texture("1hp.png"));
-          } else {
-              image1 = new Image(new Texture("dead.png"));
-          }
-          Table newTable = new Table();
-          newTable.setFillParent(true);
-          sc.setFontScale(3f, 3f);
-          tm.setFontScale(3f, 3f);
-          newTable.top();
-          newTable.left();
-          newTable.padLeft(20f);
-          newTable.add(image1);
-          newTable.row();
-          newTable.add(sc);
-          newTable.row();
-          newTable.add(tm);
-          stage.addActor(newTable);
-          stage.draw();
       }
 
     public void setPlayer(Player player){
@@ -235,9 +209,5 @@ public class PlayScreen extends ScreenAdapter {
         return world;
     }
     public TextureAtlas getAtlas(){return atlas;}
-    private String formatTime(float time) {
-      int minutes = (int)time / 60;
-      int seconds = (int)time % 60;
-      return String.format("%02d:%02d", minutes, seconds);
-  }
+
 }
