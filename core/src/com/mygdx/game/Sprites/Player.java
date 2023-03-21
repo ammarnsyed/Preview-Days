@@ -15,7 +15,7 @@ import static com.mygdx.game.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
-    private int lives;
+    public int lives;
     public static boolean isDead;
     private int hitCount;
     private int jumpCount;
@@ -38,10 +38,12 @@ public class Player extends Entity {
     private int maxJumps;
     private float stateTimer;
     private World world;
+    public int getPlayerLives;
 
     public Player(float width, float height, Body body, World world) {
         super(width, height, body);
         lives = 2;
+        getPlayerLives = lives;
         isDead = false;
         needToUpdateBody = false;
         hitCount = 0;
