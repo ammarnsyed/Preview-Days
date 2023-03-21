@@ -2,6 +2,8 @@ package com.mygdx.game.GameLogic.Screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.GameLogic.PlayScreen;
 import com.mygdx.game.GameLogic.Player;
