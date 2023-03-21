@@ -15,7 +15,7 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
-    private int lives;
+    public int lives;
     public static boolean isDead;
     private boolean isPaused;
     private int hitCount;
@@ -38,14 +38,12 @@ public class Player extends Entity {
     private int maxJumps;
     private float stateTimer;
     private World world;
-
-
-
-
+    public int getPlayerLives;
 
     public Player(float width, float height, Body body, World world) {
         super(width, height, body);
         lives = 2;
+        getPlayerLives = lives;
         isDead = false;
         isPaused = false;
         needToUpdateBody = false;

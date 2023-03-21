@@ -3,9 +3,6 @@ package com.mygdx.game.GameLogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,35 +15,34 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
-import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
 import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;
+import com.mygdx.game.GameLogic.Player;
+import com.mygdx.game.GameLogic.NPC;
 
 import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class PlayScreen extends ScreenAdapter {
+    private BitmapFont font;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     Texture img;
     private gStateManager gsm;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
-    private Vector3 cameraAnchor;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
 
     private Player player;
-
+    private Hud hud;
     private int playerLives;
 
     private JumpPowerUp jumpPowerUpTest;
@@ -63,8 +59,6 @@ public class PlayScreen extends ScreenAdapter {
     private Image image1;
     private boolean isPaused;
 
-    private BitmapFont font;
-
     private float deltaTime = 10;
     private float score = 0;
 
@@ -74,7 +68,6 @@ public class PlayScreen extends ScreenAdapter {
         this.font = new BitmapFont();
         SoundEffects.startMainMusic();
         this.stage = new Stage();
-
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -90,6 +83,7 @@ public class PlayScreen extends ScreenAdapter {
 
         NPCs = tileMapHelper.getNPCs();
 
+        this.hud = new Hud(batch, player);
 
         world.setContactListener(new WorldContactListener());
 
@@ -111,8 +105,8 @@ public class PlayScreen extends ScreenAdapter {
         if (!isPaused) {
             world.step(1/60f, 6, 2);
             cameraUpdate();
-            playerLives = player.getLives();
             player.update(delta);
+            hud.update(delta, player);
             for(NPC npc : NPCs){
                 npc.update(delta);
             }
@@ -137,7 +131,8 @@ public class PlayScreen extends ScreenAdapter {
                 player.setPaused();
                 isPaused = true;
             }
-        } else {
+        }
+        else {
             if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
                 Gdx.app.exit();
             }
@@ -176,7 +171,6 @@ public class PlayScreen extends ScreenAdapter {
 
           orthogonalTiledMapRenderer.render();
           batch.begin();
-
           deltaTime = Gdx.graphics.getDeltaTime();
           deltaTime -= delta;
 
