@@ -49,7 +49,7 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private hud hud;
-    private static int playerLives;
+    private int playerLives;
 
     private JumpPowerUp jumpPowerUpTest;
     private SpeedPowerUp speedPowerUpTest;
@@ -64,17 +64,12 @@ public class PlayScreen extends ScreenAdapter {
     private TextureAtlas atlas;
     private Image image1;
 
-    private BitmapFont font;
-
     private float deltaTime = 10;
     private float score = 0;
 
 
   public PlayScreen(OrthographicCamera camera){
-        this.font = new BitmapFont();
-
         this.stage = new Stage();
-
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
@@ -90,7 +85,7 @@ public class PlayScreen extends ScreenAdapter {
 
         NPCs = tileMapHelper.getNPCs();
 
-        this.hud = new hud(batch, player);
+        this.hud = new hud(batch);
 
         world.setContactListener(new WorldContactListener());
 
@@ -186,22 +181,34 @@ public class PlayScreen extends ScreenAdapter {
         //font.draw(batch, "Time remaining: " + (int) timeRemaining, 1000, 1000);
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        hud.stage.draw();
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
         if(player.isDead() && player.getStateTimer() > 3){
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
-        /*Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label tm = new Label("Time: ".concat(String.valueOf(deltaTime)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-*/
-       /* sc.setFontScale(3f,3f);
-        tm.setFontScale(3f,3f);*/
-        /*newTable.add(sc);
-        newTable.row();
-        newTable.add(tm);*/
 
-        hud.stage.draw();
+
+        if(playerLives+1 == 3){
+            image1 = new Image(new Texture("3hp.png"));
+        }else if(playerLives+1 == 2){
+            image1 = new Image(new Texture("2hp.png"));
+        }else if(playerLives+1 == 1){
+            image1 = new Image(new Texture("1hp.png"));
+        }else{
+            image1 = new Image(new Texture("dead.png"));
+        }
+        Table newTable = new Table();
+        newTable.setFillParent(true);
+        newTable.top();
+        newTable.right();
+        newTable.padRight(20f);
+        newTable.add(image1);
+        newTable.row();
+
+        stage.addActor(newTable);
+        stage.draw();
     }
 
     public void setPlayer(Player player){
@@ -216,12 +223,4 @@ public class PlayScreen extends ScreenAdapter {
       int seconds = (int)time % 60;
       return String.format("%02d:%02d", minutes, seconds);
   }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public OrthographicCamera getCamera(){
-      return camera;
-    }
 }

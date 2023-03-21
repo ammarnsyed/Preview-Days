@@ -68,6 +68,9 @@ public abstract class PowerUp {
     public Body getBody(){
         return body;
     }
+    public float getTime(){
+        return timer;
+    }
     public void setActivated(float time, boolean active){
         timer = time;
         activated = active;
