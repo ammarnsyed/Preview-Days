@@ -12,7 +12,7 @@ public class SoundEffects {
    static Sound deathSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/Phone_Ring.wav"));
 
 
-    private static Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/gamemusic2.wav"));
+    private static Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/music1.mp3"));
     private static Music lowHpMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/1hpdontdie.wav"));
 
 
