@@ -14,8 +14,7 @@ public class MenuState extends State{
     super(gsm);
     bgImg = new Texture("bgImg.png");
     playBtn = new Texture("startButton.png");
-    charImg = new Texture("char.png");
-    isTouched = false;
+    charImg = new Texture("char.png");;
   }
 
   @Override
@@ -33,11 +32,13 @@ public class MenuState extends State{
 
   @Override
   public void render(SpriteBatch sb) {
-    sb.begin();
-    sb.draw(bgImg,3000,4000,3920,3080);
-    sb.draw(charImg,3400,4780, 170,170);
-    sb.draw(playBtn, 3300,4580,351, 150);
-    sb.end();
+    if(!isTouched()) {
+      sb.begin();
+      sb.draw(bgImg, 3000, 4000, 3920, 3080);
+      sb.draw(charImg, 3400, 4780, 170, 170);
+      sb.draw(playBtn, 3300, 4580, 351, 150);
+      sb.end();
+    }
   }
 
   @Override
@@ -49,4 +50,5 @@ public class MenuState extends State{
   public static boolean isTouched() {
     return isTouched;
   }
+
 }
