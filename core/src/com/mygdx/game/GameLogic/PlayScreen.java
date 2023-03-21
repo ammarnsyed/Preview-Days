@@ -3,6 +3,8 @@ package com.mygdx.game.GameLogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -67,9 +69,10 @@ public class PlayScreen extends ScreenAdapter {
     private float score = 0;
 
 
+
   public PlayScreen(OrthographicCamera camera){
         this.font = new BitmapFont();
-
+        SoundEffects.startMainMusic();
         this.stage = new Stage();
 
         this.camera = camera;

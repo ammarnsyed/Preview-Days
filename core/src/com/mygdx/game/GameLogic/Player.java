@@ -2,6 +2,7 @@ package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -37,6 +38,10 @@ public class Player extends Entity {
     private int maxJumps;
     private float stateTimer;
     private World world;
+
+
+
+
 
     public Player(float width, float height, Body body, World world) {
         super(width, height, body);
@@ -83,7 +88,6 @@ public class Player extends Entity {
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
-
 
     }
 
@@ -183,6 +187,8 @@ public class Player extends Entity {
                     force *= -1;
                 }
                 body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
+                Sound jumpSound = SoundEffects.getJumpSE();
+                jumpSound.play(0.5f);
                 jumpCount++;
             }
             //Jump is reset
@@ -201,10 +207,21 @@ public class Player extends Entity {
         if(lives == 0){
             playerDeath();
         }
+        else{
+            Sound hit = SoundEffects.getHitSE();
+            hit.play(0.5f);
+        }
 
+        if(lives == 1){
+            SoundEffects.stopMainMusic();
+            SoundEffects.startLowHpMusic();
+        }
     }
 
     protected void playerDeath() {
+        SoundEffects.stopLowHpMusic();
+        Sound death = SoundEffects.getDeathSE();
+        death.play(0.5f);
         Filter filter = new Filter();
         filter.maskBits = NOTHING_BIT;
         dead = true;
