@@ -85,7 +85,7 @@ public class PlayScreen extends ScreenAdapter {
 
         NPCs = tileMapHelper.getNPCs();
 
-        this.hud = new hud(batch);
+        this.hud = new hud(batch, player);
 
         world.setContactListener(new WorldContactListener());
 
@@ -189,25 +189,6 @@ public class PlayScreen extends ScreenAdapter {
             Boot.INSTANCE.create();
         }
 
-
-        if(playerLives+1 == 3){
-            image1 = new Image(new Texture("3hp.png"));
-        }else if(playerLives+1 == 2){
-            image1 = new Image(new Texture("2hp.png"));
-        }else if(playerLives+1 == 1){
-            image1 = new Image(new Texture("1hp.png"));
-        }else{
-            image1 = new Image(new Texture("dead.png"));
-        }
-        Table newTable = new Table();
-        newTable.setFillParent(true);
-        newTable.top();
-        newTable.right();
-        newTable.padRight(20f);
-        newTable.add(image1);
-        newTable.row();
-
-        stage.addActor(newTable);
         stage.draw();
     }
 
