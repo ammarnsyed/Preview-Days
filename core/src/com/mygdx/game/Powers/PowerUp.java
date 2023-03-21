@@ -15,6 +15,7 @@ import com.mygdx.game.GameLogic.Player;
 
 /**
  * This is the class that your PowerUps will inherit from!
+ * Don't worry about changing this class, it is simply available to satiate your curiosity.
  */
 public class PowerUp {
     protected float x;
