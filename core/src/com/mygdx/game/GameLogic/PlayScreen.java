@@ -187,6 +187,7 @@ public class PlayScreen extends ScreenAdapter {
               npc.render(batch);
           }
 
+          hud.stage.draw();
           batch.end();
           box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
