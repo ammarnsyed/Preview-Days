@@ -202,7 +202,7 @@ public class Player extends Entity {
     }
 
     public void playerCheckToDie(){
-        if(lives == 0){
+        if(lives < 0){
             playerDeath();
         }
         else{
@@ -210,7 +210,7 @@ public class Player extends Entity {
             hit.play(0.5f);
         }
 
-        if(lives == 1){
+        if(lives == 0){
             SoundEffects.stopMainMusic();
             SoundEffects.startLowHpMusic();
         }
