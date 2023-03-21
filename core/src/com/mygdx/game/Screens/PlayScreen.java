@@ -71,14 +71,14 @@ public class PlayScreen extends ScreenAdapter {
         world.setContactListener(new WorldContactListener());
 
         //Setting three different Power ups to test collision detection for all
-        jumpPowerUpTest = new JumpPowerUp(5700, 4600, world);
+        jumpPowerUpTest = new JumpPowerUp(5200, 4600, world);
         //9236 5488
         speedPowerUpTest = new SpeedPowerUp(3764, 5664, world);
         //x:3680 y:5664
-        sizePowerUpTest = new SizePowerUp(3400, 4880, world);
+        sizePowerUpTest = new SizePowerUp(3680, 5664, world);
         multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 5780, world);
         //x:3400 y:4880
-        antiGravityPowerUpTest = new AntiGravityPowerUp(3764, 5664, world);
+        antiGravityPowerUpTest = new AntiGravityPowerUp(3400, 4880, world);
     }
 
     private void update(float delta){
