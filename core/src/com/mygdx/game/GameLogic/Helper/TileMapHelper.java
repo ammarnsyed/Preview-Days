@@ -9,27 +9,35 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameLogic.MapCoordinate;
 import com.mygdx.game.GameLogic.NPC;
 import com.mygdx.game.GameLogic.PlayScreen;
+import com.mygdx.game.Powers.PowerUp;
+import com.mygdx.game.Powers.PowerUpExample;
+
+import java.util.ArrayList;
 
 public class TileMapHelper {
     private TiledMap tiledMap;
     private PlayScreen playScreen;
     public Array<NPC> NPCs;
+    public ArrayList<MapCoordinate> powerUpLocations;
 
     public TileMapHelper(PlayScreen playScreen){
         this.playScreen = playScreen;
         NPCs = new Array<>();
+        powerUpLocations = new ArrayList<>();
     }
 
     public Array<NPC> getNPCs() {
         return NPCs;
     }
+    public ArrayList<MapCoordinate> getPowerUps() {return powerUpLocations;}
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("MapLayout.tmx");
 
-        for(int i = 2; i<=5; i++){
+        for(int i = 2; i<=6; i++){
             parseMapObjects(tiledMap.getLayers().get(i).getObjects(), i-1);
         }
         return new OrthogonalTiledMapRenderer(tiledMap);
@@ -42,12 +50,19 @@ public class TileMapHelper {
                 if(layer == 4){
                     createNPC((PolygonMapObject) mapObject);
                 }
+                else if(layer == 5){
+                    createPowerUp((PolygonMapObject) mapObject);
+                }
                 else{
                     createStaticBody((PolygonMapObject) mapObject, layer);
                 }
 
             }
         }
+    }
+
+    private void createPowerUp(PolygonMapObject polygonMapObject){
+        powerUpLocations.add(new MapCoordinate(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY()));
     }
 
     private void createNPC(PolygonMapObject polygonMapObject){

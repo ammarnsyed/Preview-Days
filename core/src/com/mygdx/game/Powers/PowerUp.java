@@ -16,8 +16,13 @@ import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.Player;
 import com.mygdx.game.GameLogic.SoundEffects;
 
-public abstract class PowerUp {
-    protected float x, y;
+/**
+ * This is the class that your PowerUps will inherit from!
+ * Don't worry about changing this class, it is simply available to satiate your curiosity.
+ */
+public class PowerUp {
+    protected float x;
+    protected float y;
     private float stateTime;
     protected Body body;
     protected Fixture fixture;
@@ -29,7 +34,13 @@ public abstract class PowerUp {
     Sprite powerSprite;
     private Animation powerUpBlink;
 
+<<<<<<< HEAD
     Sound powerUpSound = SoundEffects.getPowerUpSE();
+=======
+    public PowerUp(){
+
+    }
+>>>>>>> powerUpArrays
 
     public PowerUp(float x, float y, World world){
         this.world = world;
@@ -39,6 +50,7 @@ public abstract class PowerUp {
         stateTime = 0;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
+        fixture.setUserData(this);
         toDestroy = false;
         destroyed = false;
         activated = false;
@@ -56,7 +68,9 @@ public abstract class PowerUp {
 
     }
 
-    public abstract void powerUpActivate(Player player);
+    public void powerUpActivate(Player player){
+
+    }
 
     public void render(SpriteBatch batch){
         if(!destroyed){
@@ -108,6 +122,18 @@ public abstract class PowerUp {
 
     public boolean getActive(){
         return activated;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY(){
+        return y;
+    }
+
+    public World getWorld(){
+        return world;
     }
 
     public void consume() {
