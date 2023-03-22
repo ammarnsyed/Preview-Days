@@ -64,21 +64,17 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
         NPCs = tileMapHelper.getNPCs();
 
-        //3300 4580 start coords
-        Body playerBody = BodyHelper.createRectangularBody(3300, 4580, 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createRectangularBody(3330, 4580, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
         world.setContactListener(new WorldContactListener());
 
-        //Setting three different Power ups to test collision detection for all
+        //Setting five different Power ups to test collision detection for all
         jumpPowerUpTest = new JumpPowerUp(5200, 4600, world);
-        //9236 5488
-        speedPowerUpTest = new SpeedPowerUp(3764, 5664, world);
-        //x:3680 y:5664
+        speedPowerUpTest = new SpeedPowerUp(9128, 5500, world);
         sizePowerUpTest = new SizePowerUp(3680, 5664, world);
-        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 5780, world);
-        //x:3400 y:4880
-        antiGravityPowerUpTest = new AntiGravityPowerUp(3400, 4880, world);
+        multipleJumpPowerUpTest = new MultipleJumpPowerUp(3300, 4780, world);
+        antiGravityPowerUpTest = new AntiGravityPowerUp(5450, 5828, world);
     }
 
     private void update(float delta){
