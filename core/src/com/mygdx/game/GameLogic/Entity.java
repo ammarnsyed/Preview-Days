@@ -21,6 +21,8 @@ public abstract class Entity {
         this.body = body;
         fixture = body.getFixtureList().get(0);
     }
+    public Entity(){
+    }
 
     protected abstract void update(float delta);
 

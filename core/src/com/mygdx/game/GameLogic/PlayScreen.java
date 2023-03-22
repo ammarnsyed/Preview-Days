@@ -76,9 +76,9 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        playerX = Checkpoint.pointX;
+        Checkpoint check = new Checkpoint();
         //3300 4580 start coords
-        Body playerBody = BodyHelper.createRectangularBody(Checkpoint.spawnX(), Checkpoint.spawnY(), 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createRectangularBody(check.spawnX(), check.spawnY(), 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
         NPCs = tileMapHelper.getNPCs();
@@ -115,8 +115,6 @@ public class PlayScreen extends ScreenAdapter {
             speedPowerUpTest.update(player, delta);
             sizePowerUpTest.update(player, delta);
 
-            Checkpoint.spawnX();
-            Checkpoint.spawnY();
 
             multipleJumpPowerUpTest.update(player, delta);
             antiGravityPowerUpTest.update(player, delta);

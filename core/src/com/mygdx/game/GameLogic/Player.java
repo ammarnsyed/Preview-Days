@@ -89,6 +89,10 @@ public class Player extends Entity {
 
     }
 
+    public Player(){
+
+    }
+
     @Override
     protected void update(float dt) {
         x = body.getPosition().x * PPM;
@@ -359,5 +363,7 @@ public class Player extends Entity {
         body.setGravityScale(gravityScale);
     }
 
-
+    public boolean isIsDead() {
+        return isDead;
+    }
 }
