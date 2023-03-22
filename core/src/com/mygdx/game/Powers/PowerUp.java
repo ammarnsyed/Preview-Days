@@ -34,13 +34,7 @@ public class PowerUp {
     Sprite powerSprite;
     private Animation powerUpBlink;
 
-<<<<<<< HEAD
     Sound powerUpSound = SoundEffects.getPowerUpSE();
-=======
-    public PowerUp(){
-
-    }
->>>>>>> powerUpArrays
 
     public PowerUp(float x, float y, World world){
         this.world = world;
@@ -99,7 +93,7 @@ public class PowerUp {
         }
         if (activated) {
             timer += delta;
-            if (timer > 10f) { // Change 10f to the desired duration of the powerup
+            if (timer > 15f) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
