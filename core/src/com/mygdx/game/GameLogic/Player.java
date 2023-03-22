@@ -47,7 +47,6 @@ public class Player extends Entity {
         isDead = false;
         isPaused = false;
         needToUpdateBody = false;
-        hitCount = 0;
         this.speed = 9f;
         this.jumpCount = 0;
 

@@ -29,18 +29,22 @@ public class Hud implements Disposable{
 
   private float timer;
   private float score;
+  private float count;
   private Image image1;
   private Table newTable;
   private Table newTable1;
 
-  public Hud(SpriteBatch spriteBatch, Player player){
+  private Label sc;
+  private Label tm;
 
-    timer = 200;
+  public Hud(SpriteBatch spriteBatch, Player player){
+    count = 0;
+    timer = 5000;
     score = 0;
     viewport = new FitViewport(1920,1080,new OrthographicCamera());
     stage = new Stage(viewport,spriteBatch);
-    Label sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-    Label tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
 
     newTable = new Table();
@@ -67,7 +71,13 @@ public class Hud implements Disposable{
 
 
   public void update(float dt, Player player) {
-    timer -= dt;
+    count += dt;
+    if(count>=1){
+      if(timer>0){
+        timer --;
+      }
+      tm.setText("Time: ".concat(String.valueOf(timer)));
+    }
     updateLives(player.getLives());
   }
   public void updateLives(int playerLives) {
@@ -86,6 +96,7 @@ public class Hud implements Disposable{
 
   public void addScore(float val){
     score += val;
+    sc.setText("Score: ".concat(String.valueOf(score)));
   }
   @Override
   public void dispose() {
