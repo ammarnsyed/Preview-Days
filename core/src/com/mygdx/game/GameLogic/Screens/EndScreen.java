@@ -14,10 +14,12 @@ import com.mygdx.game.GameLogic.Player;
 public class EndScreen extends ScreenAdapter {
     private Stage stage;
     private PlayScreen screen;
+    private Player player;
 
 
     public EndScreen(OrthographicCamera camera) {
         this.stage = new Stage();
+        player = new Player();
 
         Label EndScreenLabel = new Label("Game Over", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label Replay = new Label("Play Again?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -36,7 +38,7 @@ public class EndScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()){
-            Player.isDead = false;
+            player.setIsDead(false);
             Boot.INSTANCE.create();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

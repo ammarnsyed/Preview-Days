@@ -16,7 +16,7 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 public class Player extends Entity {
 
     public int lives;
-    public static boolean isDead;
+    private static boolean isDead;
     private boolean isPaused;
     private int hitCount;
     private int jumpCount;
@@ -38,12 +38,10 @@ public class Player extends Entity {
     private int maxJumps;
     private float stateTimer;
     private World world;
-    public int getPlayerLives;
 
     public Player(float width, float height, Body body, World world) {
         super(width, height, body);
         lives = 2;
-        getPlayerLives = lives;
         isDead = false;
         isPaused = false;
         needToUpdateBody = false;
@@ -85,6 +83,10 @@ public class Player extends Entity {
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
+
+    }
+
+    public Player(){
 
     }
 
@@ -358,5 +360,11 @@ public class Player extends Entity {
         body.setGravityScale(gravityScale);
     }
 
+    public void setIsDead(boolean isDead) {
+        Player.isDead = isDead;
+    }
 
+    public boolean isIsDead() {
+        return isDead;
+    }
 }

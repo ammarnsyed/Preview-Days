@@ -80,9 +80,8 @@ public class PlayScreen extends ScreenAdapter {
 
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
-
-        playerX = Checkpoint.pointX;
-        Body playerBody = BodyHelper.createRectangularBody(Checkpoint.spawnX(), Checkpoint.spawnY(), 0.5f, 1, false, world);
+        Checkpoint check = new Checkpoint();
+        Body playerBody = BodyHelper.createRectangularBody(check.spawnX(), check.spawnY(), 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
         NPCs = tileMapHelper.getNPCs();
@@ -114,8 +113,6 @@ public class PlayScreen extends ScreenAdapter {
             }
 
 
-            Checkpoint.spawnX();
-            Checkpoint.spawnY();
 
 
             batch.setProjectionMatrix(camera.combined);

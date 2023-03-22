@@ -17,11 +17,11 @@ public class Checkpoint {
     private Fixture fixture;
     private String CheckName;
     private static Boolean checkPoint = false;
-    public static String pointName;
-    public static int setX;
-    public static int setY;
-    public static int pointX;
-    public static int pointY;
+    private static String pointName;
+    private static int setX;
+    private static int setY;
+    private static int pointX;
+    private static int pointY;
 
 
     public Checkpoint(int x, int y, World world, String CheckName){
@@ -38,6 +38,9 @@ public class Checkpoint {
         fixture.getFilterData().categoryBits = Constants.CHECKPOINT_BIT;
     }
 
+    public Checkpoint(){
+    }
+
     public void printContact(){
         Gdx.app.log("Contact", "Checkpoint");
         checkPoint = true;
@@ -46,34 +49,13 @@ public class Checkpoint {
         pointName = this.CheckName;
     }
 
-    public void update(Checkpoint checkpoint){
-    }
-
-    public String printX(){
-        return String.valueOf(x);
-    }
-
-    public int returnX(){
-        return x;
-    }
-    public void getX() {
-        checkPoint = true;
-    }
 
     public String getCheckName() {
         return pointName;
     }
 
-    public static Checkpoint getCheckpoint(String pointName, Array<Checkpoint> checkpoints){
-        for(Checkpoint check : checkpoints){
-            if(check.getCheckName().equals(pointName)){
-                return check;
-            }
-        }
-        return null;
-    }
 
-    public static float spawnX(){
+    public float spawnX(){
         if(!checkPoint){
             pointX = 3500;
         }else{
@@ -81,7 +63,7 @@ public class Checkpoint {
         }
         return pointX;
     }
-    public static float spawnY(){
+    public float spawnY(){
         if(!checkPoint){
             pointY = 4880;
         }else{
