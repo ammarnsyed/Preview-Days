@@ -82,7 +82,7 @@ public abstract class PowerUp {
         }
         if (activated) {
             timer += delta;
-            if (timer > 10f) { // Change 10f to the desired duration of the powerup
+            if (timer > 15f) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
