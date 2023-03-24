@@ -3,6 +3,7 @@ package com.mygdx.game.GameLogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -124,6 +125,8 @@ public class PlayScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
+                Sound pauseSound = SoundEffects.getPauseSE();
+                pauseSound.play(0.5f);
                 player.setPaused();
                 isPaused = true;
             }
@@ -134,6 +137,8 @@ public class PlayScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
+                Sound resumeSE = SoundEffects.getResumeSE();
+                resumeSE.play(0.5f);
                 player.setUnPaused();
                 isPaused = false;
             }

@@ -10,15 +10,21 @@ public class SoundEffects {
    static Sound powerUpSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/mixkit-game-warning-quick-notification-267.wav"));
    static Sound hitSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/Trampoline.wav"));
    static Sound deathSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/Phone_Ring.wav"));
+   static Sound UISE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/SFX_UI_Confirm.wav"));
+   static Sound pauseSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/SFX_UI_Pause.wav"));
+    static Sound resumeSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/SFX_UI_Resume.wav"));
 
 
     private static Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/music1.mp3"));
     private static Music lowHpMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/1hpdontdie.wav"));
 
-
    public static Sound getJumpSE(){
        return jumpSE;
    }
+
+   public static Sound getPauseSE(){return pauseSE;}
+
+    public static Sound getResumeSE(){return resumeSE;}
 
    public static Sound getPowerUpSE(){
        return powerUpSE;
@@ -31,6 +37,8 @@ public class SoundEffects {
    public static Sound getDeathSE(){
        return deathSE;
    }
+
+   public static Sound getUISE(){return UISE;}
 
    public static void startMainMusic(){
        mainMusic.setLooping(true);
