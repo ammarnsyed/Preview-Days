@@ -1,7 +1,9 @@
 package com.mygdx.game.GameLogic.States;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.GameLogic.SoundEffects;
 
 public class MenuState extends State{
   private static boolean isTouched;
@@ -20,6 +22,8 @@ public class MenuState extends State{
   @Override
   public void handleInput() {
     if(Gdx.input.justTouched()){
+      Sound startSound = SoundEffects.getUISE();
+      startSound.play(0.5f);
       gsm.set(new PlayState(gsm));
       isTouched = true;
     }
