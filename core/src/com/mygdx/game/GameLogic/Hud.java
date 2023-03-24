@@ -31,7 +31,7 @@ public class Hud implements Disposable{
 
   public Hud(SpriteBatch spriteBatch, Player player){
     count = 0;
-    timer = 5000;
+    timer = 0;
     score = 0;
     viewport = new FitViewport(1920,1080,new OrthographicCamera());
     stage = new Stage(viewport,spriteBatch);
@@ -63,15 +63,12 @@ public class Hud implements Disposable{
 
 
   public void update(float dt, Player player) {
-    count += dt;
-    if(count>=1){
-      if(timer>0){
-        timer --;
-      }
-      tm.setText("Time: ".concat(String.valueOf(timer)));
-    }
+    timer += dt;
+    String timerText = String.format("Time: %.1f", timer);
+    tm.setText(timerText);
     updateLives(player.getLives());
   }
+
   public void updateLives(int playerLives) {
     newTable1.removeActor(image1);
     if (playerLives == 2) {
