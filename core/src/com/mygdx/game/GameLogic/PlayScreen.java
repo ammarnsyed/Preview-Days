@@ -17,14 +17,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
 import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;
-import com.mygdx.game.GameLogic.Player;
-import com.mygdx.game.GameLogic.NPC;
 
 import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
@@ -42,6 +42,7 @@ public class PlayScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
+    private Array<Checkpoint> checkpoints;
     private ArrayList<MapCoordinate> powerUpLocations;
     private ArrayList<PowerUp> actualPowerUps;
     private PowerUpHelper powerHelper;
@@ -80,11 +81,15 @@ public class PlayScreen extends ScreenAdapter {
 
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
-        Checkpoint check = new Checkpoint();
-        Body playerBody = BodyHelper.createRectangularBody(check.spawnX(), check.spawnY(), 0.5f, 1, false, world);
+        NPCs = tileMapHelper.getNPCs();
+        checkpoints = tileMapHelper.getCheckpoints();
+        Checkpoint check = checkpoints.get(0);
+
+        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
+
         player = new Player(1, 1, playerBody, getWorld());
 
-        NPCs = tileMapHelper.getNPCs();
+
 
         this.hud = new Hud(batch, player);
 
@@ -93,9 +98,6 @@ public class PlayScreen extends ScreenAdapter {
 
 
 
-
-        Spawn = new Checkpoint(5800, 5080, world, "Spawn");
-        Random = new Checkpoint(6500, 4600, world, "Random");
 
     }
 

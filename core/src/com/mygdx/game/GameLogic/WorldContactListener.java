@@ -1,8 +1,8 @@
 package com.mygdx.game.GameLogic;
 
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.Powers.PowerUp;
 
 public class WorldContactListener implements ContactListener {
@@ -54,12 +54,10 @@ public class WorldContactListener implements ContactListener {
                 break;
             case Constants.PLAYER_BIT | Constants.CHECKPOINT_BIT:
                 if(fixA.getFilterData().categoryBits == Constants.CHECKPOINT_BIT){
-                    ((Checkpoint)fixA.getUserData()).printContact();
-                    ((Checkpoint)fixA.getUserData()).getCheckName();
+                    ((Checkpoint)fixA.getUserData()).changeSpawn();
                 }
                 else{
-                    ((Checkpoint)fixB.getUserData()).printContact();
-                    ((Checkpoint)fixB.getUserData()).getCheckName();
+                    ((Checkpoint)fixB.getUserData()).changeSpawn();
                 }
                 break;
         }
