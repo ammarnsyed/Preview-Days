@@ -9,11 +9,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameLogic.Checkpoint;
 import com.mygdx.game.GameLogic.MapCoordinate;
 import com.mygdx.game.GameLogic.NPC;
 import com.mygdx.game.GameLogic.PlayScreen;
-import com.mygdx.game.Powers.PowerUp;
-import com.mygdx.game.Powers.PowerUpExample;
 
 import java.util.ArrayList;
 
@@ -21,23 +20,26 @@ public class TileMapHelper {
     private TiledMap tiledMap;
     private PlayScreen playScreen;
     public Array<NPC> NPCs;
+    public Array<Checkpoint> checkpoints;
     public ArrayList<MapCoordinate> powerUpLocations;
 
     public TileMapHelper(PlayScreen playScreen){
         this.playScreen = playScreen;
         NPCs = new Array<>();
         powerUpLocations = new ArrayList<>();
+        checkpoints = new Array<>();
     }
 
     public Array<NPC> getNPCs() {
         return NPCs;
     }
     public ArrayList<MapCoordinate> getPowerUps() {return powerUpLocations;}
+    public Array<Checkpoint> getCheckpoints() {return checkpoints;}
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("MapLayout.tmx");
 
-        for(int i = 2; i<=6; i++){
+        for(int i = 2; i<=7; i++){
             parseMapObjects(tiledMap.getLayers().get(i).getObjects(), i-1);
         }
         return new OrthogonalTiledMapRenderer(tiledMap);
@@ -60,6 +62,7 @@ public class TileMapHelper {
             }
         }
     }
+
 
     private void createPowerUp(PolygonMapObject polygonMapObject){
         powerUpLocations.add(new MapCoordinate(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY()));
@@ -87,6 +90,11 @@ public class TileMapHelper {
                 break;
             case 3:
                 fixture.getFilterData().categoryBits = Constants.SPIKE_BIT;
+                break;
+            case 6:
+                Checkpoint checkpoint = new Checkpoint(Math.round(polygonMapObject.getPolygon().getX()), Math.round(polygonMapObject.getPolygon().getY()), body);
+                checkpoints.add(checkpoint);
+                break;
         }
 
         shape.dispose();
