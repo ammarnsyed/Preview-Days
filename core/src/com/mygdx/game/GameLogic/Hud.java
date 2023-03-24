@@ -21,7 +21,6 @@ public class Hud implements Disposable{
 
   private float timer;
   private float score;
-  private float count;
   private Image image1;
   private Table newTable;
   private Table newTable1;
@@ -30,7 +29,6 @@ public class Hud implements Disposable{
   private Label tm;
 
   public Hud(SpriteBatch spriteBatch, Player player){
-    count = 0;
     timer = 0;
     score = 0;
     viewport = new FitViewport(1920,1080,new OrthographicCamera());
@@ -87,6 +85,7 @@ public class Hud implements Disposable{
     score += val;
     sc.setText("Score: ".concat(String.valueOf(score)));
   }
+
   @Override
   public void dispose() {
     stage.dispose();
