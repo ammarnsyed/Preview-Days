@@ -9,8 +9,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GameLogic.Checkpoint;
-import com.mygdx.game.GameLogic.MapCoordinate;
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
 import com.mygdx.game.GameLogic.NPC;
 import com.mygdx.game.GameLogic.PlayScreen;
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.GameLogic;
 
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Powers.PowerUp;

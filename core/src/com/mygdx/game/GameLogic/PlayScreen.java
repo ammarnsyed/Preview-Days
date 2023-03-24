@@ -16,6 +16,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
 import com.mygdx.game.GameLogic.Screens.Boot;
@@ -82,8 +85,7 @@ public class PlayScreen extends ScreenAdapter {
         checkpoints = tileMapHelper.getCheckpoints();
         Checkpoint check = checkpoints.get(0);
 
-        Gdx.app.log("Checkpoint Location", Checkpoint.getSpawnX() + " " + Checkpoint.getSpawnY());
-        Body playerBody = BodyHelper.createRectangularBody(Checkpoint.getSpawnX(), Checkpoint.getSpawnY(), 0.5f, 1, false, world);
+        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
 
         player = new Player(1, 1, playerBody, getWorld());
 

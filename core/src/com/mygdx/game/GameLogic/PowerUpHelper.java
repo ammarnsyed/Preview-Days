@@ -1,9 +1,7 @@
 package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.GameLogic.Helper.TileMapHelper;
-import com.mygdx.game.GameLogic.MapCoordinate;
-import com.mygdx.game.Powers.PowerUpExample;
+import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
 import com.mygdx.game.Powers.PowerUp;
 import com.mygdx.game.Powers.PowerUpList;
 
