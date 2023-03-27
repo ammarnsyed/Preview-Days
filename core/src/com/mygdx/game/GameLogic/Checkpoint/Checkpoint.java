@@ -16,7 +16,8 @@ public class Checkpoint {
         fixture.setSensor(true);
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.CHECKPOINT_BIT;
-        this.x = x;
+        //character was spawning in blocks temp fix for now
+        this.x = x-20;
         this.y = y;
     }
 
