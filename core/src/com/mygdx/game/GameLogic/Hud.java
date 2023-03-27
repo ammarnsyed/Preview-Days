@@ -20,7 +20,6 @@ public class Hud implements Disposable{
 
   public Stage stage;
   private Viewport viewport;
-  private PlayScreen playscreen;
 
   private float timer;
   private float score;
@@ -30,8 +29,8 @@ public class Hud implements Disposable{
 
   private Label sc;
   private Label tm;
-  private Label powerupTimerLabel;
-  private boolean powerupActive;
+  private Label powerUpTimerLabel;
+  private boolean powerUpActive;
 
   public Hud(SpriteBatch spriteBatch, Player player){
     timer = 0;
@@ -40,7 +39,7 @@ public class Hud implements Disposable{
     stage = new Stage(viewport,spriteBatch);
     sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-    powerupTimerLabel = new Label("Powerup: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    powerUpTimerLabel = new Label("Powerup: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
     newTable = new Table();
     newTable1 = new Table();
@@ -48,15 +47,15 @@ public class Hud implements Disposable{
     newTable.setFillParent(true);
     sc.setFontScale(3f,3f);
     tm.setFontScale(3f,3f);
-    powerupTimerLabel.setFontScale(3f, 3f);
+    powerUpTimerLabel.setFontScale(3f, 3f);
     newTable.top();
     newTable.left();
     newTable.add(sc);
     newTable.row();
     newTable.add(tm);
     newTable.row();
-    newTable.add(powerupTimerLabel);
-    powerupActive = false;
+    newTable.add(powerUpTimerLabel);
+    powerUpActive = false;
     newTable1.top();
     newTable1.right();
     updateLives(player.getLives());
@@ -82,15 +81,11 @@ public class Hud implements Disposable{
     }
 
     if (powerupActive) {
-      powerupTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
-      powerupTimerLabel.setVisible(true);
+      powerUpTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
+      powerUpTimerLabel.setVisible(true);
     } else {
-      powerupTimerLabel.setVisible(false);
+      powerUpTimerLabel.setVisible(false);
     }
-  }
-
-  public void updatePowerupTimer(float powerupTimer) {
-    powerupTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
   }
 
   public void updateLives(int playerLives) {
