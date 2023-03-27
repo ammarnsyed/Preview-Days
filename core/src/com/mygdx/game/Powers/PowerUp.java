@@ -98,10 +98,10 @@ public class PowerUp {
             world.destroyBody(body);
             destroyed = true;
         }
-        duration -= timer;
         if (activated) {
             timer += delta;
-            if (timer >= duration) { // Change 10f to the desired duration of the powerup
+            duration -= delta;
+            if (duration <= 0) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);

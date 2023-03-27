@@ -51,18 +51,14 @@ public class Hud implements Disposable{
     powerupTimerLabel.setFontScale(3f, 3f);
     newTable.top();
     newTable.left();
-    newTable.padLeft(20f);
-    newTable.row();
     newTable.add(sc);
     newTable.row();
     newTable.add(tm);
-    newTable.row();
     newTable.row();
     newTable.add(powerupTimerLabel);
     powerupActive = false;
     newTable1.top();
     newTable1.right();
-    newTable.padRight(20f);
     updateLives(player.getLives());
     stage.addActor(newTable);
     stage.addActor(newTable1);
@@ -75,17 +71,21 @@ public class Hud implements Disposable{
     tm.setText(timerText);
     updateLives(player.getLives());
 
-    powerupActive = false;
+    boolean powerupActive = false;
+    float powerupTimer = 0;
     for (PowerUp powerUp : actualPowerUps) {
       if (powerUp.getActive()) {
         powerupActive = true;
-        updatePowerupTimer(powerUp.getDuration());
+        powerupTimer = powerUp.getDuration();
         break;
       }
     }
 
-    if (!powerupActive) {
-      updatePowerupTimer(0);
+    if (powerupActive) {
+      powerupTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
+      powerupTimerLabel.setVisible(true);
+    } else {
+      powerupTimerLabel.setVisible(false);
     }
   }
 
