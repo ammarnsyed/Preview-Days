@@ -3,6 +3,7 @@ package com.mygdx.game.GameLogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,14 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
 import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;
-import com.mygdx.game.GameLogic.Player;
-import com.mygdx.game.GameLogic.NPC;
 
 import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
@@ -42,6 +43,7 @@ public class PlayScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
+    private Array<Checkpoint> checkpoints;
     private ArrayList<MapCoordinate> powerUpLocations;
     private ArrayList<PowerUp> actualPowerUps;
     private PowerUpHelper powerHelper;
@@ -80,11 +82,15 @@ public class PlayScreen extends ScreenAdapter {
 
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
-        Checkpoint check = new Checkpoint();
-        Body playerBody = BodyHelper.createRectangularBody(check.spawnX(), check.spawnY(), 0.5f, 1, false, world);
+        NPCs = tileMapHelper.getNPCs();
+        checkpoints = tileMapHelper.getCheckpoints();
+        Checkpoint check = checkpoints.get(0);
+
+        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
+
         player = new Player(1, 1, playerBody, getWorld());
 
-        NPCs = tileMapHelper.getNPCs();
+
 
         this.hud = new Hud(batch, player);
 
@@ -94,9 +100,6 @@ public class PlayScreen extends ScreenAdapter {
 
 
 
-        Spawn = new Checkpoint(5800, 5080, world, "Spawn");
-        Random = new Checkpoint(6500, 4600, world, "Random");
-
     }
 
     private void update(float delta){
@@ -104,7 +107,7 @@ public class PlayScreen extends ScreenAdapter {
             world.step(1/60f, 6, 2);
             cameraUpdate();
             player.update(delta);
-            hud.update(delta, player);
+            hud.update(delta, player, actualPowerUps);
             for(NPC npc : NPCs){
                 npc.update(delta);
             }
@@ -122,6 +125,8 @@ public class PlayScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
+                Sound pauseSound = SoundEffects.getPauseSE();
+                pauseSound.play(0.5f);
                 player.setPaused();
                 isPaused = true;
             }
@@ -132,6 +137,8 @@ public class PlayScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
+                Sound resumeSE = SoundEffects.getResumeSE();
+                resumeSE.play(0.5f);
                 player.setUnPaused();
                 isPaused = false;
             }

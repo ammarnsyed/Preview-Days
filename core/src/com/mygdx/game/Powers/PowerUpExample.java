@@ -15,6 +15,7 @@ public class PowerUpExample extends PowerUp {
      */
     @Override
     public void powerUpActivate(Player player) {
-
+        player.setSpeed(20f);
+        player.setGravityScale(-1f);
     }
 }
