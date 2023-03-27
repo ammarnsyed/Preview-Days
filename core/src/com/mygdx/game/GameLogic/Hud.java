@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Powers.PowerUp;
+
+import java.util.ArrayList;
 
 public class Hud implements Disposable{
 
@@ -27,6 +30,8 @@ public class Hud implements Disposable{
 
   private Label sc;
   private Label tm;
+  private Label powerupTimerLabel;
+  private boolean powerupActive;
 
   public Hud(SpriteBatch spriteBatch, Player player){
     timer = 0;
@@ -35,7 +40,7 @@ public class Hud implements Disposable{
     stage = new Stage(viewport,spriteBatch);
     sc = new Label("Score: ".concat(String.valueOf(score)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
+    powerupTimerLabel = new Label("Powerup: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
     newTable = new Table();
     newTable1 = new Table();
@@ -43,6 +48,7 @@ public class Hud implements Disposable{
     newTable.setFillParent(true);
     sc.setFontScale(3f,3f);
     tm.setFontScale(3f,3f);
+    powerupTimerLabel.setFontScale(3f, 3f);
     newTable.top();
     newTable.left();
     newTable.padLeft(20f);
@@ -51,6 +57,9 @@ public class Hud implements Disposable{
     newTable.row();
     newTable.add(tm);
     newTable.row();
+    newTable.row();
+    newTable.add(powerupTimerLabel);
+    powerupActive = false;
     newTable1.top();
     newTable1.right();
     newTable.padRight(20f);
@@ -60,11 +69,28 @@ public class Hud implements Disposable{
   }
 
 
-  public void update(float dt, Player player) {
+  public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
     String timerText = String.format("Time: %.1f", timer);
     tm.setText(timerText);
     updateLives(player.getLives());
+
+    powerupActive = false;
+    for (PowerUp powerUp : actualPowerUps) {
+      if (powerUp.getActive()) {
+        powerupActive = true;
+        updatePowerupTimer(powerUp.getDuration());
+        break;
+      }
+    }
+
+    if (!powerupActive) {
+      updatePowerupTimer(0);
+    }
+  }
+
+  public void updatePowerupTimer(float powerupTimer) {
+    powerupTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
   }
 
   public void updateLives(int playerLives) {

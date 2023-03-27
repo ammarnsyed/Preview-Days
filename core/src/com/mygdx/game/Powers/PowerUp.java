@@ -29,10 +29,12 @@ public class PowerUp {
     protected boolean toDestroy;
     protected boolean destroyed;
     protected World world;
-    protected float timer = 0f;
+    protected float timer;
+    private  float duration;
     protected boolean activated;
     Sprite powerSprite;
     private Animation powerUpBlink;
+    private float timeLeft;
 
     Sound powerUpSound = SoundEffects.getPowerUpSE();
 
@@ -41,6 +43,8 @@ public class PowerUp {
         body = BodyHelper.createCircularBody(x, y, 1, true, world);
         this.x = x;
         this.y = y;
+        timer = 0f;
+        duration = 10f;
         stateTime = 0;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.POWER_BIT;
@@ -79,6 +83,9 @@ public class PowerUp {
     public float getTime(){
         return timer;
     }
+    public float getDuration(){
+        return duration;
+    }
     public void setActivated(float time, boolean active){
         timer = time;
         activated = active;
@@ -91,9 +98,10 @@ public class PowerUp {
             world.destroyBody(body);
             destroyed = true;
         }
+        duration -= timer;
         if (activated) {
             timer += delta;
-            if (timer > 15f) { // Change 10f to the desired duration of the powerup
+            if (timer >= duration) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
