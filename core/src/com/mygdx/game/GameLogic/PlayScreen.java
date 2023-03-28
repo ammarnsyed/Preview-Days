@@ -68,7 +68,7 @@ public class PlayScreen extends ScreenAdapter {
 
 
 
-  public PlayScreen(OrthographicCamera camera){
+    public PlayScreen(OrthographicCamera camera){
         this.font = new BitmapFont();
         SoundEffects.startMainMusic();
         this.stage = new Stage();
@@ -80,17 +80,20 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
+        // Retrieve saved checkpoint coordinates
+        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
+        float checkpointY = prefs.getFloat("lastCheckpointY", Spawner.getInstance().getSpawnY());
 
+        // Create player body at checkpoint coordinates
+        Body playerBody = BodyHelper.createRectangularBody(checkpointX, checkpointY, 0.5f, 1, false, world);
+        player = new Player(1, 1, playerBody, getWorld());
 
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
         checkpoints = tileMapHelper.getCheckpoints();
         Checkpoint check = checkpoints.get(0);
-
-        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
-
-        player = new Player(1, 1, playerBody, getWorld());
 
 
 
@@ -99,7 +102,6 @@ public class PlayScreen extends ScreenAdapter {
 
 
         world.setContactListener(new WorldContactListener());
-
 
 
 
@@ -186,38 +188,38 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-          this.update(delta);
+        this.update(delta);
 
-          Gdx.gl.glClearColor(0, 0, 0, 1);
-          Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-          orthogonalTiledMapRenderer.render();
-          batch.begin();
-          deltaTime = Gdx.graphics.getDeltaTime();
-          deltaTime -= delta;
+        orthogonalTiledMapRenderer.render();
+        batch.begin();
+        deltaTime = Gdx.graphics.getDeltaTime();
+        deltaTime -= delta;
 
-          //Render objects such as characters and walls
-          player.render(batch);
+        //Render objects such as characters and walls
+        player.render(batch);
 
 
-          for (NPC npc : NPCs) {
-              npc.render(batch);
-          }
-          for(PowerUp power : actualPowerUps){
+        for (NPC npc : NPCs) {
+            npc.render(batch);
+        }
+        for(PowerUp power : actualPowerUps){
             power.render(batch);
-          }
+        }
 
 
-          hud.stage.draw();
-          batch.end();
-          box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        hud.stage.draw();
+        batch.end();
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
-          gsm.update(Gdx.graphics.getDeltaTime());
-          gsm.render(batch);
-          if (player.isDead() && player.getStateTimer() > 3) {
-              Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-              Boot.INSTANCE.create();
-          }
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
+        if (player.isDead() && player.getStateTimer() > 3) {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Boot.INSTANCE.create();
+        }
     }
 
     public void setPlayer(Player player){
