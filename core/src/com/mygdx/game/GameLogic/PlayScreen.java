@@ -2,6 +2,7 @@ package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -61,13 +62,14 @@ public class PlayScreen extends ScreenAdapter {
     private TextureAtlas atlas;
     private Image image1;
     private boolean isPaused;
+    Preferences prefs;
 
     private float deltaTime = 10;
     private float score = 0;
 
 
 
-  public PlayScreen(OrthographicCamera camera){
+    public PlayScreen(OrthographicCamera camera){
         this.font = new BitmapFont();
         SoundEffects.startMainMusic();
         this.stage = new Stage();
@@ -79,6 +81,23 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
+        //Shutdown hook to reset preferences when IntelliJ is shut down
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                prefs.clear();
+                prefs.flush();
+            }
+        });
+
+
+        // Retrieve saved checkpoint coordinates
+        prefs = Gdx.app.getPreferences("My Preferences");
+        float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
+        float checkpointY = prefs.getFloat("lastCheckpointY", Spawner.getInstance().getSpawnY());
+
+        // Create player body at checkpoint coordinates
+        Body playerBody = BodyHelper.createRectangularBody(checkpointX, checkpointY, 0.5f, 1, false, world);
+        player = new Player(1, 1, playerBody, getWorld());
 
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
@@ -86,21 +105,16 @@ public class PlayScreen extends ScreenAdapter {
         checkpoints = tileMapHelper.getCheckpoints();
         Checkpoint check = checkpoints.get(0);
 
-        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
-
-        player = new Player(1, 1, playerBody, getWorld());
-
 
 
         this.hud = new Hud(batch, player);
+        loadPlayerProgress();
 
 
         world.setContactListener(new WorldContactListener());
 
-
-
-
     }
+
 
     private void update(float delta){
         if (!isPaused) {
@@ -155,6 +169,23 @@ public class PlayScreen extends ScreenAdapter {
         camera.update();
     }
 
+    public void savePlayerProgress() {
+        prefs = Gdx.app.getPreferences("My Preferences");
+        prefs.putInteger("lastCheckpointX", (int) Spawner.getInstance().getSpawnX());
+        prefs.putInteger("lastCheckpointY", (int) Spawner.getInstance().getSpawnY());
+        prefs.putFloat("timeTaken", hud.getTime());
+        prefs.flush();
+    }
+
+    private void loadPlayerProgress() {
+        prefs = Gdx.app.getPreferences("My Preferences");
+        int lastCheckpointX = prefs.getInteger("lastCheckpointX", 3500);
+        int lastCheckpointY = prefs.getInteger("lastCheckpointY", 4880);
+        float timeTaken = prefs.getFloat("timeTaken", 0);
+        Spawner.getInstance().setSpawn(lastCheckpointX, lastCheckpointY);
+        hud.setTime(timeTaken);
+    }
+
     @Override
     public void show(){
         batch = new SpriteBatch();
@@ -166,38 +197,44 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-          this.update(delta);
+        this.update(delta);
 
-          Gdx.gl.glClearColor(0, 0, 0, 1);
-          Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-          orthogonalTiledMapRenderer.render();
-          batch.begin();
-          deltaTime = Gdx.graphics.getDeltaTime();
-          deltaTime -= delta;
+        orthogonalTiledMapRenderer.render();
+        batch.begin();
+        deltaTime = Gdx.graphics.getDeltaTime();
+        deltaTime -= delta;
 
-          //Render objects such as characters and walls
-          player.render(batch);
+        //Render objects such as characters and walls
+        player.render(batch);
 
 
-          for (NPC npc : NPCs) {
-              npc.render(batch);
-          }
-          for(PowerUp power : actualPowerUps){
+        for (NPC npc : NPCs) {
+            npc.render(batch);
+        }
+        for(PowerUp power : actualPowerUps){
             power.render(batch);
-          }
+        }
 
 
-          hud.stage.draw();
-          batch.end();
-          box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        hud.stage.draw();
+        batch.end();
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
-          gsm.update(Gdx.graphics.getDeltaTime());
-          gsm.render(batch);
-          if (player.isDead() && player.getStateTimer() > 3) {
-              Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-              Boot.INSTANCE.create();
-          }
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
+        if (player.isDead() && player.getStateTimer() > 3) {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Boot.INSTANCE.create();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        prefs.clear();
+        prefs.flush();
     }
 
     public void setPlayer(Player player){
