@@ -62,6 +62,7 @@ public class PlayScreen extends ScreenAdapter {
     private TextureAtlas atlas;
     private Image image1;
     private boolean isPaused;
+    Preferences prefs;
 
     private float deltaTime = 10;
     private float score = 0;
@@ -80,8 +81,17 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
+        //Shutdown hook to reset preferences when IntelliJ is shut down
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                prefs.clear();
+                prefs.flush();
+            }
+        });
+
+
         // Retrieve saved checkpoint coordinates
-        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        prefs = Gdx.app.getPreferences("My Preferences");
         float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
         float checkpointY = prefs.getFloat("lastCheckpointY", Spawner.getInstance().getSpawnY());
 
@@ -103,9 +113,8 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
-
-
     }
+
 
     private void update(float delta){
         if (!isPaused) {
@@ -161,7 +170,7 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     public void savePlayerProgress() {
-        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        prefs = Gdx.app.getPreferences("My Preferences");
         prefs.putInteger("lastCheckpointX", (int) Spawner.getInstance().getSpawnX());
         prefs.putInteger("lastCheckpointY", (int) Spawner.getInstance().getSpawnY());
         prefs.putFloat("timeTaken", hud.getTime());
@@ -169,7 +178,7 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     private void loadPlayerProgress() {
-        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        prefs = Gdx.app.getPreferences("My Preferences");
         int lastCheckpointX = prefs.getInteger("lastCheckpointX", 3500);
         int lastCheckpointY = prefs.getInteger("lastCheckpointY", 4880);
         float timeTaken = prefs.getFloat("timeTaken", 0);
@@ -220,6 +229,12 @@ public class PlayScreen extends ScreenAdapter {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             Boot.INSTANCE.create();
         }
+    }
+
+    @Override
+    public void dispose() {
+        prefs.clear();
+        prefs.flush();
     }
 
     public void setPlayer(Player player){
