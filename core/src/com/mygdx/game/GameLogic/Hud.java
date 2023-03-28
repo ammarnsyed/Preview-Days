@@ -86,6 +86,14 @@ public class Hud implements Disposable{
     sc.setText("Score: ".concat(String.valueOf(score)));
   }
 
+  public float getTime() {
+    return timer;
+  }
+
+  public void setTime(float timer) {
+    this.timer = timer;
+  }
+
   @Override
   public void dispose() {
     stage.dispose();

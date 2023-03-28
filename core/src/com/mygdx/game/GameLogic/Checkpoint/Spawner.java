@@ -1,10 +1,16 @@
 package com.mygdx.game.GameLogic.Checkpoint;
 
+import com.mygdx.game.GameLogic.PlayScreen;
+
 public class Spawner {
     private static Spawner spawn = null;
     private static MapCoordinate mapCoordinate;
 
-    private Spawner(){
+    private Spawner(PlayScreen playScreen){
+        playScreen.savePlayerProgress();
+    }
+
+    public Spawner() {
         mapCoordinate = new MapCoordinate(3500, 4880);
     }
 

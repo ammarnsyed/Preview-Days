@@ -2,6 +2,7 @@ package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -80,6 +81,7 @@ public class PlayScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
 
+
         powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
@@ -93,6 +95,7 @@ public class PlayScreen extends ScreenAdapter {
 
 
         this.hud = new Hud(batch, player);
+        loadPlayerProgress();
 
 
         world.setContactListener(new WorldContactListener());
@@ -153,6 +156,23 @@ public class PlayScreen extends ScreenAdapter {
         }
         camera.position.set(position);
         camera.update();
+    }
+
+    public void savePlayerProgress() {
+        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        prefs.putInteger("lastCheckpointX", (int) Spawner.getInstance().getSpawnX());
+        prefs.putInteger("lastCheckpointY", (int) Spawner.getInstance().getSpawnY());
+        prefs.putFloat("timeTaken", hud.getTime());
+        prefs.flush();
+    }
+
+    private void loadPlayerProgress() {
+        Preferences prefs = Gdx.app.getPreferences("My Preferences");
+        int lastCheckpointX = prefs.getInteger("lastCheckpointX", 3500);
+        int lastCheckpointY = prefs.getInteger("lastCheckpointY", 4880);
+        float timeTaken = prefs.getFloat("timeTaken", 0);
+        Spawner.getInstance().setSpawn(lastCheckpointX, lastCheckpointY);
+        hud.setTime(timeTaken);
     }
 
     @Override
