@@ -52,6 +52,10 @@ public class SoundEffects {
        lowHpMusic.play();
    }
 
+   public static void changeMusicVolume(float volume){
+       mainMusic.setVolume(volume);
+   }
+
    public static void stopMainMusic(){
        mainMusic.stop();
    }

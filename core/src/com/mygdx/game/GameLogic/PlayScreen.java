@@ -47,7 +47,7 @@ public class PlayScreen extends ScreenAdapter {
     private Array<Checkpoint> checkpoints;
     private ArrayList<MapCoordinate> powerUpLocations;
     private ArrayList<PowerUp> actualPowerUps;
-    private PowerUpHelper powerHelper;
+    private ClassToList powerHelper;
 
     private Player player;
     private Hud hud;
@@ -99,7 +99,7 @@ public class PlayScreen extends ScreenAdapter {
         Body playerBody = BodyHelper.createRectangularBody(checkpointX, checkpointY, 0.5f, 1, false, world);
         player = new Player(1, 1, playerBody, getWorld());
 
-        powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
+        powerHelper = new ClassToList(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
         checkpoints = tileMapHelper.getCheckpoints();
@@ -141,6 +141,7 @@ public class PlayScreen extends ScreenAdapter {
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
                 Sound pauseSound = SoundEffects.getPauseSE();
                 pauseSound.play(0.5f);
+                SoundEffects.changeMusicVolume(0.25f);
                 player.setPaused();
                 isPaused = true;
             }
@@ -152,6 +153,7 @@ public class PlayScreen extends ScreenAdapter {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
                 Sound resumeSE = SoundEffects.getResumeSE();
+                SoundEffects.changeMusicVolume(0.5f);
                 resumeSE.play(0.5f);
                 player.setUnPaused();
                 isPaused = false;
@@ -221,7 +223,6 @@ public class PlayScreen extends ScreenAdapter {
 
         hud.stage.draw();
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
