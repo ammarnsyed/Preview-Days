@@ -24,7 +24,7 @@ public class Hud implements Disposable{
   private int min;
   private int sec;
   private float timer;
-  private float score;
+  private int score;
   private Image image1;
   private Table newTable;
   private Table newTable1;
@@ -65,10 +65,18 @@ public class Hud implements Disposable{
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
+    //format the timer to min:sec
     min = (int) (timer/60);
     sec = (int) (timer%60);
     String timerText = String.format("Time: %02d", min) + ":" + String.format("%02d", sec);
+    //every minute the user can live, 60 points score will be added
+    if(sec==0){
+      score += 1;
+    }
+    String scoreText = String.format("Score: %d", score);
+    sc.setText(scoreText);
     tm.setText(timerText);
+
     updateLives(player.getLives());
 
     boolean powerUpActive = false;
