@@ -222,12 +222,7 @@ public class PlayScreen extends ScreenAdapter {
             Boot.INSTANCE.create();
         }
     }
-
-    @Override
-    public void dispose() {
-        prefs.clear();
-        prefs.flush();
-    }
+    
 
     public void setPlayer(Player player){
         this.player = player;
