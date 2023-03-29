@@ -30,7 +30,6 @@ public class Hud implements Disposable{
   private Label sc;
   private Label tm;
   private Label powerUpTimerLabel;
-  private boolean powerUpActive;
 
   public Hud(SpriteBatch spriteBatch, Player player){
     timer = 0;
@@ -55,7 +54,6 @@ public class Hud implements Disposable{
     newTable.add(tm);
     newTable.row();
     newTable.add(powerUpTimerLabel);
-    powerUpActive = false;
     newTable1.top();
     newTable1.right();
     updateLives(player.getLives());
@@ -63,25 +61,24 @@ public class Hud implements Disposable{
     stage.addActor(newTable1);
   }
 
-
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
     String timerText = String.format("Time: %.1f", timer);
     tm.setText(timerText);
     updateLives(player.getLives());
 
-    boolean powerupActive = false;
-    float powerupTimer = 0;
+    boolean powerUpActive = false;
+    float powerUpTimer = 0;
     for (PowerUp powerUp : actualPowerUps) {
       if (powerUp.getActive()) {
-        powerupActive = true;
-        powerupTimer = powerUp.getDuration();
+        powerUpActive = true;
+        powerUpTimer = powerUp.getDuration();
         break;
       }
     }
 
-    if (powerupActive) {
-      powerUpTimerLabel.setText(String.format("Powerup: %.1fs", powerupTimer));
+    if (powerUpActive) {
+      powerUpTimerLabel.setText(String.format("Powerup: %.1fs", powerUpTimer));
       powerUpTimerLabel.setVisible(true);
     } else {
       powerUpTimerLabel.setVisible(false);
@@ -119,6 +116,5 @@ public class Hud implements Disposable{
   public void dispose() {
     stage.dispose();
   }
-
 
 }

@@ -15,7 +15,6 @@ public class Boot extends Game {
         INSTANCE = this;
     }
 
-
     @Override
     public void create() {
         this.width = Gdx.graphics.getWidth();
@@ -26,11 +25,10 @@ public class Boot extends Game {
 
         if(player.isDead()){
             Gdx.app.log("Screen:", "Dead");
-            setScreen(new EndScreen(camera));
+            setScreen(new EndScreen());
         } else {
             Gdx.app.log("Screen:", "Alive");
             setScreen(new PlayScreen(camera));
         }
-
     }
 }

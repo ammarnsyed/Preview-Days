@@ -1,7 +1,5 @@
 package com.mygdx.game.GameLogic.Checkpoint;
 
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.mygdx.game.GameLogic.Helper.Constants;

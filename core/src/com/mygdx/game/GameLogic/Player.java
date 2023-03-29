@@ -18,7 +18,6 @@ public class Player extends Entity {
     protected int lives;
     protected static boolean isDead;
     protected boolean isPaused;
-    private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
@@ -36,9 +35,8 @@ public class Player extends Entity {
     private boolean isFacingRight;
     private int maxJumps;
     private float stateTimer;
-    private World world;
 
-    public Player(float width, float height, Body body, World world) {
+    public Player(float width, float height, Body body) {
         super(width, height, body);
         lives = 2;
         isDead = false;
@@ -52,7 +50,6 @@ public class Player extends Entity {
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT;
 
-        this.world = world;
         this.maxJumps = 1;
         fixtureSet();
 
@@ -250,7 +247,6 @@ public class Player extends Entity {
         body.applyLinearImpulse(knockback, body.getWorldCenter(), true);
         playerCheckToDie();
     }
-
 
     protected void setPaused(){
         isPaused = true;

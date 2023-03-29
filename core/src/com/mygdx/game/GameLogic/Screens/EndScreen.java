@@ -4,23 +4,20 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.GameLogic.Boot;
-import com.mygdx.game.GameLogic.PlayScreen;
 import com.mygdx.game.GameLogic.Player;
 import com.mygdx.game.GameLogic.SoundEffects;
 
 public class EndScreen extends ScreenAdapter {
     private Stage stage;
-    private PlayScreen screen;
     private Player player;
 
 
-    public EndScreen(OrthographicCamera camera) {
+    public EndScreen() {
         this.stage = new Stage();
         player = new Player();
 
