@@ -23,11 +23,10 @@ public class Player extends Entity {
     private int jumpForce = 18;
     private boolean knockedBack;
     private float knockbackTimer;
-    private boolean dead;
     private boolean fallen;
     private boolean needToUpdateBody;
 
-    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private enum State {FALLING, JUMPING, STANDING, RUNNING}
     private State currentState;
     private State previousState;
     private TextureRegion playerIdle;
@@ -169,7 +168,7 @@ public class Player extends Entity {
 
     private void checkUserInput(){
         velX = 0;
-        if(!dead && MenuState.isTouched()) {
+        if(!isDead && MenuState.isTouched()) {
             //Move Left
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 velX = -1;
@@ -223,7 +222,6 @@ public class Player extends Entity {
         death.play(0.5f);
         Filter filter = new Filter();
         filter.maskBits = NOTHING_BIT;
-        dead = true;
         isDead = true;
         lives = lives - 3;
         for (Fixture fixture : body.getFixtureList()) {
@@ -253,9 +251,6 @@ public class Player extends Entity {
         playerCheckToDie();
     }
 
-    protected boolean isDead() {
-        return dead;
-    }
 
     public boolean getPaused(){
         return isPaused;
@@ -364,7 +359,7 @@ public class Player extends Entity {
         Player.isDead = isDead;
     }
 
-    public boolean isIsDead() {
+    public boolean isDead() {
         return isDead;
     }
 }
