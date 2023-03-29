@@ -32,6 +32,7 @@ public class Player extends Entity {
     private Sprite playerSprite;
     private Animation playerRun;
     private Animation playerJump;
+    private Animation playerFall;
     private boolean isFacingRight;
     private int maxJumps;
     private float stateTimer;
@@ -72,13 +73,23 @@ public class Player extends Entity {
         for(int i = 0; i<3; i++){
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
-
         playerRun = new Animation(0.1f, frames);
         frames.clear();
         for(int i = 3; i<4; i++){
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
+        frames.clear();
+
+        TextureAtlas fallAtlas = new TextureAtlas("fallingSprites.pack");
+        TextureRegion fallRegion = fallAtlas.findRegion("playerFalling");
+
+        for(int i = 0; i<4; i++){
+            frames.add(new TextureRegion(fallRegion, i*20, 0, 20, 27));
+        }
+        playerFall = new Animation(0.1f, frames);
+        frames.clear();
+
 
     }
 
@@ -120,6 +131,8 @@ public class Player extends Entity {
                 region = (TextureRegion) playerJump.getKeyFrame(stateTimer);
                 break;
             case FALLING:
+                region = (TextureRegion) playerFall.getKeyFrame(stateTimer, true);
+                break;
             case STANDING:
             default:
                 region = playerIdle;
@@ -149,7 +162,7 @@ public class Player extends Entity {
     }
 
     private State getState(){
-        if(body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)){
+        if(body.getLinearVelocity().y > 0){
             return State.JUMPING;
         }
         else if(body.getLinearVelocity().y < 0){
