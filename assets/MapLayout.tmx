@@ -337,8 +337,8 @@
   <object id="58" x="3520" y="3584">
    <polygon points="0,0 64,0 64.0521,22.0313 -0.0104167,22.0313"/>
   </object>
-  <object id="59" x="3584" y="3392">
-   <polygon points="0,64 64,64 64,1664 0,1664"/>
+  <object id="59" x="3584" y="3458.56">
+   <polygon points="0,61.44 64,61.44 64,1597.44 0,1597.44"/>
   </object>
   <object id="61" x="3264" y="3264">
    <polygon points="0,0 2112,0 2112,-64 0,-64"/>
@@ -376,8 +376,8 @@
   <object id="167" x="5184" y="3968">
    <polygon points="0,0 64,0 64,22.0222 0,22"/>
   </object>
-  <object id="185" x="3648" y="3456">
-   <polygon points="0,0 1280,0 1280,64 0,64"/>
+  <object id="185" x="3583.66" y="3456.03">
+   <polygon points="0,0 1344.36,0 1344.36,63.6364 0,63.6364"/>
   </object>
   <object id="186" x="5120" y="3712">
    <polygon points="0,0 -1408,0 -1408,64 0,64"/>
@@ -896,8 +896,8 @@
   </object>
  </objectgroup>
  <objectgroup id="19" name="Checkpoint Layer">
-  <object id="425" x="3648" y="3456">
-   <polygon points="0,0 -64,0 -64,-192 0,-192"/>
+  <object id="425" x="3648" y="3416">
+   <polygon points="0,0 -64,0 -64,-152 0,-152"/>
   </object>
   <object id="426" x="4993.33" y="3712">
    <polygon points="0,0 0,-192 -64,-192 -64,0"/>
