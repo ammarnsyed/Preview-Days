@@ -103,10 +103,6 @@ public class Hud implements Disposable{
     newTable1.add(image1);
   }
 
-  public void addScore(float val){
-    score += val;
-    sc.setText("Score: ".concat(String.valueOf(score)));
-  }
 
   public float getTime() {
     return timer;
