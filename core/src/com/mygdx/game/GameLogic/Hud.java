@@ -21,6 +21,8 @@ public class Hud implements Disposable{
   public Stage stage;
   private Viewport viewport;
 
+  private int min;
+  private int sec;
   private float timer;
   private float score;
   private Image image1;
@@ -66,7 +68,9 @@ public class Hud implements Disposable{
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
-    String timerText = String.format("Time: %.1f", timer);
+    min = (int) (timer/60);
+    sec = (int) (timer%60);
+    String timerText = String.format("Time: %02d", min) + ":" + String.format("%02d", sec);
     tm.setText(timerText);
     updateLives(player.getLives());
 
