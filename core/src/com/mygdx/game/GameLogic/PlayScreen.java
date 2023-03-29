@@ -81,14 +81,6 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-        //Shutdown hook to reset preferences when IntelliJ is shut down
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                prefs.clear();
-                prefs.flush();
-            }
-        });
-
 
         // Retrieve saved checkpoint coordinates
         prefs = Gdx.app.getPreferences("My Preferences");
