@@ -23,7 +23,6 @@ import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
 import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
-import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;

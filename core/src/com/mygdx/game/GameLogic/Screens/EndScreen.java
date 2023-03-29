@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.mygdx.game.GameLogic.Boot;
 import com.mygdx.game.GameLogic.PlayScreen;
 import com.mygdx.game.GameLogic.Player;
 import com.mygdx.game.GameLogic.SoundEffects;

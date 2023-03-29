@@ -15,9 +15,9 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
-    public int lives;
-    private static boolean isDead;
-    private boolean isPaused;
+    protected int lives;
+    protected static boolean isDead;
+    protected boolean isPaused;
     private int hitCount;
     private int jumpCount;
     private int jumpForce = 18;
@@ -202,7 +202,7 @@ public class Player extends Entity {
         }
     }
 
-    public void playerCheckToDie(){
+    protected void playerCheckToDie(){
         if(lives < 0){
             playerDeath();
         }
@@ -257,15 +257,11 @@ public class Player extends Entity {
         return dead;
     }
 
-    public boolean getPaused(){
-        return isPaused;
-    }
-
-    public void setPaused(){
+    protected void setPaused(){
         isPaused = true;
     }
 
-    public void setUnPaused(){
+    protected void setUnPaused(){
         isPaused = false;
     }
 

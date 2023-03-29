@@ -1,12 +1,9 @@
-package com.mygdx.game.GameLogic.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.GameLogic.PlayScreen;
-import com.mygdx.game.GameLogic.Player;
+import com.mygdx.game.GameLogic.Screens.EndScreen;
 
 public class Boot extends Game {
 
