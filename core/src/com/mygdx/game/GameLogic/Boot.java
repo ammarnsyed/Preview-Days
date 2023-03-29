@@ -24,7 +24,7 @@ public class Boot extends Game {
         this.camera.setToOrtho(false, width, height);
         player = new Player();
 
-        if(player.isIsDead()){
+        if(player.isDead()){
             Gdx.app.log("Screen:", "Dead");
             setScreen(new EndScreen(camera));
         } else {
