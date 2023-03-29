@@ -1,7 +1,6 @@
 package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
@@ -50,6 +49,10 @@ public class SoundEffects {
        lowHpMusic.setLooping(true);
        lowHpMusic.setVolume(0.5f);
        lowHpMusic.play();
+   }
+
+   public static void changeMusicVolume(float volume){
+       mainMusic.setVolume(volume);
    }
 
    public static void stopMainMusic(){

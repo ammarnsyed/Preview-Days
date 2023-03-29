@@ -1,6 +1,5 @@
 package com.mygdx.game.Powers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -34,7 +33,6 @@ public class PowerUp {
     protected boolean activated;
     Sprite powerSprite;
     private Animation powerUpBlink;
-    private float timeLeft;
 
     Sound powerUpSound = SoundEffects.getPowerUpSE();
 
@@ -62,13 +60,9 @@ public class PowerUp {
         frames.add(powerTexture1);
         frames.add(powerTexture2);
         powerUpBlink = new Animation(0.5f, frames);
-
-
     }
 
-    public void powerUpActivate(Player player){
-
-    }
+    public void powerUpActivate(Player player){}
 
     public void render(SpriteBatch batch){
         if(!destroyed){
@@ -77,12 +71,6 @@ public class PowerUp {
 
     }
 
-    public Body getBody(){
-        return body;
-    }
-    public float getTime(){
-        return timer;
-    }
     public float getDuration(){
         return duration;
     }
@@ -132,10 +120,6 @@ public class PowerUp {
 
     public float getY(){
         return y;
-    }
-
-    public World getWorld(){
-        return world;
     }
 
     public void consume() {

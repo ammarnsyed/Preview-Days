@@ -8,22 +8,16 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
-import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
 import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
-import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;
@@ -33,50 +27,30 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 import java.util.ArrayList;
 
 public class PlayScreen extends ScreenAdapter {
-    private BitmapFont font;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     Texture img;
     private gStateManager gsm;
     private World world;
-    private Box2DDebugRenderer box2DDebugRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
     private Array<Checkpoint> checkpoints;
-    private ArrayList<MapCoordinate> powerUpLocations;
     private ArrayList<PowerUp> actualPowerUps;
-    private PowerUpHelper powerHelper;
+    private ClassToList powerHelper;
 
     private Player player;
     private Hud hud;
-    private int playerLives;
 
-
-    private Checkpoint Spawn;
-    private Checkpoint Random;
-    private int playerX;
-
-    private Stage stage;
-    private TextureAtlas atlas;
-    private Image image1;
     private boolean isPaused;
     Preferences prefs;
 
-    private float deltaTime = 10;
-    private float score = 0;
-
-
-
     public PlayScreen(OrthographicCamera camera){
-        this.font = new BitmapFont();
         SoundEffects.startMainMusic();
-        this.stage = new Stage();
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
@@ -89,19 +63,15 @@ public class PlayScreen extends ScreenAdapter {
 
         // Create player body at checkpoint coordinates
         Body playerBody = BodyHelper.createRectangularBody(checkpointX, checkpointY, 0.5f, 1, false, world);
-        player = new Player(1, 1, playerBody, getWorld());
+        player = new Player(1, 1, playerBody);
 
-        powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
+        powerHelper = new ClassToList(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
         checkpoints = tileMapHelper.getCheckpoints();
-        Checkpoint check = checkpoints.get(0);
-
-
 
         this.hud = new Hud(batch, player);
         loadPlayerProgress();
-
 
         world.setContactListener(new WorldContactListener());
 
@@ -121,9 +91,6 @@ public class PlayScreen extends ScreenAdapter {
                 power.update(player, delta);
             }
 
-
-
-
             batch.setProjectionMatrix(camera.combined);
             orthogonalTiledMapRenderer.setView(camera);
 
@@ -133,6 +100,7 @@ public class PlayScreen extends ScreenAdapter {
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
                 Sound pauseSound = SoundEffects.getPauseSE();
                 pauseSound.play(0.5f);
+                SoundEffects.changeMusicVolume(0.25f);
                 player.setPaused();
                 isPaused = true;
             }
@@ -144,6 +112,7 @@ public class PlayScreen extends ScreenAdapter {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
                 Sound resumeSE = SoundEffects.getResumeSE();
+                SoundEffects.changeMusicVolume(0.5f);
                 resumeSE.play(0.5f);
                 player.setUnPaused();
                 isPaused = false;
@@ -196,12 +165,9 @@ public class PlayScreen extends ScreenAdapter {
 
         orthogonalTiledMapRenderer.render();
         batch.begin();
-        deltaTime = Gdx.graphics.getDeltaTime();
-        deltaTime -= delta;
 
         //Render objects such as characters and walls
         player.render(batch);
-
 
         for (NPC npc : NPCs) {
             npc.render(batch);
@@ -210,10 +176,8 @@ public class PlayScreen extends ScreenAdapter {
             power.render(batch);
         }
 
-
         hud.stage.draw();
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
@@ -222,14 +186,9 @@ public class PlayScreen extends ScreenAdapter {
             Boot.INSTANCE.create();
         }
     }
-    
 
-    public void setPlayer(Player player){
-        this.player = player;
-    }
     public World getWorld() {
         return world;
     }
-    public TextureAtlas getAtlas(){return atlas;}
 
 }

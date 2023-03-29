@@ -1,12 +1,9 @@
-package com.mygdx.game.GameLogic.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.GameLogic.PlayScreen;
-import com.mygdx.game.GameLogic.Player;
+import com.mygdx.game.GameLogic.Screens.EndScreen;
 
 public class Boot extends Game {
 
@@ -18,7 +15,6 @@ public class Boot extends Game {
         INSTANCE = this;
     }
 
-
     @Override
     public void create() {
         this.width = Gdx.graphics.getWidth();
@@ -27,13 +23,12 @@ public class Boot extends Game {
         this.camera.setToOrtho(false, width, height);
         player = new Player();
 
-        if(player.isIsDead()){
+        if(player.isDead()){
             Gdx.app.log("Screen:", "Dead");
-            setScreen(new EndScreen(camera));
+            setScreen(new EndScreen());
         } else {
             Gdx.app.log("Screen:", "Alive");
             setScreen(new PlayScreen(camera));
         }
-
     }
 }

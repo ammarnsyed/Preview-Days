@@ -15,19 +15,17 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
-    public int lives;
-    private static boolean isDead;
-    private boolean isPaused;
-    private int hitCount;
+    protected int lives;
+    protected static boolean isDead;
+    protected boolean isPaused;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
     private float knockbackTimer;
-    private boolean dead;
     private boolean fallen;
     private boolean needToUpdateBody;
 
-    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private enum State {FALLING, JUMPING, STANDING, RUNNING}
     private State currentState;
     private State previousState;
     private TextureRegion playerIdle;
@@ -37,9 +35,8 @@ public class Player extends Entity {
     private boolean isFacingRight;
     private int maxJumps;
     private float stateTimer;
-    private World world;
 
-    public Player(float width, float height, Body body, World world) {
+    public Player(float width, float height, Body body) {
         super(width, height, body);
         lives = 2;
         isDead = false;
@@ -53,7 +50,6 @@ public class Player extends Entity {
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT;
 
-        this.world = world;
         this.maxJumps = 1;
         fixtureSet();
 
@@ -169,7 +165,7 @@ public class Player extends Entity {
 
     private void checkUserInput(){
         velX = 0;
-        if(!dead && MenuState.isTouched()) {
+        if(!isDead && MenuState.isTouched()) {
             //Move Left
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 velX = -1;
@@ -202,7 +198,7 @@ public class Player extends Entity {
         }
     }
 
-    public void playerCheckToDie(){
+    protected void playerCheckToDie(){
         if(lives < 0){
             playerDeath();
         }
@@ -223,7 +219,6 @@ public class Player extends Entity {
         death.play(0.5f);
         Filter filter = new Filter();
         filter.maskBits = NOTHING_BIT;
-        dead = true;
         isDead = true;
         lives = lives - 3;
         for (Fixture fixture : body.getFixtureList()) {
@@ -253,19 +248,11 @@ public class Player extends Entity {
         playerCheckToDie();
     }
 
-    protected boolean isDead() {
-        return dead;
-    }
-
-    public boolean getPaused(){
-        return isPaused;
-    }
-
-    public void setPaused(){
+    protected void setPaused(){
         isPaused = true;
     }
 
-    public void setUnPaused(){
+    protected void setUnPaused(){
         isPaused = false;
     }
 
@@ -364,7 +351,7 @@ public class Player extends Entity {
         Player.isDead = isDead;
     }
 
-    public boolean isIsDead() {
+    public boolean isDead() {
         return isDead;
     }
 }
