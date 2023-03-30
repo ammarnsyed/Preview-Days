@@ -1,5 +1,6 @@
 package com.mygdx.game.GameLogic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,6 +33,12 @@ public class Hud implements Disposable{
   private Label sc;
   private Label tm;
   private Label powerUpTimerLabel;
+
+  private Table newTableP;
+  private Label button1 = new Label("RESUME",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+  private Label button2 = new Label("SETTING",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+  private Label button3 = new Label("EXIT",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
 
   public Hud(SpriteBatch spriteBatch, Player player){
     timer = 0;
@@ -95,6 +102,53 @@ public class Hud implements Disposable{
     } else {
       powerUpTimerLabel.setVisible(false);
     }
+  }
+
+  protected void updatePause(){
+    newTableP = new Table();
+    newTableP.setFillParent(true);
+    button1.setFontScale(3f,3f);
+    button2.setFontScale(3f,3f);
+    button3.setFontScale(3f,3f);
+    newTableP.add(button1);
+    newTableP.row();
+    newTableP.add(button2);
+    newTableP.row();
+    newTableP.add(button3);
+    newTableP.center();
+    stage.addActor(newTableP);
+
+  }
+
+  public void buttonDetect(PlayScreen playScreen){
+    if(Gdx.input.getX() < button1.getX() + 2 * button1.getWidth() && Gdx.input.getX() > button1.getX() + 0.75 * button1.getWidth() && Gdx.input.getY() < button1.getY() + 2.5 * button1.getHeight() && Gdx.input.getY() > button1.getY() + 1.5 * button1.getHeight() ){
+      button1.setColor(Color.GRAY);
+      if(Gdx.input.isTouched()){
+        playScreen.updateResume();
+      }
+    }else{
+      button1.setColor(Color.WHITE);
+    }
+    if(Gdx.input.getX() < button2.getX() + 1.8 * button2.getWidth() && Gdx.input.getX() > button2.getX() + 0.6 * button2.getWidth() && Gdx.input.getY() < button2.getY() + 4.7 * button2.getHeight() && Gdx.input.getY() > button2.getY() + 3.9 * button2.getHeight() ){
+      button2.setColor(Color.GRAY);
+      if(Gdx.input.isTouched()){
+        playScreen.updateResume();
+      }
+    }else{
+      button2.setColor(Color.WHITE);
+    }
+    if(Gdx.input.getX() < button3.getX() + 3 * button3.getWidth() && Gdx.input.getX() > button3.getX() + 1.7 * button3.getWidth() && Gdx.input.getY() < button3.getY() + 7 * button3.getHeight() && Gdx.input.getY() > button3.getY() + 6 * button3.getHeight() ){
+      button3.setColor(Color.GRAY);
+      if(Gdx.input.isTouched()){
+        playScreen.exitGame();
+      }
+    }else{
+      button3.setColor(Color.WHITE);
+    }
+  }
+
+  public void updateResume(){
+    newTableP.remove();
   }
 
   public void updateLives(int playerLives) {
