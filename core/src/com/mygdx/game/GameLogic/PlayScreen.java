@@ -84,7 +84,6 @@ public class PlayScreen extends ScreenAdapter {
         //Shutdown hook to reset preferences when IntelliJ is shut down
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                prefs.clear();
                 prefs.flush();
             }
         });
