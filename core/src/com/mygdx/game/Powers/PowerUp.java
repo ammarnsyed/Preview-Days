@@ -31,6 +31,7 @@ public class PowerUp {
     protected float timer;
     private  float duration;
     protected boolean activated;
+    protected boolean musicToFade;
     Sprite powerSprite;
     private Animation powerUpBlink;
 
@@ -50,6 +51,7 @@ public class PowerUp {
         toDestroy = false;
         destroyed = false;
         activated = false;
+        musicToFade = false;
 
         TextureRegion powerTexture1 = new TextureRegion(new Texture("powerUp1.png"));
         TextureRegion powerTexture2 = new TextureRegion(new Texture("powerUp2.png"));
@@ -89,9 +91,14 @@ public class PowerUp {
         if (activated) {
             timer += delta;
             duration -= delta;
+            if(duration <= 5 && !musicToFade){
+                musicToFade = true;
+                SoundEffects.fadePowerUpMusic(5);
+            }
             if (duration <= 0) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
+                SoundEffects.startCurrentMusic();
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
                 player.setSpeed(Constants.PLAYER_SPEED);
                 player.setWidth(Constants.PLAYER_WIDTH);
@@ -124,6 +131,8 @@ public class PowerUp {
 
     public void consume() {
         powerUpSound.play(0.5f);
+        SoundEffects.stopCurrentMusic();
+        SoundEffects.startPowerUpMusic();
         toDestroy = true;
     }
 }

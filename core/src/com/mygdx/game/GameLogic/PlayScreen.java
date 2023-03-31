@@ -100,7 +100,7 @@ public class PlayScreen extends ScreenAdapter {
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
                 Sound pauseSound = SoundEffects.getPauseSE();
                 pauseSound.play(0.5f);
-                SoundEffects.changeMusicVolume(0.25f);
+                SoundEffects.changeMainMusicVolume(0.25f);
                 player.setPaused();
                 isPaused = true;
             }
@@ -112,7 +112,7 @@ public class PlayScreen extends ScreenAdapter {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
                 Sound resumeSE = SoundEffects.getResumeSE();
-                SoundEffects.changeMusicVolume(0.5f);
+                SoundEffects.changeMainMusicVolume(0.5f);
                 resumeSE.play(0.5f);
                 player.setUnPaused();
                 isPaused = false;
