@@ -222,13 +222,14 @@ public class Player extends Entity {
         }
 
         if(lives == 0){
-            SoundEffects.stopMainMusic();
+            SoundEffects.stopCurrentMusic();
+            SoundEffects.fadeOutPowerTask.cancel();
             SoundEffects.startLowHpMusic();
         }
     }
 
     protected void playerDeath() {
-        SoundEffects.stopLowHpMusic();
+        SoundEffects.stopCurrentMusic();
         Sound death = SoundEffects.getDeathSE();
         death.play(0.5f);
         Filter filter = new Filter();
