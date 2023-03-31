@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -35,9 +36,10 @@ public class Hud implements Disposable{
   private Label powerUpTimerLabel;
 
   private Table newTableP;
-  private Label button1 = new Label("RESUME",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-  private Label button2 = new Label("SETTING",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-  private Label button3 = new Label("EXIT",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+  TextButton.TextButtonStyle textButtonStyle;
+  private TextButton button1;
+  private TextButton button2;
+  private TextButton button3;
 
 
   public Hud(SpriteBatch spriteBatch, Player player){
@@ -68,6 +70,12 @@ public class Hud implements Disposable{
     updateLives(player.getLives());
     stage.addActor(newTable);
     stage.addActor(newTable1);
+
+    textButtonStyle = new TextButton.TextButtonStyle();
+    textButtonStyle.font = new BitmapFont();
+    button1 = new TextButton("RESUME",textButtonStyle);
+    button2 = new TextButton("SETTING",textButtonStyle);
+    button3 = new TextButton("EXIT",textButtonStyle);
   }
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
@@ -107,9 +115,9 @@ public class Hud implements Disposable{
   protected void updatePause(){
     newTableP = new Table();
     newTableP.setFillParent(true);
-    button1.setFontScale(3f,3f);
-    button2.setFontScale(3f,3f);
-    button3.setFontScale(3f,3f);
+    button1.getLabel().setFontScale(3f,3f);
+    button2.getLabel().setFontScale(3f,3f);
+    button3.getLabel().setFontScale(3f,3f);
     newTableP.add(button1);
     newTableP.row();
     newTableP.add(button2);
