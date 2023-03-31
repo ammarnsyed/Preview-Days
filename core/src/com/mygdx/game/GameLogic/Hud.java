@@ -121,7 +121,11 @@ public class Hud implements Disposable{
   }
 
   public void buttonDetect(PlayScreen playScreen){
-    if(Gdx.input.getX() < button1.getX() + 2 * button1.getWidth() && Gdx.input.getX() > button1.getX() + 0.75 * button1.getWidth() && Gdx.input.getY() < button1.getY() + 2.5 * button1.getHeight() && Gdx.input.getY() > button1.getY() + 1.5 * button1.getHeight() ){
+    float x1 = button1.getX(), x2 = button2.getX(), x3 = button3.getX();
+    float y1 = button1.getY(), y2 = button2.getY(), y3 = button3.getY();
+    float w1 = button1.getWidth(), w2 = button2.getWidth(), w3 = button3.getWidth();
+    float h1 = button1.getHeight(), h2 = button2.getHeight(), h3 = button3.getHeight();
+    if(Gdx.input.getX() < x1 + 2 * button1.getWidth() && Gdx.input.getX() > x1 + 0.75 * button1.getWidth() && Gdx.input.getY() < button1.getY() + 2.5 * button1.getHeight() && Gdx.input.getY() > button1.getY() + 1.5 * button1.getHeight() ){
       button1.setColor(Color.GRAY);
       if(Gdx.input.isTouched()){
         playScreen.updateResume();
