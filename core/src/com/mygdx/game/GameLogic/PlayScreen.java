@@ -42,6 +42,7 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private Hud hud;
+    private Box2DDebugRenderer box;
 
     private boolean isPaused;
     Preferences prefs;
@@ -51,6 +52,7 @@ public class PlayScreen extends ScreenAdapter {
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
+        this.box = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
@@ -159,7 +161,6 @@ public class PlayScreen extends ScreenAdapter {
     @Override
     public void render(float delta){
         this.update(delta);
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -178,6 +179,7 @@ public class PlayScreen extends ScreenAdapter {
 
         hud.stage.draw();
         batch.end();
+        box.render(world, camera.combined.scl(PPM));
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);

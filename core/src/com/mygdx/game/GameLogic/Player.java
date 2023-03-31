@@ -37,6 +37,7 @@ public class Player extends Entity {
     private int maxJumps;
     private float stateTimer;
 
+
     public Player(float width, float height, Body body) {
         super(width, height, body);
         lives = 2;
