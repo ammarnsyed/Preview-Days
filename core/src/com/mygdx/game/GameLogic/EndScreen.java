@@ -1,4 +1,4 @@
-package com.mygdx.game.GameLogic.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;

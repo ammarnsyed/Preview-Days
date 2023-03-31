@@ -360,11 +360,11 @@ public class Player extends Entity {
         body.setGravityScale(gravityScale);
     }
 
-    public void setIsDead(boolean isDead) {
+    protected void setIsDead(boolean isDead) {
         Player.isDead = isDead;
     }
 
-    public boolean isDead() {
+    protected boolean isDead() {
         return isDead;
     }
 }
