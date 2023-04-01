@@ -5,7 +5,7 @@ public class Spawner {
     private static MapCoordinate mapCoordinate;
 
     private Spawner(){
-        mapCoordinate = new MapCoordinate(3500, 4880);
+        mapCoordinate = new MapCoordinate(3350, 4550);
     }
 
     public static Spawner getInstance(){
