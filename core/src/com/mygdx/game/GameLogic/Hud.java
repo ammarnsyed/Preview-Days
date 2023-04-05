@@ -146,20 +146,26 @@ public class Hud implements Disposable{
       clickCount[0] = 0;
     }
 
-
-    float x1 = button1.getX(), x2 = button2.getX(), x3 = button3.getX();
-    float y1 = button1.getY(), y2 = button2.getY(), y3 = button3.getY();
-    float w1 = button1.getWidth(), w2 = button2.getWidth(), w3 = button3.getWidth();
-    float h1 = button1.getHeight(), h2 = button2.getHeight(), h3 = button3.getHeight();
-
-
-    if(Gdx.input.getX() < x3 + w3 && Gdx.input.getX() > x3 && Gdx.input.getY() < y3 + h3 && Gdx.input.getY() > y3 ){
-      button3.getLabel().setColor(Color.GRAY);
-      if(Gdx.input.isTouched()){
-        playScreen.exitGame();
+    button2.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[1]++;
       }
-    }else{
-      button3.getLabel().setColor(Color.WHITE);
+    });
+    if(clickCount[1] != 0){
+      playScreen.updateResume();
+      clickCount[1] = 0;
+    }
+
+    button3.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[2]++;
+      }
+    });
+    if(clickCount[2] != 0){
+      playScreen.exitGame();
+      clickCount[2] = 0;
     }
   }
 
