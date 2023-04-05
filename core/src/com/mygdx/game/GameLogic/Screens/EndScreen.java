@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.PlayScreen;
 import com.mygdx.game.GameLogic.Player;
 import com.mygdx.game.GameLogic.SoundEffects;
@@ -35,7 +36,6 @@ public class EndScreen extends ScreenAdapter {
     public EndScreen(OrthographicCamera camera) {
         this.stage = new Stage();
         player = new Player();
-
         font = new BitmapFont();
         skin = new Skin();
 
@@ -46,7 +46,7 @@ public class EndScreen extends ScreenAdapter {
 
         button1 = new TextButton("Play Again!", textButtonStyle);
         button1.getLabel().setFontScale(5f, 5f);
-        button2 = new TextButton("Refresh", textButtonStyle);
+        button2 = new TextButton("Restart", textButtonStyle);
         button2.getLabel().setFontScale(5f, 5f);
         button.addListener(new ChangeListener() {
             @Override
@@ -60,6 +60,10 @@ public class EndScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.log("Game", "Continue");
+                Sound startSound = SoundEffects.getUISE();
+                startSound.play(0.5f);
+                player.setIsDead(false);
+                Boot.INSTANCE.create();
             }
         });
         button2.addListener(new ChangeListener() {
@@ -69,6 +73,11 @@ public class EndScreen extends ScreenAdapter {
                 Gdx.app.log("Game", "Refreshed");
                 prefs.clear();
                 prefs.flush();
+                Spawner.resetSpawn();
+                Sound startSound = SoundEffects.getUISE();
+                startSound.play(0.5f);
+                player.setIsDead(false);
+                Boot.INSTANCE.create();
             }
         });
 
@@ -87,12 +96,6 @@ public class EndScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.justTouched()){
-            Sound startSound = SoundEffects.getUISE();
-            startSound.play(0.5f);
-            player.setIsDead(false);
-            Boot.INSTANCE.create();
-        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();

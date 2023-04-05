@@ -26,4 +26,8 @@ public class Spawner {
     public float getSpawnY(){
         return mapCoordinate.getY();
     }
+
+    public static void resetSpawn(){
+        mapCoordinate.setCoordinate(3500, 4880);
+    }
 }
