@@ -38,6 +38,7 @@ public class EndScreen extends ScreenAdapter {
         newTable.row();
         newTable.add(Replay).padTop(5f);
         newTable.row();
+        newTable.add(leaderBoard);
         newTable.center();
         stage.addActor(newTable);
     }
