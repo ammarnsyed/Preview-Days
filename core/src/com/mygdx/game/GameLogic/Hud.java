@@ -129,6 +129,7 @@ public class Hud implements Disposable{
     newTableP.add(button2);
     newTableP.row();
     newTableP.add(button3);
+    Gdx.input.setInputProcessor(stage);
     stage.addActor(newTableP);
 
   }
