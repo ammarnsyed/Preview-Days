@@ -898,8 +898,8 @@
   <object id="437" x="5415.33" y="3726.67">
    <polygon points="0,0 64,0 64,64 0,64"/>
   </object>
-  <object id="438" x="12736" y="0">
-   <polygon points="0,0 64,0 64,64 0,64"/>
+  <object id="438" x="12718" y="0">
+   <polygon points="0,0 82,0 82,74 0,74"/>
   </object>
  </objectgroup>
  <objectgroup id="19" name="Checkpoint Layer">
