@@ -6,11 +6,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -40,6 +44,8 @@ public class Hud implements Disposable{
   private TextButton button1;
   private TextButton button2;
   private TextButton button3;
+  private final int[] clickCount = {0,0,0};
+
 
 
   public Hud(SpriteBatch spriteBatch, Player player){
@@ -115,7 +121,7 @@ public class Hud implements Disposable{
   protected void updatePause(){
     newTableP = new Table();
     newTableP.setFillParent(true);
-    button1.getLabel().setFontScale(3f,3f);
+    button1.getLabel().setFontScale(5f,5f);
     button2.getLabel().setFontScale(3f,3f);
     button3.getLabel().setFontScale(3f,3f);
     newTableP.add(button1);
@@ -123,39 +129,36 @@ public class Hud implements Disposable{
     newTableP.add(button2);
     newTableP.row();
     newTableP.add(button3);
-    newTableP.center();
     stage.addActor(newTableP);
 
   }
 
-  public void buttonDetect(PlayScreen playScreen){
+  public void buttonDetect(final PlayScreen playScreen){
+    button1.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[0]++;
+      }
+    });
+    if(clickCount[0] != 0){
+      playScreen.updateResume();
+      clickCount[0] = 0;
+    }
+
+
     float x1 = button1.getX(), x2 = button2.getX(), x3 = button3.getX();
     float y1 = button1.getY(), y2 = button2.getY(), y3 = button3.getY();
     float w1 = button1.getWidth(), w2 = button2.getWidth(), w3 = button3.getWidth();
     float h1 = button1.getHeight(), h2 = button2.getHeight(), h3 = button3.getHeight();
-    if(Gdx.input.getX() < x1 + 2 * button1.getWidth() && Gdx.input.getX() > x1 + 0.75 * button1.getWidth() && Gdx.input.getY() < button1.getY() + 2.5 * button1.getHeight() && Gdx.input.getY() > button1.getY() + 1.5 * button1.getHeight() ){
-      button1.setColor(Color.GRAY);
-      if(Gdx.input.isTouched()){
-        playScreen.updateResume();
-      }
-    }else{
-      button1.setColor(Color.WHITE);
-    }
-    if(Gdx.input.getX() < button2.getX() + 1.8 * button2.getWidth() && Gdx.input.getX() > button2.getX() + 0.6 * button2.getWidth() && Gdx.input.getY() < button2.getY() + 4.7 * button2.getHeight() && Gdx.input.getY() > button2.getY() + 3.9 * button2.getHeight() ){
-      button2.setColor(Color.GRAY);
-      if(Gdx.input.isTouched()){
-        playScreen.updateResume();
-      }
-    }else{
-      button2.setColor(Color.WHITE);
-    }
-    if(Gdx.input.getX() < button3.getX() + 3 * button3.getWidth() && Gdx.input.getX() > button3.getX() + 1.7 * button3.getWidth() && Gdx.input.getY() < button3.getY() + 7 * button3.getHeight() && Gdx.input.getY() > button3.getY() + 6 * button3.getHeight() ){
-      button3.setColor(Color.GRAY);
+
+
+    if(Gdx.input.getX() < x3 + w3 && Gdx.input.getX() > x3 && Gdx.input.getY() < y3 + h3 && Gdx.input.getY() > y3 ){
+      button3.getLabel().setColor(Color.GRAY);
       if(Gdx.input.isTouched()){
         playScreen.exitGame();
       }
     }else{
-      button3.setColor(Color.WHITE);
+      button3.getLabel().setColor(Color.WHITE);
     }
   }
 

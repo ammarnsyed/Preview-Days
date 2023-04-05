@@ -192,6 +192,7 @@ public class PlayScreen extends ScreenAdapter {
         }
 
         hud.stage.draw();
+        hud.stage.act();
         batch.end();
 
         gsm.update(Gdx.graphics.getDeltaTime());
