@@ -8,10 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.mygdx.game.GameLogic.Boot;
-import com.mygdx.game.GameLogic.Player;
-import com.mygdx.game.GameLogic.SoundEffects;
 
 public class EndScreen extends ScreenAdapter {
     private Stage stage;
@@ -24,13 +20,10 @@ public class EndScreen extends ScreenAdapter {
 
         Label EndScreenLabel = new Label("Game Over", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         Label Replay = new Label("Play Again?", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = new BitmapFont();
-        style.fontColor = Color.WHITE;
-        TextButton leaderBoard = new TextButton("LeaderBoard",new TextButton.TextButtonStyle());
+        Label leaderBoard = new Label("LeaderBoard", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         EndScreenLabel.setFontScale(5f, 5f);
         Replay.setFontScale(5f, 5f);
-        leaderBoard.getLabel().setFontScale(5f,5f);
+        leaderBoard.setFontScale(5f,5f);
 
         Table newTable = new Table();
         newTable.setFillParent(true);
