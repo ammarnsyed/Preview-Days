@@ -36,10 +36,12 @@ public class Player extends Entity {
     private boolean isFacingRight;
     private int maxJumps;
     private float stateTimer;
+    public static int playerCount = 0;
 
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
+        playerCount++;
         lives = 2;
         isDead = false;
         isPaused = false;

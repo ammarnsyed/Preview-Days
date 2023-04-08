@@ -68,7 +68,8 @@ public class EndScreen extends ScreenAdapter {
                 Sound startSound = SoundEffects.getUISE();
                 startSound.play(0.5f);
                 player.setIsDead(false);
-                Boot.INSTANCE.create();
+                Boot.INSTANCE.disposeCurrentScreen();
+                Boot.INSTANCE.startGame();
             }
         });
         button2.addListener(new ChangeListener() {
@@ -82,7 +83,8 @@ public class EndScreen extends ScreenAdapter {
                 Sound startSound = SoundEffects.getUISE();
                 startSound.play(0.5f);
                 player.setIsDead(false);
-                Boot.INSTANCE.create();
+                Boot.INSTANCE.disposeCurrentScreen();
+                Boot.INSTANCE.startGame();
             }
         });
 
@@ -138,7 +140,7 @@ public class EndScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        super.dispose();
+        this.hide();
+        stage.dispose();
     }
-
 }
