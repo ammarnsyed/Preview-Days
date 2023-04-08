@@ -2,17 +2,22 @@ package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
+import javax.management.relation.RelationNotFoundException;
+import java.util.Random;
 
 public class Boot extends Game {
 
     public static Boot INSTANCE;
     private int width, height;
     private OrthographicCamera camera;
-    private Player player;
     public Boot(){
         INSTANCE = this;
     }
+    private ScreenAdapter currentScreen;
 
     @Override
     public void create() {
@@ -20,14 +25,21 @@ public class Boot extends Game {
         this.height = Gdx.graphics.getHeight();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
-        player = new Player();
+        startGame();
+    }
 
-        if(player.isDead()){
-            Gdx.app.log("Screen:", "Dead");
-            setScreen(new EndScreen());
-        } else {
-            Gdx.app.log("Screen:", "Alive");
-            setScreen(new PlayScreen(camera));
-        }
+    public void startGame(){
+        currentScreen = new PlayScreen(camera);
+        setScreen(currentScreen);
+    }
+
+    public void endGame(){
+        currentScreen = new EndScreen();
+        setScreen(currentScreen);
+    }
+
+    public void disposeCurrentScreen(){
+        currentScreen.dispose();
+        Gdx.app.log("Disposing Screen:", currentScreen.getClass().getName());
     }
 }

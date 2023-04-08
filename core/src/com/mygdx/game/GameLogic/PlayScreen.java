@@ -57,7 +57,6 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-
         // Retrieve saved checkpoint coordinates
         prefs = Gdx.app.getPreferences("My Preferences");
         float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
@@ -185,8 +184,14 @@ public class PlayScreen extends ScreenAdapter {
         gsm.render(batch);
         if (player.isDead() && player.getStateTimer() > 3) {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            Boot.INSTANCE.create();
+            Boot.INSTANCE.disposeCurrentScreen();
+            Boot.INSTANCE.endGame();
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     public World getWorld() {

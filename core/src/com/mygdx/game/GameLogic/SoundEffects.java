@@ -42,7 +42,12 @@ public class SoundEffects {
 
    public static Sound getUISE(){return UISE;}
 
-    public static Timer.Task fadeOutPowerTask;
+    public static Timer.Task fadeOutPowerTask = new Timer.Task() {
+        @Override
+        public void run() {
+
+        }
+    };
 
    public static void startMainMusic(){
        mainMusic.setLooping(true);
