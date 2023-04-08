@@ -57,7 +57,6 @@ public class PlayScreen extends ScreenAdapter {
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
-
         // Retrieve saved checkpoint coordinates
         prefs = Gdx.app.getPreferences("My Preferences");
         float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
