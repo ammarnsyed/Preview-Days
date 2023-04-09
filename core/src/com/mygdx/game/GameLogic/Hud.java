@@ -1,14 +1,20 @@
 package com.mygdx.game.GameLogic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -32,6 +38,15 @@ public class Hud implements Disposable{
   private Label sc;
   private Label tm;
   private Label powerUpTimerLabel;
+
+  private Table newTableP;
+  TextButton.TextButtonStyle textButtonStyle;
+  private TextButton button1;
+  private TextButton button2;
+  private TextButton button3;
+  private final int[] clickCount = {0,0,0};
+
+
 
   public Hud(SpriteBatch spriteBatch, Player player){
     timer = 0;
@@ -61,6 +76,12 @@ public class Hud implements Disposable{
     updateLives(player.getLives());
     stage.addActor(newTable);
     stage.addActor(newTable1);
+
+    textButtonStyle = new TextButton.TextButtonStyle();
+    textButtonStyle.font = new BitmapFont();
+    button1 = new TextButton("RESUME",textButtonStyle);
+    button2 = new TextButton("SETTING",textButtonStyle);
+    button3 = new TextButton("EXIT",textButtonStyle);
   }
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
@@ -95,6 +116,61 @@ public class Hud implements Disposable{
     } else {
       powerUpTimerLabel.setVisible(false);
     }
+  }
+
+  protected void updatePause(){
+    newTableP = new Table();
+    newTableP.setFillParent(true);
+    button1.getLabel().setFontScale(5f,5f);
+    button2.getLabel().setFontScale(3f,3f);
+    button3.getLabel().setFontScale(3f,3f);
+    newTableP.add(button1);
+    newTableP.row();
+    newTableP.add(button2);
+    newTableP.row();
+    newTableP.add(button3);
+    Gdx.input.setInputProcessor(stage);
+    stage.addActor(newTableP);
+
+  }
+
+  public void buttonDetect(final PlayScreen playScreen){
+    button1.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[0]++;
+      }
+    });
+    if(clickCount[0] != 0){
+      playScreen.updateResume();
+      clickCount[0] = 0;
+    }
+
+    button2.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[1]++;
+      }
+    });
+    if(clickCount[1] != 0){
+      playScreen.updateResume();
+      clickCount[1] = 0;
+    }
+
+    button3.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        clickCount[2]++;
+      }
+    });
+    if(clickCount[2] != 0){
+      playScreen.exitGame();
+      clickCount[2] = 0;
+    }
+  }
+
+  public void updateResume(){
+    newTableP.remove();
   }
 
   public void updateLives(int playerLives) {

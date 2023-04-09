@@ -96,7 +96,7 @@ public class PlayScreen extends ScreenAdapter {
             orthogonalTiledMapRenderer.setView(camera);
 
             if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-                Gdx.app.exit();
+                exitGame();
             }
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
                 Sound pauseSound = SoundEffects.getPauseSE();
@@ -108,17 +108,32 @@ public class PlayScreen extends ScreenAdapter {
         }
 
         else {
+            updatePaused();
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                Gdx.app.exit();
+                exitGame();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
+                updateResume();
                 Sound resumeSE = SoundEffects.getResumeSE();
                 SoundEffects.changeMainMusicVolume(0.5f);
                 resumeSE.play(0.5f);
-                player.setUnPaused();
-                isPaused = false;
             }
         }
+    }
+
+    public void updatePaused(){
+        hud.updatePause();
+        hud.buttonDetect(this);
+    }
+
+    public void updateResume(){
+        player.setUnPaused();
+        isPaused = false;
+        hud.updateResume();
+    }
+
+    public void exitGame(){
+        Gdx.app.exit();
     }
 
     private void cameraUpdate(){
@@ -177,6 +192,7 @@ public class PlayScreen extends ScreenAdapter {
         }
 
         hud.stage.draw();
+        hud.stage.act();
         batch.end();
         box.render(world, camera.combined.scl(PPM));
 
