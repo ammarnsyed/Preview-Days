@@ -130,12 +130,16 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     public void updateResume(){
+        Sound startSound = SoundEffects.getUISE();
+        startSound.play(0.5f);
         player.setUnPaused();
         isPaused = false;
         hud.updateResume();
     }
 
     public void exitGame(){
+        Sound startSound = SoundEffects.getUISE();
+        startSound.play(0.5f);
         Gdx.app.exit();
     }
 
