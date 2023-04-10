@@ -1,6 +1,7 @@
 package com.mygdx.game.GameLogic;
 
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
+import com.mygdx.game.GameLogic.Checkpoint.Trophy;
 import com.mygdx.game.GameLogic.Helper.Constants;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.Powers.PowerUp;
@@ -58,6 +59,14 @@ public class WorldContactListener implements ContactListener {
                 }
                 else{
                     ((Checkpoint)fixB.getUserData()).changeSpawn();
+                }
+                break;
+            case Constants.PLAYER_BIT | Constants.TROPHY_BIT:
+                if(fixA.getFilterData().categoryBits == Constants.TROPHY_BIT){
+                    ((Trophy)fixA.getUserData()).collectTrophy();
+                }
+                else{
+                    ((Trophy)fixA.getUserData()).collectTrophy();
                 }
                 break;
         }

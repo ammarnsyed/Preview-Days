@@ -14,6 +14,7 @@ public class SoundEffects {
    static Sound pauseSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/SFX_UI_Pause.wav"));
    static Sound resumeSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/SFX_UI_Resume.wav"));
    static Sound checkpointSE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/mixkit-game-warning-quick-notification-267.wav"));
+   static Sound trophySE = Gdx.audio.newSound(Gdx.files.internal("Sound/Effects/Trophy.wav"));
 
     private static Music mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/music1.mp3"));
     private static Music lowHpMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Music/1hpdontdie.wav"));
@@ -45,6 +46,8 @@ public class SoundEffects {
    }
 
    public static Sound getUISE(){return UISE;}
+
+    public static Sound getTrophySE(){return trophySE;}
 
     public static Timer.Task fadeOutPowerTask = new Timer.Task() {
         @Override
