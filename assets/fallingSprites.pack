@@ -1,0 +1,12 @@
+
+fallingSprites.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+playerFalling
+  rotate: false
+  xy: 1, 1
+  size: 84, 28
+  orig: 84, 28
+  offset: 0, 0
+  index: -1

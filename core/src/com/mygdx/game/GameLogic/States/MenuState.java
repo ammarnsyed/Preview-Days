@@ -7,16 +7,19 @@ import com.mygdx.game.GameLogic.SoundEffects;
 
 public class MenuState extends State{
   private static boolean isTouched;
+
+  //defining images being used on main menu
   private Texture playBtn;
-  private Texture charImg;
   private Texture bgImg;
+  private  Texture instructions;
 
 
   public MenuState(gStateManager gsm) {
     super(gsm);
+    //path to where the images are located
     bgImg = new Texture("bgImg.png");
     playBtn = new Texture("startButton.png");
-    charImg = new Texture("char.png");;
+    instructions = new Texture("instructions.png");
   }
 
   @Override
@@ -34,13 +37,14 @@ public class MenuState extends State{
     handleInput();
   }
 
+  // these are the coordinates for images on the start screen
   @Override
   public void render(SpriteBatch sb) {
     if(!isTouched()) {
       sb.begin();
-      sb.draw(bgImg, 3000, 4000, 3920, 3080);
-      sb.draw(charImg, 3400, 4780, 170, 170);
-      sb.draw(playBtn, 3300, 4580, 351, 150);
+      sb.draw(bgImg, 2390, 4035, 1920, 1080);
+      sb.draw(playBtn, 3200, 4580, 351, 150);
+      sb.draw(instructions,3200, 4380, 351, 150);
       sb.end();
     }
   }

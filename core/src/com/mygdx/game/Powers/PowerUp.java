@@ -1,6 +1,5 @@
 package com.mygdx.game.Powers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -32,9 +31,9 @@ public class PowerUp {
     protected float timer;
     private  float duration;
     protected boolean activated;
+    protected boolean musicToFade;
     Sprite powerSprite;
     private Animation powerUpBlink;
-    private float timeLeft;
 
     Sound powerUpSound = SoundEffects.getPowerUpSE();
 
@@ -52,6 +51,7 @@ public class PowerUp {
         toDestroy = false;
         destroyed = false;
         activated = false;
+        musicToFade = false;
 
         TextureRegion powerTexture1 = new TextureRegion(new Texture("powerUp1.png"));
         TextureRegion powerTexture2 = new TextureRegion(new Texture("powerUp2.png"));
@@ -62,13 +62,9 @@ public class PowerUp {
         frames.add(powerTexture1);
         frames.add(powerTexture2);
         powerUpBlink = new Animation(0.5f, frames);
-
-
     }
 
-    public void powerUpActivate(Player player){
-
-    }
+    public void powerUpActivate(Player player){}
 
     public void render(SpriteBatch batch){
         if(!destroyed){
@@ -77,12 +73,6 @@ public class PowerUp {
 
     }
 
-    public Body getBody(){
-        return body;
-    }
-    public float getTime(){
-        return timer;
-    }
     public float getDuration(){
         return duration;
     }
@@ -101,9 +91,14 @@ public class PowerUp {
         if (activated) {
             timer += delta;
             duration -= delta;
+            if(duration <= 5 && !musicToFade){
+                musicToFade = true;
+                SoundEffects.fadePowerUpMusic(5);
+            }
             if (duration <= 0) { // Change 10f to the desired duration of the powerup
                 timer = 0f;
                 activated = false;
+                SoundEffects.startCurrentMusic();
                 player.setJumpForce(Constants.PLAYER_JUMP_FORCE);
                 player.setSpeed(Constants.PLAYER_SPEED);
                 player.setWidth(Constants.PLAYER_WIDTH);
@@ -134,12 +129,10 @@ public class PowerUp {
         return y;
     }
 
-    public World getWorld(){
-        return world;
-    }
-
     public void consume() {
         powerUpSound.play(0.5f);
+        SoundEffects.stopCurrentMusic();
+        SoundEffects.startPowerUpMusic();
         toDestroy = true;
     }
 }

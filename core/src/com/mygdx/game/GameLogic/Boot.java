@@ -1,23 +1,19 @@
-package com.mygdx.game.GameLogic.Screens;
+package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.mygdx.game.GameLogic.PlayScreen;
-import com.mygdx.game.GameLogic.Player;
 
 public class Boot extends Game {
 
     public static Boot INSTANCE;
     private int width, height;
     private OrthographicCamera camera;
-    private Player player;
     public Boot(){
         INSTANCE = this;
     }
-
+    private ScreenAdapter currentScreen;
 
     @Override
     public void create() {
@@ -25,15 +21,21 @@ public class Boot extends Game {
         this.height = Gdx.graphics.getHeight();
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
-        player = new Player();
+        startGame();
+    }
 
-        if(player.isIsDead()){
-            Gdx.app.log("Screen:", "Dead");
-            setScreen(new EndScreen(camera));
-        } else {
-            Gdx.app.log("Screen:", "Alive");
-            setScreen(new PlayScreen(camera));
-        }
+    public void startGame(){
+        currentScreen = new PlayScreen(camera);
+        setScreen(currentScreen);
+    }
 
+    public void endGame(){
+        currentScreen = new EndScreen();
+        setScreen(currentScreen);
+    }
+
+    public void disposeCurrentScreen(){
+        currentScreen.dispose();
+        Gdx.app.log("Disposing Screen:", currentScreen.getClass().getName());
     }
 }

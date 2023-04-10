@@ -15,32 +15,33 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class Player extends Entity {
 
-    public int lives;
-    private static boolean isDead;
-    private boolean isPaused;
-    private int hitCount;
+    protected int lives;
+    protected static boolean isDead;
+    protected boolean isPaused;
     private int jumpCount;
     private int jumpForce = 18;
     private boolean knockedBack;
     private float knockbackTimer;
-    private boolean dead;
     private boolean fallen;
     private boolean needToUpdateBody;
 
-    private enum State {FALLING, JUMPING, STANDING, RUNNING};
+    private enum State {FALLING, JUMPING, STANDING, RUNNING}
     private State currentState;
     private State previousState;
     private TextureRegion playerIdle;
     private Sprite playerSprite;
     private Animation playerRun;
     private Animation playerJump;
+    private Animation playerFall;
     private boolean isFacingRight;
     private int maxJumps;
     private float stateTimer;
-    private World world;
+    public static int playerCount = 0;
 
-    public Player(float width, float height, Body body, World world) {
+
+    public Player(float width, float height, Body body) {
         super(width, height, body);
+        playerCount++;
         lives = 2;
         isDead = false;
         isPaused = false;
@@ -53,7 +54,6 @@ public class Player extends Entity {
         fixture.getFilterData().maskBits =
                 Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT;
 
-        this.world = world;
         this.maxJumps = 1;
         fixtureSet();
 
@@ -76,13 +76,23 @@ public class Player extends Entity {
         for(int i = 0; i<3; i++){
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
-
         playerRun = new Animation(0.1f, frames);
         frames.clear();
         for(int i = 3; i<4; i++){
             frames.add(new TextureRegion(textureRegion, i*21, 0, 21, 26));
         }
         playerJump = new Animation(0.1f, frames);
+        frames.clear();
+
+        TextureAtlas fallAtlas = new TextureAtlas("fallingSprites.pack");
+        TextureRegion fallRegion = fallAtlas.findRegion("playerFalling");
+
+        for(int i = 0; i<4; i++){
+            frames.add(new TextureRegion(fallRegion, i*20, 0, 20, 27));
+        }
+        playerFall = new Animation(0.1f, frames);
+        frames.clear();
+
 
     }
 
@@ -124,6 +134,8 @@ public class Player extends Entity {
                 region = (TextureRegion) playerJump.getKeyFrame(stateTimer);
                 break;
             case FALLING:
+                region = (TextureRegion) playerFall.getKeyFrame(stateTimer, true);
+                break;
             case STANDING:
             default:
                 region = playerIdle;
@@ -153,7 +165,7 @@ public class Player extends Entity {
     }
 
     private State getState(){
-        if(body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == State.JUMPING)){
+        if(body.getLinearVelocity().y > 0){
             return State.JUMPING;
         }
         else if(body.getLinearVelocity().y < 0){
@@ -169,7 +181,7 @@ public class Player extends Entity {
 
     private void checkUserInput(){
         velX = 0;
-        if(!dead && MenuState.isTouched()) {
+        if(!isDead && MenuState.isTouched()) {
             //Move Left
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 velX = -1;
@@ -202,7 +214,7 @@ public class Player extends Entity {
         }
     }
 
-    public void playerCheckToDie(){
+    protected void playerCheckToDie(){
         if(lives < 0){
             playerDeath();
         }
@@ -212,18 +224,18 @@ public class Player extends Entity {
         }
 
         if(lives == 0){
-            SoundEffects.stopMainMusic();
+            SoundEffects.stopCurrentMusic();
+            SoundEffects.fadeOutPowerTask.cancel();
             SoundEffects.startLowHpMusic();
         }
     }
 
     protected void playerDeath() {
-        SoundEffects.stopLowHpMusic();
+        SoundEffects.stopCurrentMusic();
         Sound death = SoundEffects.getDeathSE();
         death.play(0.5f);
         Filter filter = new Filter();
         filter.maskBits = NOTHING_BIT;
-        dead = true;
         isDead = true;
         lives = lives - 3;
         for (Fixture fixture : body.getFixtureList()) {
@@ -253,19 +265,11 @@ public class Player extends Entity {
         playerCheckToDie();
     }
 
-    protected boolean isDead() {
-        return dead;
-    }
-
-    public boolean getPaused(){
-        return isPaused;
-    }
-
-    public void setPaused(){
+    protected void setPaused(){
         isPaused = true;
     }
 
-    public void setUnPaused(){
+    protected void setUnPaused(){
         isPaused = false;
     }
 
@@ -360,11 +364,11 @@ public class Player extends Entity {
         body.setGravityScale(gravityScale);
     }
 
-    public void setIsDead(boolean isDead) {
+    protected void setIsDead(boolean isDead) {
         Player.isDead = isDead;
     }
 
-    public boolean isIsDead() {
+    protected boolean isDead() {
         return isDead;
     }
 }
