@@ -42,9 +42,9 @@ public class MenuState extends State{
   public void render(SpriteBatch sb) {
     if(!isTouched()) {
       sb.begin();
-      sb.draw(bgImg, 2540, 4227, 1920, 1080);
-      sb.draw(playBtn, 3325, 4780, 351, 150);
-      sb.draw(instructions,3325, 4500, 351, 150);
+      sb.draw(bgImg, 2390, 4035, 1920, 1080);
+      sb.draw(playBtn, 3200, 4580, 351, 150);
+      sb.draw(instructions,3200, 4380, 351, 150);
       sb.end();
     }
   }
