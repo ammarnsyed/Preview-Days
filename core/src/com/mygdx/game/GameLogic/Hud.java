@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Powers.PowerUp;
@@ -119,7 +122,7 @@ public class Hud implements Disposable{
   protected void updatePause(){
     newTableP = new Table();
     newTableP.setFillParent(true);
-    button1.getLabel().setFontScale(5f,5f);
+    button1.getLabel().setFontScale(3f,3f);
     button2.getLabel().setFontScale(3f,3f);
     button3.getLabel().setFontScale(3f,3f);
     newTableP.add(button1);
@@ -133,6 +136,17 @@ public class Hud implements Disposable{
   }
 
   public void buttonDetect(final PlayScreen playScreen){
+    button1.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        button1.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        button1.getLabel().setColor(Color.WHITE);
+      }
+    });
     button1.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -144,6 +158,18 @@ public class Hud implements Disposable{
       clickCount[0] = 0;
     }
 
+
+    button2.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        button2.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        button2.getLabel().setColor(Color.WHITE);
+      }
+    });
     button2.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
@@ -155,6 +181,18 @@ public class Hud implements Disposable{
       clickCount[1] = 0;
     }
 
+
+    button3.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        button3.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        button3.getLabel().setColor(Color.WHITE);
+      }
+    });
     button3.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
