@@ -42,7 +42,6 @@ public class PlayScreen extends ScreenAdapter {
 
     private Player player;
     private Hud hud;
-    private Box2DDebugRenderer box;
 
     private boolean isPaused;
     Preferences prefs;
@@ -52,7 +51,6 @@ public class PlayScreen extends ScreenAdapter {
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
-        this.box = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
@@ -194,7 +192,6 @@ public class PlayScreen extends ScreenAdapter {
         hud.stage.draw();
         hud.stage.act();
         batch.end();
-        box.render(world, camera.combined.scl(PPM));
 
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
