@@ -191,7 +191,7 @@ public class Player extends Entity {
                 velX = 1;
             }
             //Jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && maxJumps <= 3 && !fallen) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && !fallen) {
                 float force = body.getMass() * jumpForce;
                 if (body.getGravityScale() < 0) {
                     // If gravity is flipped, apply the jump force in the opposite direction
