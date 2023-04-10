@@ -8,14 +8,14 @@ import com.mygdx.game.Powers.PowerUpList;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-public class PowerUpHelper {
+public class ClassToList {
     private ArrayList<String> powerUpClassNames;
     private ArrayList<MapCoordinate> powerUpLocations;
     private World world;
 
     public ArrayList<PowerUp> powerUps;
 
-    public PowerUpHelper(ArrayList<MapCoordinate> powerLocations, World world){
+    public ClassToList(ArrayList<MapCoordinate> powerLocations, World world){
         powerUpClassNames = PowerUpList.getInstance().getPowerUpClassNames();
         powerUpLocations = powerLocations;
         powerUps = new ArrayList<>();

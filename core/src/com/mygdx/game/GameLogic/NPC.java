@@ -9,7 +9,6 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 
 public class NPC extends Entity {
 
-    public enum State {RUNNING};
     private Sprite npcSprite;
     private TextureAtlas atlas = new TextureAtlas("NPCFixedSprites.pack");
     private Array<TextureRegion> frames;

@@ -2,27 +2,22 @@ package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
-import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
 import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
-import com.mygdx.game.GameLogic.Screens.Boot;
 import com.mygdx.game.GameLogic.States.MenuState;
 import com.mygdx.game.Powers.*;
 import com.mygdx.game.GameLogic.States.gStateManager;
@@ -32,75 +27,57 @@ import static com.mygdx.game.GameLogic.Helper.Constants.PPM;
 import java.util.ArrayList;
 
 public class PlayScreen extends ScreenAdapter {
-    private BitmapFont font;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     Texture img;
     private gStateManager gsm;
     private World world;
-    private Box2DDebugRenderer box2DDebugRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
     private Array<NPC> NPCs;
     private Array<Checkpoint> checkpoints;
-    private ArrayList<MapCoordinate> powerUpLocations;
     private ArrayList<PowerUp> actualPowerUps;
-    private PowerUpHelper powerHelper;
+    private ClassToList powerHelper;
 
     private Player player;
     private Hud hud;
-    private int playerLives;
+    private Box2DDebugRenderer box;
 
-
-    private Checkpoint Spawn;
-    private Checkpoint Random;
-    private int playerX;
-
-    private Stage stage;
-    private TextureAtlas atlas;
-    private Image image1;
     private boolean isPaused;
+    Preferences prefs;
 
-    private float deltaTime = 10;
-    private float score = 0;
-
-
-
-  public PlayScreen(OrthographicCamera camera){
-        this.font = new BitmapFont();
+    public PlayScreen(OrthographicCamera camera){
         SoundEffects.startMainMusic();
-        this.stage = new Stage();
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
+        this.box = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
 
+        // Retrieve saved checkpoint coordinates
+        prefs = Gdx.app.getPreferences("My Preferences");
+        float checkpointX = prefs.getFloat("lastCheckpointX", Spawner.getInstance().getSpawnX());
+        float checkpointY = prefs.getFloat("lastCheckpointY", Spawner.getInstance().getSpawnY());
 
-        powerHelper = new PowerUpHelper(tileMapHelper.getPowerUps(), world);
+        // Create player body at checkpoint coordinates
+        Body playerBody = BodyHelper.createRectangularBody(checkpointX, checkpointY, 0.5f, 1, false, world);
+        player = new Player(1, 1, playerBody);
+
+        powerHelper = new ClassToList(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
         checkpoints = tileMapHelper.getCheckpoints();
-        Checkpoint check = checkpoints.get(0);
-
-        Body playerBody = BodyHelper.createRectangularBody(Spawner.getInstance().getSpawnX(), Spawner.getInstance().getSpawnY(), 0.5f, 1, false, world);
-
-        player = new Player(1, 1, playerBody, getWorld());
-
-
 
         this.hud = new Hud(batch, player);
-
+        loadPlayerProgress();
 
         world.setContactListener(new WorldContactListener());
 
-
-
-
     }
+
 
     private void update(float delta){
         if (!isPaused) {
@@ -115,34 +92,48 @@ public class PlayScreen extends ScreenAdapter {
                 power.update(player, delta);
             }
 
-
-
-
             batch.setProjectionMatrix(camera.combined);
             orthogonalTiledMapRenderer.setView(camera);
 
             if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-                Gdx.app.exit();
+                exitGame();
             }
             if(Gdx.input.isKeyPressed(Input.Keys.P)){
                 Sound pauseSound = SoundEffects.getPauseSE();
                 pauseSound.play(0.5f);
+                SoundEffects.changeMainMusicVolume(0.25f);
                 player.setPaused();
                 isPaused = true;
             }
         }
 
         else {
+            updatePaused();
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                Gdx.app.exit();
+                exitGame();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.U)) {
+                updateResume();
                 Sound resumeSE = SoundEffects.getResumeSE();
+                SoundEffects.changeMainMusicVolume(0.5f);
                 resumeSE.play(0.5f);
-                player.setUnPaused();
-                isPaused = false;
             }
         }
+    }
+
+    public void updatePaused(){
+        hud.updatePause();
+        hud.buttonDetect(this);
+    }
+
+    public void updateResume(){
+        player.setUnPaused();
+        isPaused = false;
+        hud.updateResume();
+    }
+
+    public void exitGame(){
+        Gdx.app.exit();
     }
 
     private void cameraUpdate(){
@@ -153,6 +144,23 @@ public class PlayScreen extends ScreenAdapter {
         }
         camera.position.set(position);
         camera.update();
+    }
+
+    public void savePlayerProgress() {
+        prefs = Gdx.app.getPreferences("My Preferences");
+        prefs.putInteger("lastCheckpointX", (int) Spawner.getInstance().getSpawnX());
+        prefs.putInteger("lastCheckpointY", (int) Spawner.getInstance().getSpawnY());
+        prefs.putFloat("timeTaken", hud.getTime());
+        prefs.flush();
+    }
+
+    private void loadPlayerProgress() {
+        prefs = Gdx.app.getPreferences("My Preferences");
+        int lastCheckpointX = prefs.getInteger("lastCheckpointX", 3500);
+        int lastCheckpointY = prefs.getInteger("lastCheckpointY", 4880);
+        float timeTaken = prefs.getFloat("timeTaken", 0);
+        Spawner.getInstance().setSpawn(lastCheckpointX, lastCheckpointY);
+        hud.setTime(timeTaken);
     }
 
     @Override
@@ -166,46 +174,44 @@ public class PlayScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta){
-          this.update(delta);
+        this.update(delta);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-          Gdx.gl.glClearColor(0, 0, 0, 1);
-          Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        orthogonalTiledMapRenderer.render();
+        batch.begin();
 
-          orthogonalTiledMapRenderer.render();
-          batch.begin();
-          deltaTime = Gdx.graphics.getDeltaTime();
-          deltaTime -= delta;
+        //Render objects such as characters and walls
+        player.render(batch);
 
-          //Render objects such as characters and walls
-          player.render(batch);
-
-
-          for (NPC npc : NPCs) {
-              npc.render(batch);
-          }
-          for(PowerUp power : actualPowerUps){
+        for (NPC npc : NPCs) {
+            npc.render(batch);
+        }
+        for(PowerUp power : actualPowerUps){
             power.render(batch);
-          }
+        }
 
+        hud.stage.draw();
+        hud.stage.act();
+        batch.end();
+        box.render(world, camera.combined.scl(PPM));
 
-          hud.stage.draw();
-          batch.end();
-          box2DDebugRenderer.render(world, camera.combined.scl(PPM));
-
-          gsm.update(Gdx.graphics.getDeltaTime());
-          gsm.render(batch);
-          if (player.isDead() && player.getStateTimer() > 3) {
-              Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-              Boot.INSTANCE.create();
-          }
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
+        if (player.isDead() && player.getStateTimer() > 3) {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Boot.INSTANCE.disposeCurrentScreen();
+            Boot.INSTANCE.endGame();
+        }
     }
 
-    public void setPlayer(Player player){
-        this.player = player;
+    @Override
+    public void dispose() {
+        super.dispose();
     }
+
     public World getWorld() {
         return world;
     }
-    public TextureAtlas getAtlas(){return atlas;}
 
 }

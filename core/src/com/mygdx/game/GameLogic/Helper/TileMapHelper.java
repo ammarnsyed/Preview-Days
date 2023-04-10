@@ -92,7 +92,7 @@ public class TileMapHelper {
                 fixture.getFilterData().categoryBits = Constants.SPIKE_BIT;
                 break;
             case 6:
-                Checkpoint checkpoint = new Checkpoint(Math.round(polygonMapObject.getPolygon().getX()), Math.round(polygonMapObject.getPolygon().getY()), body);
+                Checkpoint checkpoint = new Checkpoint(Math.round(polygonMapObject.getPolygon().getX()), Math.round(polygonMapObject.getPolygon().getY()), body, playScreen);
                 checkpoints.add(checkpoint);
                 break;
         }
