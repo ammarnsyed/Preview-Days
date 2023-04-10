@@ -1,6 +1,7 @@
 package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.Powers.PowerUp;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class Hud implements Disposable{
   private TextButton button1;
   private TextButton button2;
   private TextButton button3;
-  private final int[] clickCount = {0,0,0};
+  private TextButton buttonReset;
 
 
 
@@ -83,6 +85,7 @@ public class Hud implements Disposable{
     button1 = new TextButton("RESUME",textButtonStyle);
     button2 = new TextButton("SETTING",textButtonStyle);
     button3 = new TextButton("EXIT",textButtonStyle);
+    buttonReset = new TextButton("RESTART",textButtonStyle);
   }
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
@@ -125,9 +128,12 @@ public class Hud implements Disposable{
     button1.getLabel().setFontScale(3f,3f);
     button2.getLabel().setFontScale(3f,3f);
     button3.getLabel().setFontScale(3f,3f);
+    buttonReset.getLabel().setFontScale(3f,3f);
     newTableP.add(button1);
     newTableP.row();
     newTableP.add(button2);
+    newTableP.row();
+    newTableP.add(buttonReset);
     newTableP.row();
     newTableP.add(button3);
     Gdx.input.setInputProcessor(stage);
@@ -150,13 +156,9 @@ public class Hud implements Disposable{
     button1.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
-        clickCount[0]++;
+        playScreen.updateResume();
       }
     });
-    if(clickCount[0] != 0){
-      playScreen.updateResume();
-      clickCount[0] = 0;
-    }
 
 
     button2.addListener(new ClickListener() {
@@ -173,13 +175,28 @@ public class Hud implements Disposable{
     button2.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
-        clickCount[1]++;
+        playScreen.updateResume();
       }
     });
-    if(clickCount[1] != 0){
-      playScreen.updateResume();
-      clickCount[1] = 0;
-    }
+
+
+    buttonReset.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        buttonReset.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        buttonReset.getLabel().setColor(Color.WHITE);
+      }
+    });
+    buttonReset.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        playScreen.setRestart();
+      }
+    });
 
 
     button3.addListener(new ClickListener() {
@@ -196,13 +213,9 @@ public class Hud implements Disposable{
     button3.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
-        clickCount[2]++;
+        playScreen.exitGame();
       }
     });
-    if(clickCount[2] != 0){
-      playScreen.exitGame();
-      clickCount[2] = 0;
-    }
   }
 
   public void updateResume(){

@@ -44,6 +44,7 @@ public class PlayScreen extends ScreenAdapter {
     private Hud hud;
 
     private boolean isPaused;
+    private boolean willRestart;
     Preferences prefs;
 
     public PlayScreen(OrthographicCamera camera){
@@ -74,6 +75,8 @@ public class PlayScreen extends ScreenAdapter {
 
         world.setContactListener(new WorldContactListener());
 
+        isPaused = false;
+        willRestart = false;
     }
 
 
@@ -104,7 +107,9 @@ public class PlayScreen extends ScreenAdapter {
                 isPaused = true;
             }
         }
-
+        else if(willRestart){
+            restartGame();
+        }
         else {
             updatePaused();
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -132,6 +137,24 @@ public class PlayScreen extends ScreenAdapter {
 
     public void exitGame(){
         Gdx.app.exit();
+    }
+
+    public void setRestart(){
+        willRestart = true;
+    }
+
+    public void restartGame(){
+        willRestart = false;
+        prefs = Gdx.app.getPreferences("My Preferences");
+        Gdx.app.log("Game", "Refreshed");
+        prefs.clear();
+        prefs.flush();
+        Spawner.resetSpawn();
+        Sound startSound = SoundEffects.getUISE();
+        startSound.play(0.5f);
+        player.setIsDead(false);
+        Boot.INSTANCE.disposeCurrentScreen();
+        Boot.INSTANCE.startGame();
     }
 
     private void cameraUpdate(){
