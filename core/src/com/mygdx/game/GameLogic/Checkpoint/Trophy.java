@@ -56,7 +56,8 @@ public class Trophy {
     public void collectTrophy(){
         if(!collected){
             Gdx.app.log("TROPHY", "COLLECTED");
-            Sound endSound = SoundEffects.getCheckpointSE();
+            SoundEffects.stopCurrentMusic();
+            Sound endSound = SoundEffects.getTrophySE();
             toDestroy = true;
             endSound.play(0.5f);
         }
