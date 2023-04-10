@@ -14,19 +14,21 @@ import com.mygdx.game.GameLogic.Helper.Constants;
 import com.mygdx.game.GameLogic.SoundEffects;
 
 public class Trophy {
-    private World world;
+    World world;
+    private float x,y;
     private Body body;
-    private float x, y;
     private Sprite trophySprite;
     private Fixture fixture;
     private boolean collected;
+    private boolean toDestroy;
 
-    public Trophy(float x, float y, World world){
-        this.world = world;
-        body = BodyHelper.createRectangularBody(x, y, 1, 1, true, world);
+    public Trophy(float x, float y, Body body){
+        this.body = body;
         this.x = x;
         this.y = y;
+        world = body.getWorld();
         collected = false;
+        toDestroy = false;
         fixture = body.getFixtureList().get(0);
         fixture.getFilterData().categoryBits = Constants.TROPHY_BIT;
         fixture.setUserData(this);
@@ -38,6 +40,11 @@ public class Trophy {
 
     public void update(float delta){
         trophySprite.setPosition(x - Constants.PPM, y-Constants.PPM);
+
+        if(toDestroy && !collected){
+            world.destroyBody(body);
+            collected = true;
+        }
     }
 
     public void render(SpriteBatch batch){
@@ -50,9 +57,8 @@ public class Trophy {
         if(!collected){
             Gdx.app.log("TROPHY", "COLLECTED");
             Sound endSound = SoundEffects.getCheckpointSE();
-            collected = true;
+            toDestroy = true;
             endSound.play(0.5f);
-            world.destroyBody(body);
         }
     }
 

@@ -79,7 +79,10 @@ public class TileMapHelper {
     }
 
     private void createTrophy(PolygonMapObject polygonMapObject){
-        trophy = new Trophy(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), playScreen.getWorld());
+        float x = polygonMapObject.getPolygon().getX();
+        float y = polygonMapObject.getPolygon().getY();
+        Body trophyBody = BodyHelper.createRectangularBody(x, y, 1, 1, true, playScreen.getWorld());
+        trophy = new Trophy(x, y, trophyBody);
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject, int layer){
