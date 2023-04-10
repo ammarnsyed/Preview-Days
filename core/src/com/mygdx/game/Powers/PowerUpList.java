@@ -29,6 +29,12 @@ public class PowerUpList {
      */
     private void setUpPowerList(){
         powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("PowerUpExample");
+        powerUpClassNames.add("PowerUpExample");
+
 
     }
 }

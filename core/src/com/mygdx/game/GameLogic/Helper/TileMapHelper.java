@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.GameLogic.Checkpoint.MapCoordinate;
+import com.mygdx.game.GameLogic.Checkpoint.Trophy;
 import com.mygdx.game.GameLogic.NPC;
 import com.mygdx.game.GameLogic.PlayScreen;
 
@@ -22,6 +23,7 @@ public class TileMapHelper {
     public Array<NPC> NPCs;
     public Array<Checkpoint> checkpoints;
     public ArrayList<MapCoordinate> powerUpLocations;
+    public Trophy trophy;
 
     public TileMapHelper(PlayScreen playScreen){
         this.playScreen = playScreen;
@@ -35,11 +37,12 @@ public class TileMapHelper {
     }
     public ArrayList<MapCoordinate> getPowerUps() {return powerUpLocations;}
     public Array<Checkpoint> getCheckpoints() {return checkpoints;}
+    public Trophy getTrophy(){return trophy;}
 
     public OrthogonalTiledMapRenderer mapSetup(){
         tiledMap = new TmxMapLoader().load("MapLayout.tmx");
 
-        for(int i = 2; i<=7; i++){
+        for(int i = 2; i<=8; i++){
             parseMapObjects(tiledMap.getLayers().get(i).getObjects(), i-1);
         }
         return new OrthogonalTiledMapRenderer(tiledMap);
@@ -55,6 +58,9 @@ public class TileMapHelper {
                 else if(layer == 5){
                     createPowerUp((PolygonMapObject) mapObject);
                 }
+                else if(layer == 7){
+                    createTrophy((PolygonMapObject) mapObject);
+                }
                 else{
                     createStaticBody((PolygonMapObject) mapObject, layer);
                 }
@@ -63,7 +69,6 @@ public class TileMapHelper {
         }
     }
 
-
     private void createPowerUp(PolygonMapObject polygonMapObject){
         powerUpLocations.add(new MapCoordinate(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY()));
     }
@@ -71,6 +76,10 @@ public class TileMapHelper {
     private void createNPC(PolygonMapObject polygonMapObject){
         Body npcBody = BodyHelper.createRectangularBody(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), 0.5f, 1, false, playScreen.getWorld());
         NPCs.add(new NPC(1, 1, npcBody));
+    }
+
+    private void createTrophy(PolygonMapObject polygonMapObject){
+        trophy = new Trophy(polygonMapObject.getPolygon().getX(), polygonMapObject.getPolygon().getY(), playScreen.getWorld());
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject, int layer){
