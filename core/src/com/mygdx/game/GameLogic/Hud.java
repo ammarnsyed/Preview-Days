@@ -44,9 +44,9 @@ public class Hud implements Disposable{
 
   private Table newTableP;
   TextButton.TextButtonStyle textButtonStyle;
-  private TextButton button1;
-  private TextButton button2;
-  private TextButton button3;
+  private TextButton buttonResume;
+  private TextButton buttonSetting;
+  private TextButton buttonExit;
   private TextButton buttonReset;
 
 
@@ -82,9 +82,9 @@ public class Hud implements Disposable{
 
     textButtonStyle = new TextButton.TextButtonStyle();
     textButtonStyle.font = new BitmapFont();
-    button1 = new TextButton("RESUME",textButtonStyle);
-    button2 = new TextButton("SETTING",textButtonStyle);
-    button3 = new TextButton("EXIT",textButtonStyle);
+    buttonResume = new TextButton("RESUME",textButtonStyle);
+    buttonSetting = new TextButton("SETTING",textButtonStyle);
+    buttonExit = new TextButton("EXIT",textButtonStyle);
     buttonReset = new TextButton("RESTART",textButtonStyle);
   }
 
@@ -125,57 +125,63 @@ public class Hud implements Disposable{
   protected void updatePause(){
     newTableP = new Table();
     newTableP.setFillParent(true);
-    button1.getLabel().setFontScale(3f,3f);
-    button2.getLabel().setFontScale(3f,3f);
-    button3.getLabel().setFontScale(3f,3f);
+    buttonResume.getLabel().setFontScale(3f,3f);
+    buttonSetting.getLabel().setFontScale(3f,3f);
+    buttonExit.getLabel().setFontScale(3f,3f);
     buttonReset.getLabel().setFontScale(3f,3f);
-    newTableP.add(button1);
+    newTableP.add(buttonResume);
     newTableP.row();
-    newTableP.add(button2);
+    newTableP.add(buttonSetting);
     newTableP.row();
     newTableP.add(buttonReset);
     newTableP.row();
-    newTableP.add(button3);
+    newTableP.add(buttonExit);
     Gdx.input.setInputProcessor(stage);
     stage.addActor(newTableP);
 
   }
 
   public void buttonDetect(final PlayScreen playScreen){
-    button1.addListener(new ClickListener() {
+    buttonResume.addListener(new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
         super.enter(event, x, y, pointer, fromActor);
-        button1.getLabel().setColor(Color.GRAY);
+        buttonResume.getLabel().setColor(Color.GRAY);
       }
       @Override
       public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
-        button1.getLabel().setColor(Color.WHITE);
+        buttonResume.getLabel().setColor(Color.WHITE);
       }
     });
-    button1.addListener(new ChangeListener() {
+    buttonResume.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
         playScreen.updateResume();
+        Sound resumeSE = SoundEffects.getResumeSE();
+        SoundEffects.changeMainMusicVolume(0.5f);
+        resumeSE.play(0.5f);
       }
     });
 
 
-    button2.addListener(new ClickListener() {
+    buttonSetting.addListener(new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
         super.enter(event, x, y, pointer, fromActor);
-        button2.getLabel().setColor(Color.GRAY);
+        buttonSetting.getLabel().setColor(Color.GRAY);
       }
       @Override
       public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
-        button2.getLabel().setColor(Color.WHITE);
+        buttonSetting.getLabel().setColor(Color.WHITE);
       }
     });
-    button2.addListener(new ChangeListener() {
+    buttonSetting.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
         playScreen.updateResume();
+        Sound resumeSE = SoundEffects.getResumeSE();
+        SoundEffects.changeMainMusicVolume(0.25f);
+        resumeSE.play(0.5f);
       }
     });
 
@@ -199,18 +205,18 @@ public class Hud implements Disposable{
     });
 
 
-    button3.addListener(new ClickListener() {
+    buttonExit.addListener(new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
         super.enter(event, x, y, pointer, fromActor);
-        button3.getLabel().setColor(Color.GRAY);
+        buttonExit.getLabel().setColor(Color.GRAY);
       }
       @Override
       public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
-        button3.getLabel().setColor(Color.WHITE);
+        buttonExit.getLabel().setColor(Color.WHITE);
       }
     });
-    button3.addListener(new ChangeListener() {
+    buttonExit.addListener(new ChangeListener() {
       @Override
       public void changed(ChangeEvent event, Actor actor) {
         playScreen.exitGame();
