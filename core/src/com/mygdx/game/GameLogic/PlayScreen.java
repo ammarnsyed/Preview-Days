@@ -227,7 +227,6 @@ public class PlayScreen extends ScreenAdapter {
 
         hud.stage.draw();
         hud.stage.act();
-        box.render(world, camera.combined.scl(PPM));
         batch.end();
 
         gsm.update(Gdx.graphics.getDeltaTime());
