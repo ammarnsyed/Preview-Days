@@ -80,6 +80,7 @@ public class Hud implements Disposable{
     stage.addActor(scoreTable);
     stage.addActor(lifeTable);
 
+
     textButtonStyle = new TextButton.TextButtonStyle();
     textButtonStyle.font = new BitmapFont();
     buttonResume = new TextButton("RESUME",textButtonStyle);
@@ -102,6 +103,7 @@ public class Hud implements Disposable{
     Gdx.input.setInputProcessor(stage);
   }
 
+  //updates score and timer during playtime
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
     //format the timer to min:sec
@@ -136,10 +138,27 @@ public class Hud implements Disposable{
     }
   }
 
+  //updates lives images
+  public void updateLives(int playerLives) {
+    lifeTable.removeActor(imgHeart);
+    if (playerLives == 2) {
+      imgHeart = new Image(new Texture("3hp.png"));
+    } else if (playerLives == 1) {
+      imgHeart = new Image(new Texture("2hp.png"));
+    } else if (playerLives == 0) {
+      imgHeart = new Image(new Texture("1hp.png"));
+    } else {
+      imgHeart = new Image(new Texture("dead.png"));
+    }
+    lifeTable.add(imgHeart);
+  }
+
+  //popping pause menu on screen
   protected void updatePause(){
     stage.addActor(pauseTable);
   }
 
+  //give pause menu buttons functionality
   public void buttonDetect(final PlayScreen playScreen){
     buttonResume.addListener(new ClickListener() {
       @Override
@@ -157,12 +176,13 @@ public class Hud implements Disposable{
       public void changed(ChangeEvent event, Actor actor) {
         playScreen.updateResume();
         Sound resumeSE = SoundEffects.getResumeSE();
-        SoundEffects.changeMainMusicVolume(0.5f);
-        resumeSE.play(0.5f);
+        SoundEffects.changeMainMusicVolume(0.25f);
+        resumeSE.play(0.25f);
       }
     });
 
 
+    //setting button is a placeholder, it functions as resume button rn
     buttonSetting.addListener(new ClickListener() {
       @Override
       public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -180,7 +200,7 @@ public class Hud implements Disposable{
         playScreen.updateResume();
         Sound resumeSE = SoundEffects.getResumeSE();
         SoundEffects.changeMainMusicVolume(0.25f);
-        resumeSE.play(0.5f);
+        resumeSE.play(0.25f);
       }
     });
 
@@ -223,22 +243,9 @@ public class Hud implements Disposable{
     });
   }
 
+  //remove pause menu
   public void updateResume(){
     pauseTable.remove();
-  }
-
-  public void updateLives(int playerLives) {
-    lifeTable.removeActor(imgHeart);
-    if (playerLives == 2) {
-      imgHeart = new Image(new Texture("3hp.png"));
-    } else if (playerLives == 1) {
-      imgHeart = new Image(new Texture("2hp.png"));
-    } else if (playerLives == 0) {
-      imgHeart = new Image(new Texture("1hp.png"));
-    } else {
-      imgHeart = new Image(new Texture("dead.png"));
-    }
-    lifeTable.add(imgHeart);
   }
 
 
