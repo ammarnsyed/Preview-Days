@@ -34,15 +34,15 @@ public class Hud implements Disposable{
   private int sec;
   private float timer;
   private int score;
-  private Image image1;
-  private Table newTable;
-  private Table newTable1;
+  private Image imgHeart;
+  private Table scoreTable;
+  private Table lifeTable;
 
   private Label sc;
   private Label tm;
   private Label powerUpTimerLabel;
 
-  private Table newTableP;
+  private Table pauseTable;
   TextButton.TextButtonStyle textButtonStyle;
   private TextButton buttonResume;
   private TextButton buttonSetting;
@@ -60,25 +60,25 @@ public class Hud implements Disposable{
     tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     powerUpTimerLabel = new Label("Powerup: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-    newTable = new Table();
-    newTable1 = new Table();
-    newTable1.setFillParent(true);
-    newTable.setFillParent(true);
+    scoreTable = new Table();
+    lifeTable = new Table();
+    lifeTable.setFillParent(true);
+    scoreTable.setFillParent(true);
     sc.setFontScale(3f,3f);
     tm.setFontScale(3f,3f);
     powerUpTimerLabel.setFontScale(3f, 3f);
-    newTable.top();
-    newTable.left();
-    newTable.add(sc);
-    newTable.row();
-    newTable.add(tm);
-    newTable.row();
-    newTable.add(powerUpTimerLabel);
-    newTable1.top();
-    newTable1.right();
+    scoreTable.top();
+    scoreTable.left();
+    scoreTable.add(sc);
+    scoreTable.row();
+    scoreTable.add(tm);
+    scoreTable.row();
+    scoreTable.add(powerUpTimerLabel);
+    lifeTable.top();
+    lifeTable.right();
     updateLives(player.getLives());
-    stage.addActor(newTable);
-    stage.addActor(newTable1);
+    stage.addActor(scoreTable);
+    stage.addActor(lifeTable);
 
     textButtonStyle = new TextButton.TextButtonStyle();
     textButtonStyle.font = new BitmapFont();
@@ -86,6 +86,20 @@ public class Hud implements Disposable{
     buttonSetting = new TextButton("SETTING",textButtonStyle);
     buttonExit = new TextButton("EXIT",textButtonStyle);
     buttonReset = new TextButton("RESTART",textButtonStyle);
+    pauseTable = new Table();
+    pauseTable.setFillParent(true);
+    buttonResume.getLabel().setFontScale(3f,3f);
+    buttonSetting.getLabel().setFontScale(3f,3f);
+    buttonExit.getLabel().setFontScale(3f,3f);
+    buttonReset.getLabel().setFontScale(3f,3f);
+    pauseTable.add(buttonResume);
+    pauseTable.row();
+    pauseTable.add(buttonSetting);
+    pauseTable.row();
+    pauseTable.add(buttonReset);
+    pauseTable.row();
+    pauseTable.add(buttonExit);
+    Gdx.input.setInputProcessor(stage);
   }
 
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
@@ -123,22 +137,7 @@ public class Hud implements Disposable{
   }
 
   protected void updatePause(){
-    newTableP = new Table();
-    newTableP.setFillParent(true);
-    buttonResume.getLabel().setFontScale(3f,3f);
-    buttonSetting.getLabel().setFontScale(3f,3f);
-    buttonExit.getLabel().setFontScale(3f,3f);
-    buttonReset.getLabel().setFontScale(3f,3f);
-    newTableP.add(buttonResume);
-    newTableP.row();
-    newTableP.add(buttonSetting);
-    newTableP.row();
-    newTableP.add(buttonReset);
-    newTableP.row();
-    newTableP.add(buttonExit);
-    Gdx.input.setInputProcessor(stage);
-    stage.addActor(newTableP);
-
+    stage.addActor(pauseTable);
   }
 
   public void buttonDetect(final PlayScreen playScreen){
@@ -225,21 +224,21 @@ public class Hud implements Disposable{
   }
 
   public void updateResume(){
-    newTableP.remove();
+    pauseTable.remove();
   }
 
   public void updateLives(int playerLives) {
-    newTable1.removeActor(image1);
+    lifeTable.removeActor(imgHeart);
     if (playerLives == 2) {
-      image1 = new Image(new Texture("3hp.png"));
+      imgHeart = new Image(new Texture("3hp.png"));
     } else if (playerLives == 1) {
-      image1 = new Image(new Texture("2hp.png"));
+      imgHeart = new Image(new Texture("2hp.png"));
     } else if (playerLives == 0) {
-      image1 = new Image(new Texture("1hp.png"));
+      imgHeart = new Image(new Texture("1hp.png"));
     } else {
-      image1 = new Image(new Texture("dead.png"));
+      imgHeart = new Image(new Texture("dead.png"));
     }
-    newTable1.add(image1);
+    lifeTable.add(imgHeart);
   }
 
 
