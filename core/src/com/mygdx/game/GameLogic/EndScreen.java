@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.GameLogic.Checkpoint.Spawner;
+import com.mygdx.game.GameLogic.LeaderBoard;
 
 
 public class EndScreen extends ScreenAdapter {
@@ -24,7 +25,6 @@ public class EndScreen extends ScreenAdapter {
     BitmapFont font;
     Skin skin;
     Preferences prefs;
-
 
     public EndScreen() {
         this.stage = new Stage();
@@ -78,7 +78,19 @@ public class EndScreen extends ScreenAdapter {
                 Boot.INSTANCE.startGame();
             }
         });
-
+        button3.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log("Game", "LeaderBoard");
+                Spawner.resetSpawn();
+                Sound startSound = SoundEffects.getUISE();
+                startSound.play(0.5f);
+                player.setIsDead(false);
+                Boot.INSTANCE.disposeCurrentScreen();
+                LeaderBoard leaderboard = new LeaderBoard();
+                Boot.INSTANCE.setScreen(leaderboard);
+          }
+        });
         Table newTable = new Table();
         newTable.setFillParent(true);
         newTable.row();

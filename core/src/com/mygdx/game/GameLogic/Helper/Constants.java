@@ -11,6 +11,7 @@ public class Constants {
     public static final short NPC_BIT = 8;
     public static final short OBSTACLE_BIT = 16;
     public static final short SPIKE_BIT = 32;
+    public static final short TROPHY_BIT = 25;
 
     public static final int PLAYER_JUMP_FORCE = 18;
     public static final float PLAYER_SPEED = 9f;
