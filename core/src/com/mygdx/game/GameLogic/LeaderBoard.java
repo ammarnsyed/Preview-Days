@@ -42,6 +42,7 @@ public class LeaderBoard extends ScreenAdapter{
     table.add(timeLabel).padRight(50);
     table.add(scoreLabel).padRight(50).row();
 
+
     // TODO: Retrieve the scores from the server and add them to the table
   }
 
@@ -52,6 +53,9 @@ public class LeaderBoard extends ScreenAdapter{
 
     stage.act(delta);
     stage.draw();
+    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+      Gdx.app.exit();
+    }
   }
 
   @Override
