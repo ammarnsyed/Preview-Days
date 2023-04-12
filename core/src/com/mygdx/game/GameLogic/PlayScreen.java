@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameLogic.Checkpoint.Checkpoint;
 import com.mygdx.game.GameLogic.Checkpoint.Spawner;
+import com.mygdx.game.GameLogic.Checkpoint.Trophy;
 import com.mygdx.game.GameLogic.Helper.BodyHelper;
 import com.mygdx.game.GameLogic.Helper.TileMapHelper;
 import com.mygdx.game.GameLogic.States.MenuState;
@@ -39,8 +40,10 @@ public class PlayScreen extends ScreenAdapter {
     private Array<Checkpoint> checkpoints;
     private ArrayList<PowerUp> actualPowerUps;
     private ClassToList powerHelper;
+    private Box2DDebugRenderer box;
 
     private Player player;
+    private Trophy trophy;
     private Hud hud;
 
     private boolean isPaused;
@@ -52,6 +55,7 @@ public class PlayScreen extends ScreenAdapter {
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, -25f ), false);
+        box = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.mapSetup();
@@ -68,6 +72,7 @@ public class PlayScreen extends ScreenAdapter {
         powerHelper = new ClassToList(tileMapHelper.getPowerUps(), world);
         actualPowerUps = powerHelper.getPowerUps();
         NPCs = tileMapHelper.getNPCs();
+        trophy = tileMapHelper.getTrophy();
         checkpoints = tileMapHelper.getCheckpoints();
 
         this.hud = new Hud(batch, player);
@@ -85,6 +90,7 @@ public class PlayScreen extends ScreenAdapter {
             world.step(1/60f, 6, 2);
             cameraUpdate();
             player.update(delta);
+            trophy.update(delta);
             hud.update(delta, player, actualPowerUps);
             for(NPC npc : NPCs){
                 npc.update(delta);
@@ -130,12 +136,16 @@ public class PlayScreen extends ScreenAdapter {
     }
 
     public void updateResume(){
+        Sound startSound = SoundEffects.getUISE();
+        startSound.play(0.5f);
         player.setUnPaused();
         isPaused = false;
         hud.updateResume();
     }
 
     public void exitGame(){
+        Sound startSound = SoundEffects.getUISE();
+        startSound.play(0.5f);
         Gdx.app.exit();
     }
 
@@ -203,7 +213,10 @@ public class PlayScreen extends ScreenAdapter {
         batch.begin();
 
         //Render objects such as characters and walls
+
         player.render(batch);
+        trophy.render(batch);
+
 
         for (NPC npc : NPCs) {
             npc.render(batch);

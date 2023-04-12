@@ -52,7 +52,8 @@ public class Player extends Entity {
         fixture.setUserData(this);
         fixture.getFilterData().categoryBits = Constants.PLAYER_BIT;
         fixture.getFilterData().maskBits =
-                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT;
+                Constants.DEFAULT_BIT | Constants.POWER_BIT | Constants.NPC_BIT
+                        | Constants.OBSTACLE_BIT | Constants.CHECKPOINT_BIT | Constants.TROPHY_BIT;
 
         this.maxJumps = 1;
         fixtureSet();
@@ -191,7 +192,7 @@ public class Player extends Entity {
                 velX = 1;
             }
             //Jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && maxJumps <= 3 && !fallen) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCount < maxJumps && !fallen) {
                 float force = body.getMass() * jumpForce;
                 if (body.getGravityScale() < 0) {
                     // If gravity is flipped, apply the jump force in the opposite direction
