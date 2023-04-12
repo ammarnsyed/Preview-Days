@@ -17,5 +17,8 @@ public class PowerUpExample extends PowerUp {
     public void powerUpActivate(Player player) {
         player.setWidth(player.getWidth()/2);
         player.setHeight(player.getHeight()/2);
+        player.setSpeed(20f);
+        player.setGravityScale(-1);
+        player.setJumpForce(20);
     }
 }

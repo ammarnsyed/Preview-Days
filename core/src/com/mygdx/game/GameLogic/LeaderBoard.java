@@ -23,15 +23,24 @@ public class LeaderBoard extends ScreenAdapter{
     table.setFillParent(true);
     stage.addActor(table);
 
-    Label title = new Label("Leaderboard", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-    table.add(title).colspan(3).padBottom(50).row();
+
 
     Label rankLabel = new Label("Rank", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     Label nameLabel = new Label("Name", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     Label scoreLabel = new Label("Score", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    Label timeLabel = new Label("Time", new Label.LabelStyle(new BitmapFont(),Color.WHITE));
+    Label title = new Label("Leaderboard", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    rankLabel.setFontScale(3f,3f);
+    nameLabel.setFontScale(3f,3f);
+    scoreLabel.setFontScale(3f,3f);
+    timeLabel.setFontScale(3f,3f);
+    title.setFontScale(5f,5f);
+    table.padTop(-50);
+    table.add(title).colspan(4).row();
     table.add(rankLabel).padRight(50);
     table.add(nameLabel).padRight(50);
-    table.add(scoreLabel).row();
+    table.add(timeLabel).padRight(50);
+    table.add(scoreLabel).padRight(50).row();
 
     // TODO: Retrieve the scores from the server and add them to the table
   }

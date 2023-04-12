@@ -1,21 +1,26 @@
 package com.mygdx.game.GameLogic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.GameLogic.Checkpoint.Spawner;
 import com.mygdx.game.Powers.PowerUp;
 
 import java.util.ArrayList;
@@ -29,20 +34,20 @@ public class Hud implements Disposable{
   private int sec;
   private float timer;
   private int score;
-  private Image image1;
-  private Table newTable;
-  private Table newTable1;
+  private Image imgHeart;
+  private Table scoreTable;
+  private Table lifeTable;
 
   private Label sc;
   private Label tm;
   private Label powerUpTimerLabel;
 
-  private Table newTableP;
+  private Table pauseTable;
   TextButton.TextButtonStyle textButtonStyle;
-  private TextButton button1;
-  private TextButton button2;
-  private TextButton button3;
-  private final int[] clickCount = {0,0,0};
+  private TextButton buttonResume;
+  private TextButton buttonSetting;
+  private TextButton buttonExit;
+  private TextButton buttonReset;
 
 
 
@@ -55,33 +60,50 @@ public class Hud implements Disposable{
     tm = new Label("Time: ".concat(String.valueOf(timer)),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     powerUpTimerLabel = new Label("Powerup: ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-    newTable = new Table();
-    newTable1 = new Table();
-    newTable1.setFillParent(true);
-    newTable.setFillParent(true);
+    scoreTable = new Table();
+    lifeTable = new Table();
+    lifeTable.setFillParent(true);
+    scoreTable.setFillParent(true);
     sc.setFontScale(3f,3f);
     tm.setFontScale(3f,3f);
     powerUpTimerLabel.setFontScale(3f, 3f);
-    newTable.top();
-    newTable.left();
-    newTable.add(sc);
-    newTable.row();
-    newTable.add(tm);
-    newTable.row();
-    newTable.add(powerUpTimerLabel);
-    newTable1.top();
-    newTable1.right();
+    scoreTable.top();
+    scoreTable.left();
+    scoreTable.add(sc);
+    scoreTable.row();
+    scoreTable.add(tm);
+    scoreTable.row();
+    scoreTable.add(powerUpTimerLabel);
+    lifeTable.top();
+    lifeTable.right();
     updateLives(player.getLives());
-    stage.addActor(newTable);
-    stage.addActor(newTable1);
+    stage.addActor(scoreTable);
+    stage.addActor(lifeTable);
+
 
     textButtonStyle = new TextButton.TextButtonStyle();
     textButtonStyle.font = new BitmapFont();
-    button1 = new TextButton("RESUME",textButtonStyle);
-    button2 = new TextButton("SETTING",textButtonStyle);
-    button3 = new TextButton("EXIT",textButtonStyle);
+    buttonResume = new TextButton("RESUME",textButtonStyle);
+    buttonSetting = new TextButton("SETTING",textButtonStyle);
+    buttonExit = new TextButton("EXIT",textButtonStyle);
+    buttonReset = new TextButton("RESTART",textButtonStyle);
+    pauseTable = new Table();
+    pauseTable.setFillParent(true);
+    buttonResume.getLabel().setFontScale(3f,3f);
+    buttonSetting.getLabel().setFontScale(3f,3f);
+    buttonExit.getLabel().setFontScale(3f,3f);
+    buttonReset.getLabel().setFontScale(3f,3f);
+    pauseTable.add(buttonResume);
+    pauseTable.row();
+    pauseTable.add(buttonSetting);
+    pauseTable.row();
+    pauseTable.add(buttonReset);
+    pauseTable.row();
+    pauseTable.add(buttonExit);
+    Gdx.input.setInputProcessor(stage);
   }
 
+  //updates score and timer during playtime
   public void update(float dt, Player player, ArrayList<PowerUp> actualPowerUps) {
     timer += dt;
     //format the timer to min:sec
@@ -116,73 +138,114 @@ public class Hud implements Disposable{
     }
   }
 
-  protected void updatePause(){
-    newTableP = new Table();
-    newTableP.setFillParent(true);
-    button1.getLabel().setFontScale(5f,5f);
-    button2.getLabel().setFontScale(3f,3f);
-    button3.getLabel().setFontScale(3f,3f);
-    newTableP.add(button1);
-    newTableP.row();
-    newTableP.add(button2);
-    newTableP.row();
-    newTableP.add(button3);
-    Gdx.input.setInputProcessor(stage);
-    stage.addActor(newTableP);
-
-  }
-
-  public void buttonDetect(final PlayScreen playScreen){
-    button1.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        clickCount[0]++;
-      }
-    });
-    if(clickCount[0] != 0){
-      playScreen.updateResume();
-      clickCount[0] = 0;
-    }
-
-    button2.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        clickCount[1]++;
-      }
-    });
-    if(clickCount[1] != 0){
-      playScreen.updateResume();
-      clickCount[1] = 0;
-    }
-
-    button3.addListener(new ChangeListener() {
-      @Override
-      public void changed(ChangeEvent event, Actor actor) {
-        clickCount[2]++;
-      }
-    });
-    if(clickCount[2] != 0){
-      playScreen.exitGame();
-      clickCount[2] = 0;
-    }
-  }
-
-  public void updateResume(){
-    newTableP.remove();
-  }
-
+  //updates lives images
   public void updateLives(int playerLives) {
-    newTable1.removeActor(image1);
+    lifeTable.removeActor(imgHeart);
     if (playerLives == 2) {
-      image1 = new Image(new Texture("3hp.png"));
+      imgHeart = new Image(new Texture("3hp.png"));
     } else if (playerLives == 1) {
-      image1 = new Image(new Texture("2hp.png"));
+      imgHeart = new Image(new Texture("2hp.png"));
     } else if (playerLives == 0) {
-      image1 = new Image(new Texture("1hp.png"));
+      imgHeart = new Image(new Texture("1hp.png"));
     } else {
-      image1 = new Image(new Texture("dead.png"));
+      imgHeart = new Image(new Texture("dead.png"));
     }
-    newTable1.add(image1);
+    lifeTable.add(imgHeart);
+  }
+
+  //popping pause menu on screen
+  protected void updatePause(){
+    stage.addActor(pauseTable);
+  }
+
+  //give pause menu buttons functionality
+  public void buttonDetect(final PlayScreen playScreen){
+    buttonResume.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        buttonResume.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        buttonResume.getLabel().setColor(Color.WHITE);
+      }
+    });
+    buttonResume.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        playScreen.updateResume();
+        Sound resumeSE = SoundEffects.getResumeSE();
+        SoundEffects.changeMainMusicVolume(0.25f);
+        resumeSE.play(0.25f);
+      }
+    });
+
+
+    //setting button is a placeholder, it functions as resume button rn
+    buttonSetting.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        buttonSetting.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        buttonSetting.getLabel().setColor(Color.WHITE);
+      }
+    });
+    buttonSetting.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        playScreen.updateResume();
+        Sound resumeSE = SoundEffects.getResumeSE();
+        SoundEffects.changeMainMusicVolume(0.25f);
+        resumeSE.play(0.25f);
+      }
+    });
+
+
+    buttonReset.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        buttonReset.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        buttonReset.getLabel().setColor(Color.WHITE);
+      }
+    });
+    buttonReset.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        playScreen.setRestart();
+      }
+    });
+
+
+    buttonExit.addListener(new ClickListener() {
+      @Override
+      public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+        super.enter(event, x, y, pointer, fromActor);
+        buttonExit.getLabel().setColor(Color.GRAY);
+      }
+      @Override
+      public void exit(InputEvent event, float x, float y, int pointer, @Null Actor toActor) {
+        buttonExit.getLabel().setColor(Color.WHITE);
+      }
+    });
+    buttonExit.addListener(new ChangeListener() {
+      @Override
+      public void changed(ChangeEvent event, Actor actor) {
+        playScreen.exitGame();
+      }
+    });
+  }
+
+  //remove pause menu
+  public void updateResume(){
+    pauseTable.remove();
   }
 
 
